@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
 
                 // strtolower --> Pasa a todos los caracteres a minusculas
                 if (strtolower($usuario['rol']) === 'admin') {
-                    header("Location: vista_admin.php");
+                    header("Location: admin/vista_admin.php");
                     exit();
                 } else {
                     header("Location: index.php");

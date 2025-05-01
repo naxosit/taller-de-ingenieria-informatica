@@ -136,3 +136,28 @@ main {
 .registrarse a:hover {
   color: var(--text-color);
 }
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #2a2a2a;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+tbody tr:hover {
+  background-color: #292929;
+}
