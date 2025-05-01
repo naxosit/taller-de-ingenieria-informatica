@@ -5,7 +5,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     exit();
 }
 
-require __DIR__ . '/../CONNECTION/conexion.php';
+require __DIR__ . '/../../CONNECTION/conexion.php';
 
 // Procesar cambio de rol mediante el rut
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
@@ -49,7 +49,7 @@ try {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Admin - Web Cine</title>
-  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="../../CSS/styles.css" />
 </head>
 <body>
 
