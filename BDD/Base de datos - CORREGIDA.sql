@@ -1,15 +1,15 @@
 -- Entidades
 
 CREATE TABLE CONTRASENA (
-	IdContrasena INT PRIMARY KEY,
-	ContrasenaUsuario VARCHAR(255)
+	Id_Contrasena INT PRIMARY KEY,
+	ContrasenaUsuario VARCHAR(225)
 );
 
 CREATE TABLE PERFIL (
 	Rut VARCHAR(12) PRIMARY KEY,
-	Nombre VARCHAR(100),
-	Apellido VARCHAR(100),
-	Correo VARCHAR(200),
+	Nombre VARCHAR(45),
+	Apellido VARCHAR(45),
+	Correo VARCHAR(45),
 	IdContrasena INT NOT NULL,
 	FOREIGN KEY (IdContrasena) REFERENCES CONTRASENA(IdContrasena)
 );
@@ -30,11 +30,9 @@ CREATE TABLE PELICULA (
 	Id_Pelicula INT PRIMARY KEY,
 	Nombre VARCHAR(200),
 	Duracion INT, -- En minutos (Modificable a tipo TIME, y luego programar para convertir hora a minutos)
-	Sinopsis VARCHAR(200),
+	Sinopsis VARCHAR(500),
 	Director VARCHAR(200),
-	Genero VARCHAR(100),
-	Id_Cine INT NOT NULL,
-	FOREIGN KEY (Id_Cine) REFERENCES CINE(Id_Cine)
+	Genero VARCHAR(100)
 );
 
 CREATE TABLE SALA (
