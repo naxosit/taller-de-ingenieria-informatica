@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
     $nuevo_rol = $_POST['nuevo_rol'];
     
     try {
-        $stmt = $db->prepare("UPDATE perfil SET rol = ? WHERE rut = ?");
+        $stmt = $db->prepare("UPDATE Perfil SET Rol_idRol = (SELECT idRol FROM Rol WHERE Nombre = ?) WHERE Rut = ?");
         $stmt->execute([$nuevo_rol, $rut]);
         $mensaje = "Rol actualizado para ".htmlspecialchars($rut);
     } catch(PDOException $e) {
@@ -24,19 +24,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
 // Obtenemos los datos del perfil y los roles.
 try {
     // Totales
-    $total_usuarios = $db->query("SELECT COUNT(*) FROM perfil")->fetchColumn();
+    $total_usuarios = $db->query("SELECT COUNT(*) FROM Perfil")->fetchColumn();
     
     // Por roles
-    $roles = ['admin', 'encargado_sala', 'encargado_butaca', 'cliente'];
+    $stmt_roles = $db->query("SELECT idRol, Nombre FROM Rol");
+    $roles = $stmt_roles->fetchAll(PDO::FETCH_KEY_PAIR);
     $usuarios_por_rol = [];
-    foreach ($roles as $rol) {
-        $stmt = $db->prepare("SELECT COUNT(*) FROM perfil WHERE rol = ?");
-        $stmt->execute([$rol]);
-        $usuarios_por_rol[$rol] = $stmt->fetchColumn();
+    
+    foreach ($roles as $idRol => $nombreRol) {
+        $stmt = $db->prepare("SELECT COUNT(*) FROM Perfil WHERE Rol_idRol = ?");
+        $stmt->execute([$idRol]);
+        $usuarios_por_rol[$nombreRol] = $stmt->fetchColumn();
     }
     
     // Últimos registros de la tabla perfil
-    $ultimos_usuarios = $db->query("SELECT rut, nombre, apellido, rol FROM perfil ORDER BY fecha_registro DESC LIMIT 5")->fetchAll();
+    $ultimos_usuarios = $db->query("
+        SELECT p.Rut as rut, p.Nombre as nombre, p.Apellido as apellido, r.Nombre as rol 
+        FROM Perfil p
+        JOIN Rol r ON p.Rol_idRol = r.idRol
+        ORDER BY p.Rut DESC LIMIT 5
+    ")->fetchAll(PDO::FETCH_ASSOC);
     
 } catch(PDOException $e) {
     $error = "Error en la base de datos: ".$e->getMessage();
@@ -87,8 +94,8 @@ try {
       </tr>
       <tr>
         <td><?= $total_usuarios ?></td>
-        <td><?= $usuarios_por_rol['admin'] ?></td>
-        <td><?= $usuarios_por_rol['encargado_sala'] ?></td>
+        <td><?= $usuarios_por_rol['admin'] ?? 0 ?></td>
+        <td><?= $usuarios_por_rol['encargado_sala'] ?? 0 ?></td>
       </tr>
       <tr>
         <th>Enc. Butaca</th>
@@ -96,8 +103,8 @@ try {
         <th>Total Activos</th>
       </tr>
       <tr>
-        <td><?= $usuarios_por_rol['encargado_butaca'] ?></td>
-        <td><?= $usuarios_por_rol['cliente'] ?></td>
+        <td><?= $usuarios_por_rol['encargado_butaca'] ?? 0 ?></td>
+        <td><?= $usuarios_por_rol['cliente'] ?? 0 ?></td>
         <td><?= array_sum($usuarios_por_rol) ?></td>
       </tr>
     </table>
@@ -122,9 +129,9 @@ try {
           <form method="post">
             <input type="hidden" name="rut" value="<?= $usuario['rut'] ?>">
             <select name="nuevo_rol">
-              <?php foreach ($roles as $rol): ?>
-              <option value="<?= $rol ?>" <?= $usuario['rol'] === $rol ? 'selected' : '' ?>>
-                <?= ucfirst(str_replace('_', ' ', $rol)) ?>
+              <?php foreach ($roles as $idRol => $nombreRol): ?>
+              <option value="<?= $nombreRol ?>" <?= $usuario['rol'] === $nombreRol ? 'selected' : '' ?>>
+                <?= ucfirst(str_replace('_', ' ', $nombreRol)) ?>
               </option>
               <?php endforeach; ?>
             </select>

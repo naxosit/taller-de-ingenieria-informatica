@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/../CONNECTION/conexion.php';
-
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
@@ -10,35 +9,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
     if (empty($rut) || empty($password)) {
         $error = "Todos los campos son obligatorios";
     } else {
-        try {
-            // Consulta optimizada con alias seguro para obtener el rut y la contraseña
-            $stmt = $db->prepare("SELECT c.contraseña, p.rol 
-                     FROM contraseña c
-                     INNER JOIN perfil p ON c.rut = p.rut
-                     WHERE c.rut = ?");
-            $stmt->execute([$rut]);
-            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            //Aqui con el rut comparamos el rol que tenga el perfil y dependiendo de esta
-            //redirecciona a su pagina.
-            if ($usuario && $usuario['contraseña'] === $password) {
-                $_SESSION['rut'] = $rut;
-                $_SESSION['rol'] = $usuario['rol'];  
-
-                // strtolower --> Pasa a todos los caracteres a minusculas
-                if (strtolower($usuario['rol']) === 'admin') {
-                    header("Location: admin/vista_admin.php");
-                    exit();
-                } else {
-                    header("Location: index.php");
-                    exit();
-                }
-            } else {
-                $error = "RUT o contraseña incorrectos";
-            }
-        } catch(PDOException $e) {
-            $error = "Error en la base de datos: " . $e->getMessage();
-        }
+      $stmt = $db->prepare("
+      SELECT c.ContraseñaUsuario AS password, r.Nombre AS rol
+      FROM perfil p
+      INNER JOIN contraseña c ON p.Id_Contraseña = c.Id_Contraseña
+      INNER JOIN rol r ON p.Rol_idRol = r.idRol
+      WHERE p.Rut = ?
+  ");
+  $stmt->execute([$rut]);
+  $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  if ($usuario && $usuario['password'] === $password) {
+      $_SESSION['rut'] = $rut;
+      $_SESSION['rol'] = $usuario['rol'];
+  
+      switch (strtolower($usuario['rol'])) {
+          case 'admin':
+              header("Location: admin/vista_admin.php");
+              break;
+          case 'encargado cartelera':
+              header("Location: encargado_cartelera.php");
+              break;
+          case 'encargado butaca':
+              header("Location: encargado_butaca.php");
+              break;
+          default:
+              header("Location: index.php");
+      }
+      exit();
+  } else {
+      $error = "RUT o contraseña incorrectos";
+  }
+  
     }
 }
 ?>

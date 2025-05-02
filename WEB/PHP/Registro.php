@@ -1,27 +1,27 @@
 <?php
 require __DIR__ . '/../CONNECTION/conexion.php';
 
-//Se toman los datos del formulario y se insertan en los atributos de la tabla perfil.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
     $rut = $_POST['rut'];
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    
+
     if (empty($rut) || empty($nombre) || empty($apellido) || empty($email) || empty($password)) {
         $error = "Todos los campos son obligatorios";
     } else {
         try {
-            // Insertar en Perfil
-            $stmt = $db->prepare("INSERT INTO Perfil (RUT, Nombre, Apellido, Correo_electronico, Rol) 
-                                  VALUES (?, ?, ?, ?, 'cliente')");
-            $stmt->execute([$rut, $nombre, $apellido, $email]);
-            
-            // Insertar contraseña en texto plano
-            $stmt = $db->prepare("INSERT INTO Contraseña (RUT, Contraseña) VALUES (?, ?)");
-            $stmt->execute([$rut, $password]);
-            
+            // Insertar la contraseña y recuperar su ID
+            $stmt = $db->prepare("INSERT INTO Contraseña (ContraseñaUsuario) VALUES (?) RETURNING Id_Contraseña");
+            $stmt->execute([$password]);
+            $id_contraseña = $stmt->fetchColumn();
+
+            // Insertar en Perfil con rol predeterminado 1 (cliente)
+            $stmt = $db->prepare("INSERT INTO Perfil (Rut, Nombre, Apellido, Correo_Electronico, Rol_idRol, Id_Contraseña) 
+                                  VALUES (?, ?, ?, ?, 4, ?)");
+            $stmt->execute([$rut, $nombre, $apellido, $email, $id_contraseña]);
+
             header("Location: login.php?registro=exito");
             exit;
         } catch(PDOException $e) {
@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

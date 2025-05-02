@@ -27,34 +27,46 @@
                         <th>Nombre</th>
                         <th>Duración</th>
                         <th>Director</th>
-                        <th>Clasificación</th>
                         <th>Género</th>
-                        <th>Estreno</th>
+                        <th>Sinopsis</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     try {
-                        $query = 'SELECT p.idpelicula, p.nombre, p.duracion_min, p.director, p.clasificacion,
-                            g.nombre_genero AS genero, p.fecha_estreno
-                            FROM pelicula p
-                            JOIN genero g ON p.genero_idgenero = g.idgenero';
+                        $query = 'SELECT 
+                                idPelicula as id, 
+                                Nombre as nombre, 
+                                Duracion as duracion, 
+                                Director as director, 
+                                Genero as genero,
+                                Sinopsis as sinopsis
+                            FROM Pelicula
+                            ORDER BY idPelicula';
 
                         $stmt = $conn->query($query);
-                        foreach ($stmt as $fila) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($fila['idpelicula']) . "</td>";
-                            echo "<td>" . htmlspecialchars($fila['nombre']) . "</td>";
-                            echo "<td>" . htmlspecialchars($fila['duracion_min']) . " min</td>";
-                            echo "<td>" . htmlspecialchars($fila['director']) . "</td>";
-                            echo "<td>" . htmlspecialchars($fila['clasificacion']) . "</td>";
-                            echo "<td>" . htmlspecialchars($fila['genero']) . "</td>";
-                            echo "<td>" . htmlspecialchars($fila['fecha_estreno']) . "</td>";
-                            echo "</tr>";
+                        
+                        if ($stmt->rowCount() > 0) {
+                            foreach ($stmt as $fila) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($fila['id'] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($fila['nombre'] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($fila['duracion'] ?? '') . " min</td>";
+                                echo "<td>" . htmlspecialchars($fila['director'] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($fila['genero'] ?? '') . "</td>";
+                                // Mostrar solo los primeros 50 caracteres de la sinopsis
+                                $sinopsis = isset($fila['sinopsis']) ? 
+                                    (strlen($fila['sinopsis']) > 50 ? substr($fila['sinopsis'], 0, 50) . '...' : $fila['sinopsis']) : 
+                                    '';
+                                echo "<td>" . htmlspecialchars($sinopsis) . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='6'>No se encontraron películas</td></tr>";
                         }
                         
                     } catch (PDOException $e) {
-                        echo "<tr><td colspan='7'>Error al obtener películas: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
+                        echo "<tr><td colspan='6'>Error al obtener películas: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
                     }
                     ?>
                 </tbody>

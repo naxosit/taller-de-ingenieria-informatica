@@ -1,5 +1,5 @@
 <?php
-require_once '../CONNECTION/conexion.php';
+require_once '../../CONNECTION/conexion.php';
 
 //Insertamos al primer superusuario con el rol admin.
 $RUT = '21445918-2';
