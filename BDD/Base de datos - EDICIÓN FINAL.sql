@@ -2,7 +2,8 @@ CREATE TABLE Cine (
     idCine INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     Nombre_cine VARCHAR(45) NOT NULL,
     correo_cine VARCHAR(45),
-    telefono INT
+    telefono INT,
+    Ubicacion VARCHAR(45)
 );
 
 CREATE TABLE Sala (
@@ -50,7 +51,6 @@ CREATE TABLE Butaca (
     Id_Butaca INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     Id_TipoButaca INT NOT NULL,
     Id_Sala INT NOT NULL,
-    Ubicacion VARCHAR(50),
     FOREIGN KEY (Id_TipoButaca) REFERENCES Tipo_Butaca(Id_TipoButaca),
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
@@ -102,3 +102,14 @@ CREATE TABLE Conectarse (
     FOREIGN KEY (Rut) REFERENCES Perfil(Rut),
     FOREIGN KEY (Id_Cine) REFERENCES Cine(idCine)
 );
+
+-- Vista que reemplaza 'Ubicacion' en la Butaca
+CREATE VIEW VistaUbicacionButacas AS
+SELECT 
+    b.Id_Butaca AS ID_Butaca,
+    b.Id_Sala AS ID_Sala,
+    tb.Fila || '-' || tb.Columna AS Ubicacion
+FROM 
+    Butaca b
+JOIN 
+    Tipo_Butaca tb ON b.Id_TipoButaca = tb.Id_TipoButaca;
