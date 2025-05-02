@@ -113,3 +113,17 @@ FROM
     Butaca b
 JOIN 
     Tipo_Butaca tb ON b.Id_TipoButaca = tb.Id_TipoButaca;
+
+-- Restricción a rut 'Formato con o sin puntos (incluyendo la K)'
+ALTER TABLE Perfil
+ADD CONSTRAINT CHK_Rut_Formato
+CHECK (
+    Rut ~ '^(\d{1,2}\.\d{3}\.\d{3}|\d{7,8})-[0-9Kk]$' -- Admite mayúsculas/minúsculas en la K
+);
+
+-- Restricción a 'Estructura de correo' -> UNICAMENTE FORMATO
+ALTER TABLE Perfil
+ADD CONSTRAINT CHK_Correo_Formato
+CHECK (
+    correo_electronico ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(cl|com)$'
+);
