@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
               header("Location: admin/vista_admin.php");
               break;
           case 'encargado cartelera':
-              header("Location: encargado_cartelera.php");
+              header("Location: Enc_cartelera/vista_encargado.php");
               break;
           case 'encargado butaca':
               header("Location: encargado_butaca.php");
