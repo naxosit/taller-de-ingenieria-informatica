@@ -11,7 +11,7 @@
     <header>
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="#">Agregar Película</a>
+            <a href="/Enc_cartelera/agregar/Agregar_pelicula.php">Agregar Película</a>
             <a href="#">Actualizar Película</a>
             <a href="#">Eliminar Película</a>
         </nav>
