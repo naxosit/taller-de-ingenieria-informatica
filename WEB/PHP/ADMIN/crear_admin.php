@@ -1,7 +1,6 @@
 <?php
 require_once '../../CONNECTION/conexion.php';
 
-//Insertamos al primer superusuario con el rol admin.
 $RUT = '21445918-2';
 $Nombre = 'Admin';
 $Apellido = 'General';
@@ -10,29 +9,29 @@ $Rol = 'admin';
 $Contraseña = 'admin123';
 
 try {
-    // Verifica si ya existe
-    $stmt = $conn->prepare("SELECT * FROM Perfil WHERE RUT = :rut");
+    // Verificar si el admin ya existe
+    $stmt = $conn->prepare("SELECT 1 FROM Perfil WHERE RUT = :rut");
     $stmt->bindParam(':rut', $RUT);
     $stmt->execute();
 
     if ($stmt->rowCount() == 0) {
         $conn->beginTransaction();
 
-        // Insertar el perfil si no existe
-        $stmt = $conn->prepare("INSERT INTO Perfil (RUT, Nombre, Apellido, Correo_electronico, Rol) VALUES (:rut, :nombre, :apellido, :correo, :rol)");
+        // Insertar la contraseña y obtener el ID
+        $stmt = $conn->prepare("INSERT INTO Contraseña (ContraseñaUsuario) VALUES (:pass) RETURNING Id_Contraseña");
+        $stmt->execute([':pass' => $Contraseña]);
+        $id_contraseña = $stmt->fetchColumn();
+
+        // Insertar el perfil con el ID de la contraseña
+        $stmt = $conn->prepare("INSERT INTO Perfil (RUT, Nombre, Apellido, Correo_electronico, Rol, Id_Contraseña) 
+                                VALUES (:rut, :nombre, :apellido, :correo, :rol, :id_contra)");
         $stmt->execute([
             ':rut' => $RUT,
             ':nombre' => $Nombre,
             ':apellido' => $Apellido,
             ':correo' => $Correo_electronico,
-            ':rol' => $Rol
-        ]);
-
-        // Insertar contraseña en texto plano
-        $stmt = $conn->prepare("INSERT INTO Contraseña (RUT, Contraseña) VALUES (:rut, :pass)");
-        $stmt->execute([
-            ':rut' => $RUT,
-            ':pass' => $Contraseña
+            ':rol' => $Rol,
+            ':id_contra' => $id_contraseña
         ]);
 
         $conn->commit();

@@ -9,13 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
     if (empty($rut) || empty($password)) {
         $error = "Todos los campos son obligatorios";
     } else {
-      $stmt = $db->prepare("
-      SELECT c.ContraseñaUsuario AS password, r.Nombre AS rol
-      FROM perfil p
-      INNER JOIN contraseña c ON p.Id_Contraseña = c.Id_Contraseña
-      INNER JOIN rol r ON p.Rol_idRol = r.idRol
-      WHERE p.Rut = ?
-  ");
+      $stmt = $db->prepare(" SELECT c.contraseñausuario AS password, p.rol as rol
+          FROM perfil p
+          INNER JOIN contraseña c ON p.id_contraseña = c.id_contraseña
+          WHERE p.rut = ?");
   $stmt->execute([$rut]);
   $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   

@@ -9,17 +9,22 @@ require __DIR__ . '/../../CONNECTION/conexion.php';
 
 // Procesar cambio de rol mediante el rut
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
-    $rut = $_POST['rut'];
-    $nuevo_rol = $_POST['nuevo_rol'];
-    
-    try {
-        $stmt = $db->prepare("UPDATE Perfil SET Rol_idRol = (SELECT idRol FROM Rol WHERE Nombre = ?) WHERE Rut = ?");
-        $stmt->execute([$nuevo_rol, $rut]);
-        $mensaje = "Rol actualizado para ".htmlspecialchars($rut);
-    } catch(PDOException $e) {
-        $error = "Error: ".$e->getMessage();
-    }
+  $rut = $_POST['rut'];
+  $nuevo_rol = $_POST['nuevo_rol'];
+  
+  try {
+      // Actualiza el rol en la base de datos usando el RUT
+      $stmt = $db->prepare("UPDATE Perfil SET Rol = :rol WHERE Rut = :rut");
+      $stmt->execute([
+          ':rol' => $nuevo_rol, // Actualiza el rol
+          ':rut' => $rut        // Identifica el usuario por su RUT
+      ]);
+      $mensaje = "Rol actualizado para ".htmlspecialchars($rut);
+  } catch(PDOException $e) {
+      $error = "Error: ".$e->getMessage();
+  }
 }
+
 
 // Obtenemos los datos del perfil y los roles.
 try {
@@ -27,22 +32,21 @@ try {
     $total_usuarios = $db->query("SELECT COUNT(*) FROM Perfil")->fetchColumn();
     
     // Por roles
-    $stmt_roles = $db->query("SELECT idRol, Nombre FROM Rol");
-    $roles = $stmt_roles->fetchAll(PDO::FETCH_KEY_PAIR);
+    $roles = ['admin', 'encargado_sala', 'encargado_butaca', 'cliente'];
     $usuarios_por_rol = [];
-    
-    foreach ($roles as $idRol => $nombreRol) {
-        $stmt = $db->prepare("SELECT COUNT(*) FROM Perfil WHERE Rol_idRol = ?");
-        $stmt->execute([$idRol]);
-        $usuarios_por_rol[$nombreRol] = $stmt->fetchColumn();
+
+    foreach ($roles as $rol) {
+        $stmt = $db->prepare("SELECT COUNT(*) FROM Perfil WHERE Rol = ?");
+        $stmt->execute([$rol]);
+        $usuarios_por_rol[$rol] = $stmt->fetchColumn();
     }
+
     
     // Últimos registros de la tabla perfil
     $ultimos_usuarios = $db->query("
-        SELECT p.Rut as rut, p.Nombre as nombre, p.Apellido as apellido, r.Nombre as rol 
-        FROM Perfil p
-        JOIN Rol r ON p.Rol_idRol = r.idRol
-        ORDER BY p.Rut DESC LIMIT 5
+    SELECT p.Rut as rut, p.Nombre as nombre, p.Apellido as apellido, p.Rol as rol 
+    FROM Perfil p
+    ORDER BY p.Rut DESC LIMIT 5
     ")->fetchAll(PDO::FETCH_ASSOC);
     
 } catch(PDOException $e) {

@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
             $id_contraseña = $stmt->fetchColumn();
 
             // Insertar en Perfil con rol predeterminado 1 (cliente)
-            $stmt = $db->prepare("INSERT INTO Perfil (Rut, Nombre, Apellido, Correo_Electronico, Rol_idRol, Id_Contraseña) 
-                                  VALUES (?, ?, ?, ?, 4, ?)");
-            $stmt->execute([$rut, $nombre, $apellido, $email, $id_contraseña]);
+            $rol = 'cliente'; // Rol por defecto
+            $stmt = $db->prepare("INSERT INTO Perfil (Rut, Nombre, Apellido, Correo_Electronico, Rol, Id_Contraseña) 
+                                  VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$rut, $nombre, $apellido, $email, $rol, $id_contraseña]);
 
-            header("Location: login.php?registro=exito");
             exit;
         } catch(PDOException $e) {
             $error = "Error al registrar: " . $e->getMessage();
