@@ -48,25 +48,25 @@ CREATE TABLE Butaca (
 
 -- Información sobre los pagos realizados por boletos
 CREATE TABLE Pago (
-    Id_Pago INT GENERATED ALWAYS AS IDENTITY,    -- Identificador del pago
+    Id_Pago INT GENERATED ALWAYS AS IDENTITY,                -- Identificador del pago
     Tipo VARCHAR(45),                                        -- Tipo de tarjeta 
     Marca VARCHAR(30),                                       -- Marca de la tarjeta (Visa, Mastercard)
     CuatroDig VARCHAR(4),                                    -- Últimos 4 dígitos de la tarjeta
-    Fecha_Transf DATE,
-    PRIMARY KEY(Id_Pago, Fecha_Transf)                                        -- Fecha del pago o transacción
+    Fecha_Transf DATE,                                       -- Fecha del pago o transacción
+    PRIMARY KEY(Id_Pago, Fecha_Transf)                       
 );
 
 -- Boleto generado para una película, butaca y pago específico
 CREATE TABLE Boleto (
     RUT VARCHAR(12),
-    Id_Pago INT NOT NULL,                                    -- Relación al pago
+    IdPago INT NOT NULL,                                     -- Relación al pago
     IdPelicula INT NOT NULL,                                 -- Película asociada
     IdButaca INT NOT NULL,                                   -- Butaca reservada
     Estado_Butaca VARCHAR(50),                               -- Estado (reservada, disponible, ocupada)
     Fecha_boleto DATE,                                       -- Fecha en que se compró
-    PRIMARY KEY (RUT, Id_Pago, IdPelicula, IdButaca),
+    PRIMARY KEY (RUT, IdPago, IdPelicula, IdButaca),
     FOREIGN KEY (RUT) REFERENCES Perfil(Rut),
-    FOREIGN KEY (Id_Pago) REFERENCES Pago(Id_Pago),
+    FOREIGN KEY (IdPago) REFERENCES Pago(Id_Pago),
     FOREIGN KEY (IdPelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca)
 );
