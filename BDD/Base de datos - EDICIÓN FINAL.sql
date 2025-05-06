@@ -11,7 +11,6 @@ CREATE TABLE Cine (
 CREATE TABLE Sala (
     idSala INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Identificador único de la sala
     Nombre VARCHAR(100) NOT NULL,                        -- Nombre de la sala
-    Capacidad INT,                                       -- Cantidad de butacas que posee
     Tipo_pantalla VARCHAR(45),                           -- Tipo de pantalla (ej: 2D, 3D, IMAX)
     Cine_idCine INT NOT NULL,                            -- Cine al que pertenece
     FOREIGN KEY (Cine_idCine) REFERENCES Cine(idCine)
@@ -27,15 +26,6 @@ CREATE TABLE Pelicula (
     Genero VARCHAR(50)                                       -- Género (acción, drama, etc.)
 );
 
--- Tabla intermedia que representa qué películas se proyectan en qué cines
-CREATE TABLE Proyeccion (
-    Id_Pelicula INT NOT NULL,
-    Id_Cine INT NOT NULL,
-    PRIMARY KEY (Id_Pelicula, Id_Cine),                      -- Clave primaria compuesta
-    FOREIGN KEY (Id_Pelicula) REFERENCES Pelicula(idPelicula),
-    FOREIGN KEY (Id_Cine) REFERENCES Cine(idCine)
-);
-
 -- Tabla que indica funciones (proyecciones) específicas de una película en una sala y fecha determinada
 CREATE TABLE Funcion (
     Id_Pelicula INT NOT NULL,
@@ -46,39 +36,36 @@ CREATE TABLE Funcion (
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
 
--- Tipos de butaca definidos por fila y columna
-CREATE TABLE Tipo_Butaca (
-    Id_TipoButaca INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Identificador del tipo de butaca
-    Fila VARCHAR(1),                                             -- Letra de fila (ej: A)
-    Columna INT                                                  -- Número de columna (ej: 12)
-);
-
 -- Butacas físicas dentro de una sala, asociadas a un tipo de butaca
 CREATE TABLE Butaca (
     Id_Butaca INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     Id_TipoButaca INT NOT NULL,                              -- Fila y columna de la butaca
-    Id_Sala INT NOT NULL,                                    -- Sala donde se encuentra
-    FOREIGN KEY (Id_TipoButaca) REFERENCES Tipo_Butaca(Id_TipoButaca),
+    Id_Sala INT NOT NULL,
+    Fila VARCHAR(20),
+    Columna INT,                                    -- Sala donde se encuentra,
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
 
 -- Información sobre los pagos realizados por boletos
 CREATE TABLE Pago (
-    Id_Pago INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,    -- Identificador del pago
+    Id_Pago INT GENERATED ALWAYS AS IDENTITY,    -- Identificador del pago
     Tipo VARCHAR(45),                                        -- Tipo de tarjeta 
     Marca VARCHAR(30),                                       -- Marca de la tarjeta (Visa, Mastercard)
     CuatroDig VARCHAR(4),                                    -- Últimos 4 dígitos de la tarjeta
-    Fecha_Transf DATE                                        -- Fecha del pago o transacción
+    Fecha_Transf DATE,
+    PRIMARY KEY(Id_Pago, Fecha_Transf)                                        -- Fecha del pago o transacción
 );
 
 -- Boleto generado para una película, butaca y pago específico
 CREATE TABLE Boleto (
+    RUT VARCHAR(12),
     Id_Pago INT NOT NULL,                                    -- Relación al pago
     IdPelicula INT NOT NULL,                                 -- Película asociada
     IdButaca INT NOT NULL,                                   -- Butaca reservada
     Estado_Butaca VARCHAR(50),                               -- Estado (reservada, disponible, ocupada)
     Fecha_boleto DATE,                                       -- Fecha en que se compró
-    PRIMARY KEY (Id_Pago, IdPelicula, IdButaca),
+    PRIMARY KEY (RUT, Id_Pago, IdPelicula, IdButaca),
+    FOREIGN KEY (RUT) REFERENCES Perfil(Rut),
     FOREIGN KEY (Id_Pago) REFERENCES Pago(Id_Pago),
     FOREIGN KEY (IdPelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca)
@@ -142,5 +129,3 @@ CHECK (
     CuatroDig ~ '^\d{4}$'
 );
 
--- Capacidad debe ser mayor a 0 (valores absurdos)
-ALTER TABLE Sala ADD CONSTRAINT CHK_Capacidad_Positive CHECK (Capacidad > 0);
