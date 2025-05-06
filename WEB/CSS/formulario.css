@@ -1,0 +1,49 @@
+/* Estilos específicos para el formulario de agregar película */
+.formulario-agregar {
+    background-color: var(--card-bg, #1e1e1e);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.formulario-agregar label {
+    color: var(--text-color, #ddd);
+    font-weight: 500;
+}
+
+.formulario-agregar input,
+.formulario-agregar select,
+.formulario-agregar textarea {
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.formulario-agregar select option {
+    background-color: #111;
+    color: #fff;
+}
+
+.formulario-agregar button {
+    background-color: var(--accent-color, #715df2);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.formulario-agregar button:hover {
+    background-color: #5e47d1;
+}

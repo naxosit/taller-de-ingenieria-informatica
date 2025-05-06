@@ -1,11 +1,12 @@
-<?php include_once("../../CONNECTION/conexion.php"); ?>
+<?php include_once("../../../CONNECTION/conexion.php");?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Películas - Web Cine</title>
-    <link rel="stylesheet" href="../../CSS/styles.css">
+    <link rel="stylesheet" href="../../../CSS/styles.css">
 </head>
 <body>
     <header>
@@ -19,6 +20,11 @@
 
     <div class="container">
         <h1 class="page-title">Listado de Películas</h1>
+
+        <?php if (isset($_GET['actualizado'])): ?>
+            <div class="alert-success">Película actualizada correctamente.</div>
+        <?php endif; ?>
+
         <div class="card">
             <table>
                 <thead>
@@ -29,6 +35,7 @@
                         <th>Director</th>
                         <th>Género</th>
                         <th>Sinopsis</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,19 +61,18 @@
                                 echo "<td>" . htmlspecialchars($fila['duracion'] ?? '') . " min</td>";
                                 echo "<td>" . htmlspecialchars($fila['director'] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($fila['genero'] ?? '') . "</td>";
-                                // Mostrar solo los primeros 50 caracteres de la sinopsis
                                 $sinopsis = isset($fila['sinopsis']) ? 
                                     (strlen($fila['sinopsis']) > 50 ? substr($fila['sinopsis'], 0, 50) . '...' : $fila['sinopsis']) : 
                                     '';
                                 echo "<td>" . htmlspecialchars($sinopsis) . "</td>";
+                                echo "<td><a href='Formulario.php?id=" . urlencode($fila['id']) . "' class='boton-actualizar'>Actualizar</a></td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6'>No se encontraron películas</td></tr>";
+                            echo "<tr><td colspan='7'>No se encontraron películas</td></tr>";
                         }
-                        
                     } catch (PDOException $e) {
-                        echo "<tr><td colspan='6'>Error al obtener películas: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
+                        echo "<tr><td colspan='7'>Error al obtener películas: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
                     }
                     ?>
                 </tbody>
