@@ -12,8 +12,8 @@
     <header class="header">
     <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="#">Agregar Película</a>
-            <a href="#">Actualizar Película</a>
+            <a href="../vista_encargado.php">Ver Peliculas</a>
+            <a href="#"></a>
             <a href="#">Eliminar Película</a>
         </nav>
     </header>

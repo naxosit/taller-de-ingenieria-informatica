@@ -1,44 +1,44 @@
 <?php
-require_once 'conexion.php';
+require_once __DIR__ . '/../../../../CONNECTION/conexion.php';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $idPelicula = $_POST['id_pelicula'] ?? '';
 
+    if (empty($idPelicula)) {
+        header("Location: ../eliminar_pelicula.php?mensaje=" . urlencode("ID de película no proporcionado") . "&error=1");
+        exit;
+    }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
-    $id_pelicula = $_POST['id_pelicula'];
-    
     try {
-        // Primero verificamos si la película existe
-        $query = "SELECT nombre FROM pelicula WHERE id_pelicula = :id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':id', $id_pelicula, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        if ($stmt->rowCount() == 0) {
-            header('Location: ../eliminarpelicula.php?mensaje=La+película+no+existe&error=1');
-            exit;
-        }
-        
-        $pelicula = $stmt->fetch(PDO::FETCH_ASSOC);
-        $nombre_pelicula = $pelicula['nombre'];
-        
-        // Procedemos a eliminar
-        $query = "DELETE FROM pelicula WHERE id_pelicula = :id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':id', $id_pelicula, PDO::PARAM_INT);
-        
-        if ($stmt->execute()) {
-            header('Location: /web/taller-de-ingenieria-informatica/WEB/PHP/Enc_cartelera/vista_encargado.php?mensaje=Película+"'.urlencode($nombre_pelicula).'" eliminada+correctamente');
+        $conn->beginTransaction();
 
+        // Eliminar boletos asociados
+        $stmt = $conn->prepare("DELETE FROM Boleto WHERE IdPelicula = :id");
+        $stmt->execute([':id' => $idPelicula]);
 
-        } else {
-            header('Location: ../eliminarpelicula.php?mensaje=Error+al+eliminar+la+película&error=1');
-        }
-        
+        // Eliminar funciones asociadas
+        $stmt = $conn->prepare("DELETE FROM Funcion WHERE Id_Pelicula = :id");
+        $stmt->execute([':id' => $idPelicula]);
+
+        // Eliminar proyecciones asociadas
+        $stmt = $conn->prepare("DELETE FROM Proyeccion WHERE Id_Pelicula = :id");
+        $stmt->execute([':id' => $idPelicula]);
+
+        // Finalmente, eliminar la película
+        $stmt = $conn->prepare("DELETE FROM Pelicula WHERE idPelicula = :id");
+        $stmt->execute([':id' => $idPelicula]);
+
+        $conn->commit();
+
+        header("Location: ../../vista_encargado.php?mensaje=" . urlencode("Película eliminada con éxito"));
+        exit;
     } catch (PDOException $e) {
-        error_log('Error al eliminar película: ' . $e->getMessage());
-        header('Location: ../eliminarpelicula.php?mensaje=Error+de+base+de+datos&error=1');
+        $conn->rollBack();
+        header("Location: ../eliminar_pelicula.php?mensaje=" . urlencode("Error al eliminar: " . $e->getMessage()) . "&error=1");
+        exit;
     }
 } else {
-    header('Location: ../eliminarpelicula.php');
+    header("Location: ../eliminar_pelicula.php?mensaje=" . urlencode("Acceso inválido") . "&error=1");
+    exit;
 }
 ?>

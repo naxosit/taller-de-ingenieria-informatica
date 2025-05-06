@@ -64,14 +64,14 @@ try {
 </head>
 <body>
 
-  <!-- Encabezado simple -->
-  <div>
-    <div>Web Cine</div>
-    <nav>
-      <a href="vista_admin.php">Inicio</a>
-      <a href="logout.php">Cerrar sesión</a>
-    </nav>
-  </div>
+    <header class="header">
+    <div class="logo">Web Cine - Administrador</div>
+        <nav>
+            <a href="../Enc_cartelera/vista_encargado.php">Vista Cartelera</a>
+            <a href="#">Vista Butaca</a>
+            <a href="#"></a>
+        </nav>
+    </header>
 
   <!-- Contenido principal -->
   <div>

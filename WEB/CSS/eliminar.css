@@ -1,0 +1,37 @@
+/* Estilos específicos para la página eliminar_pelicula.php */
+
+.form-group {
+    margin-bottom: 20px;
+  }
+  
+  #id_pelicula {
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #1c1c1c;
+    color: var(--text-color);
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  #id_pelicula option {
+    background-color: #1c1c1c;
+    color: var(--text-color);
+  }
+  
+  .btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-delete:hover {
+    background-color: #c0392b;
+  }
+  

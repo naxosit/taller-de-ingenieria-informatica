@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Película - Web Cine</title>
-    <link rel="stylesheet" href="/CSS/styles.css">
+    <link rel="stylesheet" href="../../../CSS/styles.css">
+    <link rel="stylesheet" href="../../../CSS/eliminar.css">
 </head>
 <body>
     <header>
-        <div class="logo">Web Cine - Eliminar Película</div>
+        <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="/vista_encargado.php">← Volver al Listado</a>
+            <a href="../agregar/Agregar_pelicula.php">Agregar Película</a>
+            <a href="#"></a>
+            <a href="../vista_encargado.php">Ver Peliculas</a>
         </nav>
     </header>
 
