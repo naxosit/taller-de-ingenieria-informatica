@@ -48,12 +48,29 @@ CREATE TABLE Butaca (
 
 -- Información sobre los pagos realizados por boletos
 CREATE TABLE Pago (
-    Id_Pago INT GENERATED ALWAYS AS IDENTITY,                -- Identificador del pago
+    Id_Pago INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,                -- Identificador del pago
     Tipo VARCHAR(45),                                        -- Tipo de tarjeta 
     Marca VARCHAR(30),                                       -- Marca de la tarjeta (Visa, Mastercard)
     CuatroDig VARCHAR(4),                                    -- Últimos 4 dígitos de la tarjeta
-    Fecha_Transf DATE,                                       -- Fecha del pago o transacción
-    PRIMARY KEY(Id_Pago, Fecha_Transf)                       
+    Fecha_Transf DATE                                       -- Fecha del pago o transacción	                      
+);
+
+-- Tabla que almacena las contraseñas cifradas de los perfiles
+CREATE TABLE Contraseña (
+    Id_Contraseña INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    ContraseñaUsuario VARCHAR(225) NOT NULL                  -- Contraseña del usuario
+);
+
+
+-- Perfiles de usuarios que pueden acceder al sistema (clientes o personal)
+CREATE TABLE Perfil (
+    Rut VARCHAR(12) PRIMARY KEY,                             -- Identificador chileno único
+    Nombre VARCHAR(45),                                      -- Nombre del usuario
+    Apellido VARCHAR(45),                                    -- Apellido del usuario
+    Correo_Electronico VARCHAR(100),                         -- Correo del usuario
+    Rol VARCHAR(40) NOT NULL,                                -- Rol (cliente, administrador, etc.)
+    Id_Contraseña INT NOT NULL,                              -- FK a la contraseña asociada
+    FOREIGN KEY (Id_Contraseña) REFERENCES Contraseña(Id_Contraseña)
 );
 
 -- Boleto generado para una película, butaca y pago específico
@@ -71,22 +88,6 @@ CREATE TABLE Boleto (
     FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca)
 );
 
--- Tabla que almacena las contraseñas cifradas de los perfiles
-CREATE TABLE Contraseña (
-    Id_Contraseña INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    ContraseñaUsuario VARCHAR(225) NOT NULL                  -- Contraseña del usuario
-);
-
--- Perfiles de usuarios que pueden acceder al sistema (clientes o personal)
-CREATE TABLE Perfil (
-    Rut VARCHAR(12) PRIMARY KEY,                             -- Identificador chileno único
-    Nombre VARCHAR(45),                                      -- Nombre del usuario
-    Apellido VARCHAR(45),                                    -- Apellido del usuario
-    Correo_Electronico VARCHAR(100),                         -- Correo del usuario
-    Rol VARCHAR(40) NOT NULL,                                -- Rol (cliente, administrador, etc.)
-    Id_Contraseña INT NOT NULL,                              -- FK a la contraseña asociada
-    FOREIGN KEY (Id_Contraseña) REFERENCES Contraseña(Id_Contraseña)
-);
 
 -- Relación que indica qué perfil accede a qué cine
 CREATE TABLE Conectarse (
@@ -128,4 +129,13 @@ ADD CONSTRAINT CHK_CuatroDig_Formato
 CHECK (
     CuatroDig ~ '^\d{4}$'
 );
+
+-- Inserciones de cines en la tabla Cine
+INSERT INTO Cine (Nombre_cine, correo_cine, telefono, Ubicacion) VALUES
+('CinePlanet Santiago Centro', 'contacto@santiago-cineplanet.cl', 226789321, 'Av. Libertador Bernardo O’Higgins 3470, Santiago'),
+('Cinemark Alto Las Condes', 'info@cinemark.cl', 223456789, 'Av. Kennedy 9001, Las Condes, Santiago'),
+('CineHoyts La Reina', 'servicio@hoyts.cl', 227654321, 'Av. Ossa 655, La Reina, Santiago'),
+('Cinemark Plaza Oeste', 'contacto@cinemarkplaza.cl', 225678901, 'Av. Américo Vespucio 1501, Cerrillos, Santiago'),
+('Cine Arte Alameda', 'info@cineartealameda.cl', 229876543, 'Av. Libertador Bernardo O’Higgins 139, Santiago Centro');
+
 

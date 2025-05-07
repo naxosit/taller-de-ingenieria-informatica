@@ -14,7 +14,7 @@
         <nav>
             <a href="../vista_encargado.php">Ver Peliculas</a>
             <a href="#"></a>
-            <a href="#">Eliminar Película</a>
+            <a href="../Eliminar/eliminarpelicula.php">Eliminar Película</a>
         </nav>
     </header>
 
@@ -54,17 +54,7 @@
                         <td><label for="genero">Género:</label></td>
                         <td><input type="text" id="genero" name="genero" required class="form-input"></td>
                     </tr>
-                    
-                    <tr>
-                        <td><label for="id_cine">Cine:</label></td>
-                        <td>
-                            <select id="id_cine" name="id_cine" required class="form-input">
-                                <option value="">Seleccione un cine</option>
-                                <?php include __DIR__ . "/cargardatos/cargarcine.php"; ?>
 
-                            </select>
-                        </td>
-                    </tr>
                     
                     <tr>
                         <td colspan="2" style="text-align: center;">

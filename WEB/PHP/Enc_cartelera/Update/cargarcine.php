@@ -17,7 +17,7 @@ try {
     if (count($cines) > 0) {
         foreach ($cines as $cine) {
             // Comprobar si el cine actual coincide con el cine en la base de datos
-            $selected = (isset($pelicula['id_cine']) && $pelicula['id_cine'] == $cine['idcine']) ? 'selected' : '';
+            $selected = (isset($pelicula['idcine']) && $pelicula['idcine'] == $cine['idcine']) ? 'selected' : '';
             echo "<option value='" . htmlspecialchars($cine['idcine']) . "' $selected>"
                 . htmlspecialchars($cine['nombre_cine']) . "</option>";
         }

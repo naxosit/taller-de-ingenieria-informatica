@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include_once("../../../CONNECTION/conexion.php");
 
 // Asegúrate de que se recibe el ID de la película a editar
@@ -46,10 +49,12 @@ if (isset($_GET['id'])) {
 
     <div class="container">
         <div class="formulario-agregar">
-            <form id="form-pelicula" action="logica/actualizar_pelicula.php" method="POST">
-                <input type="hidden" name="id" value="<?= htmlspecialchars($pelicula['idPelicula']) ?>">
-
-
+            <form id="form-pelicula" action="logica_actualizar.php" method="POST">  
+            <?php 
+            // Evitamos pasar null a htmlspecialchars:
+            $idPelicula = $pelicula['idPelicula'] ?? ''; 
+            ?>
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($idPelicula, ENT_QUOTES, 'UTF-8'); ?>">    
                 <table class="form-table">
                     <tr>
                         <td><label for="nombre">Nombre:</label></td>
@@ -77,12 +82,21 @@ if (isset($_GET['id'])) {
                     </tr>
                     
                     <tr>
-                        <td><label for="id_cine">Cine:</label></td>
+                        <td><label for="idcine">Cine:</label></td>
                         <td>
-                            <select id="id_cine" name="id_cine" required class="form-input">
-                                <option value="">Seleccione un cine</option>
-                                <?php include __DIR__ . "/cargarcine.php"; ?>
-                            </select>
+                        <select id="id_cine" name="id_cine" required class="form-input">
+                            <option value="">Seleccione un cine</option>
+                            <?php
+                            $stmt = $conn->prepare("SELECT idcine, nombre_cine FROM cine ORDER BY nombre_cine");
+                            $stmt->execute();
+                            $cines = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            foreach ($cines as $cine) {
+                                $selected = ($pelicula['Id_Cine'] == $cine['idcine']) ? 'selected' : '';
+                                echo "<option value='{$cine['idcine']}' $selected>{$cine['nombre_cine']}</option>";
+                            }
+                            ?>
+                        </select>
                         </td>
                     </tr>
                     

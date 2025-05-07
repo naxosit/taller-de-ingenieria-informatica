@@ -12,19 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $conn->beginTransaction();
 
-        // Eliminar boletos asociados
+        // Eliminar boletos asociados a la película
         $stmt = $conn->prepare("DELETE FROM Boleto WHERE IdPelicula = :id");
         $stmt->execute([':id' => $idPelicula]);
 
-        // Eliminar funciones asociadas
+        // Eliminar funciones asociadas a la película
         $stmt = $conn->prepare("DELETE FROM Funcion WHERE Id_Pelicula = :id");
         $stmt->execute([':id' => $idPelicula]);
 
-        // Eliminar proyecciones asociadas
-        $stmt = $conn->prepare("DELETE FROM Proyeccion WHERE Id_Pelicula = :id");
-        $stmt->execute([':id' => $idPelicula]);
-
-        // Finalmente, eliminar la película
+        // Eliminar la película
         $stmt = $conn->prepare("DELETE FROM Pelicula WHERE idPelicula = :id");
         $stmt->execute([':id' => $idPelicula]);
 
