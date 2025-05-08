@@ -1,28 +1,12 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 include_once("../../../CONNECTION/conexion.php");
+include_once("cargar_pelicula.php");
 
-// Asegúrate de que se recibe el ID de la película a editar
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id_pelicula = $_GET['id'];
 
-    // Consulta para obtener los datos de la película
-    $sql = "SELECT p.*, pr.Id_Cine FROM Pelicula p 
-            LEFT JOIN Proyeccion pr ON p.idPelicula = pr.Id_Pelicula 
-            WHERE p.idPelicula = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$id]);
-    $pelicula = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$pelicula) {
-        echo "Película no encontrada.";
-        exit;
-    }
-} else {
-    echo "ID de película no especificado.";
-    exit;
+    // Usar tu función para obtener los datos de la película
+    $pelicula = cargarPelicula($id_pelicula);
 }
 ?>
 
@@ -39,9 +23,9 @@ if (isset($_GET['id'])) {
     <header class="header">
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="#">Agregar Película</a>
-            <a href="#">Actualizar Película</a>
-            <a href="#">Eliminar Película</a>
+            <a href="../vista_encargado.php">Agregar Película</a>
+            <a href="Actualizar_pelicula.php">Actualizar Película</a>
+            <a href="../Eliminar/eliminarpelicula.php">Eliminar Película</a>
         </nav>
     </header>
 
@@ -49,10 +33,10 @@ if (isset($_GET['id'])) {
 
     <div class="container">
         <div class="formulario-agregar">
-            <form id="form-pelicula" action="logica_actualizar.php" method="POST">  
+            <form id="form-pelicula" action="logica_actualizar.php" method="POST">
             <?php 
             // Evitamos pasar null a htmlspecialchars:
-            $idPelicula = $pelicula['idPelicula'] ?? ''; 
+            $idPelicula = $pelicula['id'] ?? ''; 
             ?>
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($idPelicula, ENT_QUOTES, 'UTF-8'); ?>">    
                 <table class="form-table">
@@ -80,26 +64,7 @@ if (isset($_GET['id'])) {
                         <td><label for="genero">Género:</label></td>
                         <td><input type="text" id="genero" name="genero" value="<?= htmlspecialchars($pelicula['genero']) ?>" required class="form-input"></td>
                     </tr>
-                    
-                    <tr>
-                        <td><label for="idcine">Cine:</label></td>
-                        <td>
-                        <select id="id_cine" name="id_cine" required class="form-input">
-                            <option value="">Seleccione un cine</option>
-                            <?php
-                            $stmt = $conn->prepare("SELECT idcine, nombre_cine FROM cine ORDER BY nombre_cine");
-                            $stmt->execute();
-                            $cines = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                            foreach ($cines as $cine) {
-                                $selected = ($pelicula['Id_Cine'] == $cine['idcine']) ? 'selected' : '';
-                                echo "<option value='{$cine['idcine']}' $selected>{$cine['nombre_cine']}</option>";
-                            }
-                            ?>
-                        </select>
-                        </td>
-                    </tr>
-                    
                     <tr>
                         <td colspan="2" style="text-align: center;">
                             <button type="submit" class="btn-submit">Actualizar Película</button>

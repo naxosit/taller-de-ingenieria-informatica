@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
         <div class="error"><?= htmlspecialchars($error) ?></div>
       <?php endif; ?>
       
-      <form action="registro.php" method="post">
+      <form action="login.php" method="post">
         <div class="input-box">
           <input type="text" name="rut" required />
           <label>RUT (ej: 12345678-9)</label>

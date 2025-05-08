@@ -12,7 +12,7 @@
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
             <a href="agregar/Agregar_pelicula.php">Agregar Película</a>
-            <a href="#"></a>
+            <a href="Update/Actualizar_pelicula.php">Actualizar Pelicula</a>
             <a href="Eliminar/eliminarpelicula.php">Eliminar Película</a>
         </nav>
     </header>

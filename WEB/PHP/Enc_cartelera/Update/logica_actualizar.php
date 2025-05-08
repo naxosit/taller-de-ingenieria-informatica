@@ -25,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         empty($duracion) ||
         empty($sinopsis) ||
         empty($director) ||
-        empty($genero)   ||
-        empty($id_cine)
+        empty($genero)   
     ) {
         die("Faltan datos obligatorios.");
     }
@@ -36,11 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $sqlPeli = "UPDATE Pelicula SET nombre = ?, duracion = ?, sinopsis = ?, director = ?, genero = ? WHERE idPelicula = ? ";
         $stmtPeli = $conn -> prepare($sqlPeli);
         $stmtPeli -> execute([$nombre, $duracion, $sinopsis, $director, $genero, $id]);
-
-        //Actualizamos los datos a la tabla "Proyeccion" relacionada a la tabla "Cine".
-        $sqlProy = "UPDATE Proyeccion SET Id_Cine = ? WHERE Id_Pelicula = ?";
-        $stmtProy = $conn -> prepare($sqlProy);
-        $stmtProy -> execute([$id_cine, $id]);
 
         //Redirijimos de vuela al listado de peliculas con indicar de éxito.
         header("Location: Actualizar_pelicula.php?actualizado=1");

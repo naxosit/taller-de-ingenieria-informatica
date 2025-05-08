@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -32,7 +32,7 @@ try {
     $total_usuarios = $db->query("SELECT COUNT(*) FROM Perfil")->fetchColumn();
     
     // Por roles
-    $roles = ['admin', 'encargado_sala', 'encargado_butaca', 'cliente'];
+    $roles = ['admin', 'encargado cartelera', 'encargado_butaca', 'cliente'];
     $usuarios_por_rol = [];
 
     foreach ($roles as $rol) {
