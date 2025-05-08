@@ -12,7 +12,7 @@
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
             <a href="agregar/Agregar_pelicula.php">Agregar Película</a>
-            <a href="Update/Actualizar_pelicula.php">Actualizar Pelicula</a>
+            <a href="Update/Actualizar_pelicula.php">Actualizar Película</a>
             <a href="Eliminar/eliminarpelicula.php">Eliminar Película</a>
         </nav>
     </header>
@@ -54,7 +54,7 @@
                                 echo "<td>" . htmlspecialchars($fila['duracion'] ?? '') . " min</td>";
                                 echo "<td>" . htmlspecialchars($fila['director'] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($fila['genero'] ?? '') . "</td>";
-                                // Mostrar solo los primeros 50 caracteres de la sinopsis
+                                // Mostrar solo los primeros 50 caracteres de la sinopsis.
                                 $sinopsis = isset($fila['sinopsis']) ? 
                                     (strlen($fila['sinopsis']) > 50 ? substr($fila['sinopsis'], 0, 50) . '...' : $fila['sinopsis']) : 
                                     '';
@@ -62,7 +62,7 @@
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6'>No se encontraron películas</td></tr>";
+                            echo "<tr><td colspan='6'>No se encontraron películas registradas</td></tr>";
                         }
                         
                     } catch (PDOException $e) {

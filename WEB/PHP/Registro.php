@@ -9,15 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
     $password = $_POST['password'];
 
     if (empty($rut) || empty($nombre) || empty($apellido) || empty($email) || empty($password)) {
-        $error = "Todos los campos son obligatorios";
+        $error = "Todos los campos son obligatorios.";
     } else {
         try {
-            // Insertar la contraseña y recuperar su ID
+            // Insertar la contraseña y recuperar su ID.
             $stmt = $db->prepare("INSERT INTO Contraseña (ContraseñaUsuario) VALUES (?) RETURNING Id_Contraseña");
             $stmt->execute([$password]);
             $id_contraseña = $stmt->fetchColumn();
 
-            // Insertar en Perfil con rol predeterminado 1 (cliente)
+            // Insertar en "Perfil" con rol predeterminado 1 (cliente).
             $rol = 'cliente'; // Rol por defecto
             $stmt = $db->prepare("INSERT INTO Perfil (Rut, Nombre, Apellido, Correo_Electronico, Rol, Id_Contraseña) 
                                   VALUES (?, ?, ?, ?, ?, ?)");
@@ -45,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
     <div class="logo">Web Cine</div>
     <nav>
       <a href="#">Inicio</a>
-      <a href="#">Servicios</a>
-      <a href="#">Productos</a>
-      <a href="#">Contacto</a>
+      <a href="#">Cartelera</a>
+      <a href="#">Películas</a>
+      <a href="#"></a>
     </nav>
   </header>
 
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
         </div>
         <input class="boton" name="btnregistrar" type="submit" value="Registrarse" />
         <div class="registrarse">
-          <a href="login.php">¿Ya tienes cuenta? Inicia sesión</a>
+          <a href="login.php">¿Ya tienes una cuenta? Inicia sesión.</a>
         </div>
       </form>
     </section>

@@ -13,7 +13,7 @@
     <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
             <a href="../vista_encargado.php">Ver Peliculas</a>
-            <a href="#"></a>
+            <a href="../Update/Actualizar_pelicula.php">Actualizar Peliculas</a>
             <a href="../Eliminar/eliminarpelicula.php">Eliminar Película</a>
         </nav>
     </header>

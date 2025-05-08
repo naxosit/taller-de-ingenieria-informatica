@@ -7,13 +7,13 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
 
 require __DIR__ . '/../../CONNECTION/conexion.php';
 
-// Procesar cambio de rol mediante el rut
+// Procesar cambio de rol mediante el rut.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
   $rut = $_POST['rut'];
   $nuevo_rol = $_POST['nuevo_rol'];
   
   try {
-      // Actualiza el rol en la base de datos usando el RUT
+      // Actualiza el rol en la base de datos usando el RUT.
       $stmt = $db->prepare("UPDATE Perfil SET Rol = :rol WHERE Rut = :rut");
       $stmt->execute([
           ':rol' => $nuevo_rol, // Actualiza el rol
@@ -26,12 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
 }
 
 
-// Obtenemos los datos del perfil y los roles.
+// Obtener los datos del perfil y los roles.
 try {
-    // Totales
+    // Obtener el total de usuarios.
     $total_usuarios = $db->query("SELECT COUNT(*) FROM Perfil")->fetchColumn();
     
-    // Por roles
+    // Cantidad de usuarios por rol.
     $roles = ['admin', 'encargado cartelera', 'encargado_butaca', 'cliente'];
     $usuarios_por_rol = [];
 
@@ -42,7 +42,7 @@ try {
     }
 
     
-    // Últimos registros de la tabla perfil
+    // Últimos registros de la tabla "Perfil".
     $ultimos_usuarios = $db->query("
     SELECT p.Rut as rut, p.Nombre as nombre, p.Apellido as apellido, p.Rol as rol 
     FROM Perfil p
@@ -77,8 +77,8 @@ try {
   <div>
     <h1>Panel de Administración</h1>
     <p>Usuario: <?= htmlspecialchars($_SESSION['rut']) ?></p> 
-    <!-- htmlspecialchars: Funcion de seguridad de PHP convierte caracteres especiales
-        en entidades HTML. Se usa cuando extraemos datos de la base de datos. -->
+    <!-- htmlspecialchars: Función de seguridad de PHP que convierte caracteres especiales
+        en entidades HTML. Se usa al extraer datos de la base de datos. -->
     
     <?php if (isset($mensaje)): ?>
       <div style="background: lightgreen; padding: 10px;"><?= $mensaje ?></div>
@@ -88,11 +88,11 @@ try {
       <div style="background: pink; padding: 10px;"><?= $error ?></div>
     <?php endif; ?>
 
-    <!-- Tabla estadisticas de los registros y roles de los usuarios -->
+    <!-- Tabla estadísticas de los registros y roles de los usuarios. -->
     <h2>Estadísticas</h2>
     <table border="1">
       <tr>
-        <th>Total Usuarios</th>
+        <th>Total de usuarios</th>
         <th>Administradores</th>
         <th>Enc. Sala</th>
       </tr>
@@ -104,7 +104,7 @@ try {
       <tr>
         <th>Enc. Butaca</th>
         <th>Clientes</th>
-        <th>Total Activos</th>
+        <th>Total de activos</th>
       </tr>
       <tr>
         <td><?= $usuarios_por_rol['encargado_butaca'] ?? 0 ?></td>
@@ -113,8 +113,8 @@ try {
       </tr>
     </table>
 
-    <!-- Últimos usuarios registrados en la Base de datos -->
-    <h2>Últimos Registros</h2>
+    <!-- Últimos usuarios registrados en la base de datos. -->
+    <h2>Últimos registros</h2>
     <table border="1">
       <tr>
         <th>RUT</th>

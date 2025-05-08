@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
     $password = $_POST['password'];
 
     if (empty($rut) || empty($password)) {
-        $error = "Todos los campos son obligatorios";
+        $error = "Todos los campos son obligatorios.";
     } else {
       $stmt = $db->prepare(" SELECT c.contraseñausuario AS password, p.rol as rol
           FROM perfil p
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
       }
       exit();
   } else {
-      $error = "RUT o contraseña incorrectos";
+      $error = "RUT o contraseña incorrectos.";
   }
   
     }
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
         </div>
         <input class="boton" name="btnlogin" type="submit" value="Ingresar" />
         <div class="registrarse">
-          <a href="registro.php">¿No tienes cuenta? Regístrate</a>
+          <a href="registro.php">¿No tienes cuenta?, Regístrate</a>
         </div>
       </form>
     </section>
