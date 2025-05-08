@@ -98,16 +98,6 @@ CREATE TABLE Conectarse (
     FOREIGN KEY (Id_Cine) REFERENCES Cine(idCine)
 );
 
--- Vista que representa la ubicación de butacas como combinación de fila y columna
-CREATE VIEW VistaUbicacionButacas AS
-SELECT 
-    b.Id_Butaca AS ID_Butaca,
-    b.Id_Sala AS ID_Sala,
-    tb.Fila || '-' || tb.Columna AS Ubicacion
-FROM 
-    Butaca b
-JOIN 
-    Tipo_Butaca tb ON b.Id_TipoButaca = tb.Id_TipoButaca;
 
 -- Restricción que valida el formato del RUT chileno (con o sin puntos y con K/k final)
 ALTER TABLE Perfil
