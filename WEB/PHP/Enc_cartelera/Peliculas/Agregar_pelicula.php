@@ -12,9 +12,9 @@
     <header class="header">
     <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="../vista_encargado.php">Ver Peliculas</a>
-            <a href="../Update/Actualizar_pelicula.php">Actualizar Peliculas</a>
-            <a href="../Eliminar/eliminarpelicula.php">Eliminar Película</a>
+            <a href="../vista_encargado.php">Lista de Peliculas</a>
+            <a href="#"></a>
+            <a href="#"></a>
         </nav>
     </header>
 
@@ -28,7 +28,7 @@
         <?php endif; ?>
 
         <div class="formulario-agregar">
-            <form id="form-pelicula" action="logica/guardar_pelicula.php" method="POST">
+            <form id="form-pelicula" action="guardar_pelicula.php" method="POST">
                 <table class="form-table">
                     <tr>
                         <td><label for="nombre">Nombre:</label></td>
@@ -53,6 +53,11 @@
                     <tr>
                         <td><label for="genero">Género:</label></td>
                         <td><input type="text" id="genero" name="genero" required class="form-input"></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="imagen">Url Portada:</label></td>
+                        <td><input type="text" id="imagen" name="imagen" required class="form-input"></td>
                     </tr>
 
                     

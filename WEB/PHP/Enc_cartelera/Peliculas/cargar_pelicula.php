@@ -11,7 +11,8 @@ function cargarPelicula($id_pelicula) {
             p.Duracion as duracion, 
             p.Director as director, 
             p.Genero as genero,
-            p.Sinopsis as sinopsis
+            p.Sinopsis as sinopsis,
+            p.Imagen as imagen
           FROM Pelicula p
           WHERE p.idPelicula = :id';
 

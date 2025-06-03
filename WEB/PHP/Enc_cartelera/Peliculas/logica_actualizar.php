@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $sinopsis = $_POST['sinopsis'] ?? '';
     $director = $_POST['director'] ?? '';
     $genero = $_POST['genero'] ?? '';
+    $imagen = $_POST['imagen'] ?? '';
     $id_cine = $_POST['id_cine'] ?? '';
 
     //Validamos los datos.
@@ -32,12 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     try {
         //Actualizamos los datos de la tabla "Pelicula"
-        $sqlPeli = "UPDATE Pelicula SET nombre = ?, duracion = ?, sinopsis = ?, director = ?, genero = ? WHERE idPelicula = ? ";
+        $sqlPeli = "UPDATE Pelicula SET nombre = ?, duracion = ?, sinopsis = ?, director = ?, genero = ?, imagen = ? WHERE idPelicula = ? ";
         $stmtPeli = $conn -> prepare($sqlPeli);
-        $stmtPeli -> execute([$nombre, $duracion, $sinopsis, $director, $genero, $id]);
+        $stmtPeli -> execute([$nombre, $duracion, $sinopsis, $director, $genero, $imagen, $id]);
 
         //Redirijimos de vuela al listado de peliculas con indicar de éxito.
-        header("Location: Actualizar_pelicula.php?actualizado=1");
+        header("Location: ../vista_encargado.php?actualizado=1");
         exit;
 
     } catch (PDOException $e) {

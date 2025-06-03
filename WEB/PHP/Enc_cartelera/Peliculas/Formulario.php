@@ -23,9 +23,9 @@ if (isset($_GET['id'])) {
     <header class="header">
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="../vista_encargado.php">Agregar Película</a>
-            <a href="Actualizar_pelicula.php">Actualizar Película</a>
-            <a href="../Eliminar/eliminarpelicula.php">Eliminar Película</a>
+            <a href="../vista_encargado.php">Lista de Peliculas</a>
+            <a href="#"></a>
+            <a href="#"></a>
         </nav>
     </header>
 
@@ -63,6 +63,11 @@ if (isset($_GET['id'])) {
                     <tr>
                         <td><label for="genero">Género:</label></td>
                         <td><input type="text" id="genero" name="genero" value="<?= htmlspecialchars($pelicula['genero']) ?>" required class="form-input"></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="imagen">Url Portada:</label></td>
+                        <td><input type="text" id="imagen" name="imagen" value="<?= htmlspecialchars($pelicula['imagen'])?>" required class="form-input"></td>
                     </tr>
 
                     <tr>

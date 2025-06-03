@@ -23,15 +23,16 @@ CREATE TABLE Pelicula (
     Duracion INT,                                            -- Duración en minutos
     Sinopsis VARCHAR(500),                                   -- Descripción corta
     Director VARCHAR(45),                                    -- Nombre del director
-    Genero VARCHAR(50)                                       -- Género (acción, drama, etc.)
+    Genero VARCHAR(50),                                      -- Género (acción, drama, etc.)
+	Imagen VARCHAR(225)										 -- Portada de la pelicula
 );
 
 -- Tabla que indica funciones (proyecciones) específicas de una película en una sala y fecha determinada
 CREATE TABLE Funcion (
     Id_Pelicula INT NOT NULL,
     Id_Sala INT NOT NULL,
-    Fecha DATE NOT NULL,                                     -- Fecha de la función
-    PRIMARY KEY (Id_Pelicula, Id_Sala, Fecha),
+    FechaHora TIMESTAMP NOT NULL,                                     -- Fecha de la función
+    PRIMARY KEY (Id_Pelicula, Id_Sala, FechaHora),
     FOREIGN KEY (Id_Pelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
@@ -120,12 +121,6 @@ CHECK (
     CuatroDig ~ '^\d{4}$'
 );
 
--- Inserciones de cines en la tabla Cine
-INSERT INTO Cine (Nombre_cine, correo_cine, telefono, Ubicacion) VALUES
-('CinePlanet Santiago Centro', 'contacto@santiago-cineplanet.cl', 226789321, 'Av. Libertador Bernardo O’Higgins 3470, Santiago'),
-('Cinemark Alto Las Condes', 'info@cinemark.cl', 223456789, 'Av. Kennedy 9001, Las Condes, Santiago'),
-('CineHoyts La Reina', 'servicio@hoyts.cl', 227654321, 'Av. Ossa 655, La Reina, Santiago'),
-('Cinemark Plaza Oeste', 'contacto@cinemarkplaza.cl', 225678901, 'Av. Américo Vespucio 1501, Cerrillos, Santiago'),
-('Cine Arte Alameda', 'info@cineartealameda.cl', 229876543, 'Av. Libertador Bernardo O’Higgins 139, Santiago Centro');
+
 
 
