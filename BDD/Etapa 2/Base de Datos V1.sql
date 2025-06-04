@@ -23,13 +23,14 @@ CREATE TABLE Pelicula (
     Sinopsis VARCHAR(500),                                   -- Descripción corta
     Director VARCHAR(45),                                    -- Nombre del director
     Genero VARCHAR(50)                                       -- Género (acción, drama, etc.)
+    Imagen VARCHAR(225)										 -- Portada de la pelicula
 );
 
 -- Tabla que indica funciones (proyecciones) específicas de una película en una sala y fecha determinada
 CREATE TABLE Funcion (
     Id_Pelicula BIGINT NOT NULL,
     Id_Sala BIGINT NOT NULL,
-    Fecha DATE NOT NULL,                                     -- Fecha de la función
+    FechaHora TIMESTAMP NOT NULL,                                     -- Fecha y hora de la función
     PRIMARY KEY (Id_Pelicula, Id_Sala, Fecha),
     FOREIGN KEY (Id_Pelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
@@ -119,13 +120,6 @@ CHECK (
     CuatroDig ~ '^\d{4}$'
 );
 
--- Inserciones de cines en la tabla Cine
-INSERT INTO Cine (Nombre_cine, correo_cine, telefono, Ubicacion) VALUES
-('CinePlanet Santiago Centro', 'contacto@santiago-cineplanet.cl', 226789321, 'Av. Libertador Bernardo O’Higgins 3470, Santiago'),
-('Cinemark Alto Las Condes', 'info@cinemark.cl', 223456789, 'Av. Kennedy 9001, Las Condes, Santiago'),
-('CineHoyts La Reina', 'servicio@hoyts.cl', 227654321, 'Av. Ossa 655, La Reina, Santiago'),
-('Cinemark Plaza Oeste', 'contacto@cinemarkplaza.cl', 225678901, 'Av. Américo Vespucio 1501, Cerrillos, Santiago'),
-('Cine Arte Alameda', 'info@cineartealameda.cl', 229876543, 'Av. Libertador Bernardo O’Higgins 139, Santiago Centro');
 
 -- Cambios 01-06-25
 
@@ -145,19 +139,6 @@ CHECK (
     correo_cine ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(cl|com)$'  --Al momento de ingresar correo del cine sea del formato correcto
 );  
 
-/* Tabla funcion pero ver la posibilidad de dividir la fecha en hora y fecha de la funcion en vez de guardar todo
-en un solo atributo
-
-CREATE TABLE Funcion (
-    Id_Pelicula INT NOT NULL,
-    Id_Sala INT NOT NULL,
-    Fecha DATE NOT NULL,-- Fecha de la función
-	Hora Time NOT NULL, -- Hora de la funcion                               
-    PRIMARY KEY (Id_Pelicula, Id_Sala, Fecha),
-    FOREIGN KEY (Id_Pelicula) REFERENCES Pelicula(idPelicula),
-    FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
-);
-*/
 
 -- Cambios boleto, fecha_boleto cambie de Date a TIMESTAMP el atributo para registrar la hora
 
