@@ -22,7 +22,7 @@ CREATE TABLE Pelicula (
     Duracion INT,                                            -- Duración en minutos
     Sinopsis VARCHAR(500),                                   -- Descripción corta
     Director VARCHAR(45),                                    -- Nombre del director
-    Genero VARCHAR(50)                                       -- Género (acción, drama, etc.)
+    Genero VARCHAR(50),                                       -- Género (acción, drama, etc.)
     Imagen VARCHAR(225)										 -- Portada de la pelicula
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE Funcion (
     Id_Pelicula BIGINT NOT NULL,
     Id_Sala BIGINT NOT NULL,
     FechaHora TIMESTAMP NOT NULL,                                     -- Fecha y hora de la función
-    PRIMARY KEY (Id_Pelicula, Id_Sala, Fecha),
+    PRIMARY KEY (Id_Pelicula, Id_Sala, FechaHora),
     FOREIGN KEY (Id_Pelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
