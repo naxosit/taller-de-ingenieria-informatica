@@ -31,7 +31,7 @@ CREATE TABLE Funcion (
     Id_Pelicula BIGINT NOT NULL,
     Id_Sala BIGINT NOT NULL,
     FechaHora TIMESTAMP NOT NULL,                                     -- Fecha y hora de la función
-    PRIMARY KEY (Id_Pelicula, Id_Sala, Fecha),
+    PRIMARY KEY (Id_Pelicula, Id_Sala, FechaHora),
     FOREIGN KEY (Id_Pelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
