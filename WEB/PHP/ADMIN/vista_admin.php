@@ -61,6 +61,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Admin - Web Cine</title>
   <link rel="stylesheet" href="../../CSS/styles.css" />
+    <link rel="stylesheet" href="../../CSS/botones.css" />
 </head>
 <body>
 
@@ -139,7 +140,7 @@ try {
               </option>
               <?php endforeach; ?>
             </select>
-            <button type="submit" name="cambiar_rol">Actualizar</button>
+            <button type="submit" class='button-eliminar' name="cambiar_rol">Actualizar</button>
           </form>
         </td>
       </tr>
