@@ -22,7 +22,11 @@ CREATE TABLE Pelicula (
     Duracion INT,                                            -- Duración en minutos
     Sinopsis VARCHAR(500),                                   -- Descripción corta
     Director VARCHAR(45),                                    -- Nombre del director
+<<<<<<< HEAD
     Genero VARCHAR(50),                                      -- Género (acción, drama, etc.)
+=======
+    Genero VARCHAR(50),                                       -- Género (acción, drama, etc.)
+>>>>>>> 453fe20ac9148e56de8478283a73c235d62e7a5a
     Imagen VARCHAR(225)										 -- Portada de la pelicula
 );
 
