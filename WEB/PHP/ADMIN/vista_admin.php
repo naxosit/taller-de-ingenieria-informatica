@@ -69,7 +69,7 @@ try {
     <div class="logo">Web Cine - Administrador</div>
         <nav>
             <a href="../Enc_cartelera/vista_encargado.php">Vista Cartelera</a>
-            <a href="#">Vista Butaca</a>
+            <a href="../Enc_cartelera/vista_salas.php">Vista Salas</a>
             <a href="#"></a>
         </nav>
     </header>
