@@ -76,7 +76,7 @@
                                     (strlen($fila['sinopsis']) > 50 ? substr($fila['sinopsis'], 0, 50) . '...' : $fila['sinopsis']) : '';
                                 echo "<td>" . htmlspecialchars($sinopsis) . "</td>";
                                 echo "<td><div class='acciones'>";
-                                echo "<a href='Peliculas/Formulario.php?id=" . urlencode($fila['id']) . "' class='button-actualizar'>Actualizar</a>";
+                                echo "<a href='Peliculas/Actualizar.php?id=" . urlencode($fila['id']) . "' class='button-actualizar'>Actualizar</a>";
                                 echo "<a href='Peliculas/Eliminar.php?id=" . urlencode($fila['id']) . "' class='button-eliminar' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta película?');\">Eliminar</a>";
                                 echo "</div></td>";
 

@@ -50,3 +50,12 @@
 .boton-agregar:hover {
   background-color: #684fd7;
 }
+
+.mensaje-exito {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px 15px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #c3e6cb;
+} 

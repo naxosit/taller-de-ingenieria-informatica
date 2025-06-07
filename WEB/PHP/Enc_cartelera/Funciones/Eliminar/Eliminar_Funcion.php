@@ -1,13 +1,13 @@
 <?php
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../../../CONNECTION/conexion.php");
 
 if (isset($_GET['idPelicula'], $_GET['idSala'], $_GET['fechaHora'])) {
-    $idPelicula = $_GET['idPelicula'];
-    $idSala = $_GET['idSala'];
+    $idPelicula = (int)$_GET['idPelicula'];
+    $idSala = (int)$_GET['idSala'];
     $fechaHora = $_GET['fechaHora'];
 
     try {
-        $stmt = $conn->prepare("DELETE FROM Funcion WHERE idPelicula = ? AND idSala = ? AND fechaHora = ?");
+        $stmt = $conn->prepare("DELETE FROM Funcion WHERE Id_Pelicula = ? AND Id_Sala = ? AND fechaHora = ?");
         $stmt->execute([$idPelicula, $idSala, $fechaHora]);
 
         if ($stmt->rowCount() > 0){
@@ -22,7 +22,7 @@ if (isset($_GET['idPelicula'], $_GET['idSala'], $_GET['fechaHora'])) {
         exit;
     }
 } else {
-    header("Location: ../vista_encargado.php");
+    header("Location: ../Funciones.php");
     exit;
 }
 ?>

@@ -2,7 +2,8 @@ INSERT INTO Pelicula (Nombre, Duracion, Sinopsis, Director, Genero, Imagen) VALU
 ('Inception', 148, 'Un ladrón que roba secretos corporativos a través del uso de la tecnología de los sueños.', 'Christopher Nolan', 'Ciencia ficción', 'https://i.blogs.es/bfb0b4/inception-origen-nuevo-cartel/450_1000.jpg'),
 ('Titanic', 195, 'Una historia de amor durante el fatídico viaje del Titanic.', 'James Cameron', 'Drama/Romance', 'https://pics.filmaffinity.com/Titanic-321994924-large.jpg'),
 ('Avatar', 162, 'Un ex-marine en un mundo alienígena se ve atrapado entre dos mundos.', 'James Cameron', 'Ciencia ficción', 'https://www.mubis.es/media/covers/1516/2039/avatar-portada-original.jpg'),
-('Avengers: Endgame', 181, 'Los Vengadores se enfrentan a Thanos en una batalla épica.', 'Anthony y Joe Russo', 'Acción', 'https://hips.hearstapps.com/hmg-prod/images/poster-vengadores-endgame-1552567490.jpg');
+('Avengers: Endgame', 181, 'Los Vengadores se enfrentan a Thanos en una batalla épica.', 'Anthony y Joe Russo', 'Acción', 'https://hips.hearstapps.com/hmg-prod/images/poster-vengadores-endgame-1552567490.jpg'),
+('Avengers 2: Endgame', 181, 'Los Vengadores se enfrentan a Thanos en una batalla épica.', 'Anthony y Joe Russo', 'Acción', 'https://hips.hearstapps.com/hmg-prod/images/poster-vengadores-endgame-1552567490.jpg');
 
 -- Inserciones de cines en la tabla Cine
 INSERT INTO Cine (Nombre_cine, correo_cine, telefono, Ubicacion) VALUES

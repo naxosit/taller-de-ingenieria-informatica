@@ -1,5 +1,5 @@
 CREATE TABLE Cine (
-    idCine BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Identificador único del cine
+    idCine BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY, -- Identificador único del cine
     Nombre_cine VARCHAR(45) NOT NULL,                    -- Nombre del cine
     correo_cine VARCHAR(45),                             -- Correo electrónico del cine
     telefono INT,                                        -- Número de teléfono
@@ -8,7 +8,7 @@ CREATE TABLE Cine (
 
 -- Tabla que almacena las salas de cada cine
 CREATE TABLE Sala (
-    idSala BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Identificador único de la sala
+    idSala BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY, -- Identificador único de la sala
     Nombre VARCHAR(100) NOT NULL,                        -- Nombre de la sala
     Tipo_pantalla VARCHAR(45),                           -- Tipo de pantalla (ej: 2D, 3D, IMAX)
     Cine_idCine BIGINT NOT NULL,                            -- Cine al que pertenece
@@ -17,12 +17,12 @@ CREATE TABLE Sala (
 
 -- Tabla con la información de cada película
 CREATE TABLE Pelicula (
-    idPelicula BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Identificador único de la película
+    idPelicula BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY, -- Identificador único de la película
     Nombre VARCHAR(45) NOT NULL,                             -- Título
     Duracion INT,                                            -- Duración en minutos
     Sinopsis VARCHAR(500),                                   -- Descripción corta
     Director VARCHAR(45),                                    -- Nombre del director
-    Genero VARCHAR(50)                                       -- Género (acción, drama, etc.)
+    Genero VARCHAR(50),                                      -- Género (acción, drama, etc.)
     Imagen VARCHAR(225)										 -- Portada de la pelicula
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE Funcion (
 
 -- Butacas físicas dentro de una sala, asociadas a un tipo de butaca
 CREATE TABLE Butaca (
-    Id_Butaca BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    Id_Butaca BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,
     Id_TipoButaca BIGINT NOT NULL,                              -- Fila y columna de la butaca
     Id_Sala BIGINT NOT NULL,
     Fila VARCHAR(20),
@@ -48,7 +48,7 @@ CREATE TABLE Butaca (
 
 -- Información sobre los pagos realizados por boletos
 CREATE TABLE Pago (
-    Id_Pago BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,                -- Identificador del pago
+    Id_Pago BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,                -- Identificador del pago
     Tipo VARCHAR(45),                                        -- Tipo de tarjeta 
     Marca VARCHAR(30),                                       -- Marca de la tarjeta (Visa, Mastercard)
     CuatroDig VARCHAR(4),                                    -- Últimos 4 dígitos de la tarjeta
@@ -57,7 +57,7 @@ CREATE TABLE Pago (
 
 -- Tabla que almacena las contraseñas cifradas de los perfiles
 CREATE TABLE Contraseña (
-    Id_Contraseña BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    Id_Contraseña BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,
     ContraseñaUsuario VARCHAR(225) NOT NULL                  -- Contraseña del usuario
 );
 

@@ -9,9 +9,13 @@
     <link rel="stylesheet" href="../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../CSS/botones.css">
 </head>
+
+<?php if (isset($_GET['actualizado']) && $_GET['actualizado'] == 1): ?>
+    <div class="mensaje-exito">¡Función actualizada correctamente!</div>
+<?php endif; ?>
 <body>
     <header>
-        <div class="logo">Web Cine - Gestión de Películas</div>
+        <div class="logo">Web Cine - Gestión de Funciones</div>
         <nav>
             <a href="../Cartelera.php">Cartelera</a>
             <a href="#"></a>
@@ -20,7 +24,11 @@
     </header>
 
     <div class="container">
-        <h1 class="page-title">Listado de Películas</h1>
+        <h1 class="page-title">Listado de Funciones</h1>
+
+        <div class = "contenedor-boton-agregar">
+            <a href="Agregar/Agregar_Funcion.php" class="boton-agregar">Agregar Funciones</a> 
+        </div>
 
         <div class="card">
             <table>
@@ -56,16 +64,16 @@
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($fila['pelicula'] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($fila['sala'] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($fila['cine'] ?? '') . " min</td>";
+                                echo "<td>" . htmlspecialchars($fila['cine'] ?? '') . "</td>";
                                 $fechaFormateada = date("d-m-Y H:i", strtotime($fila['fechahora']));
                                 echo "<td>" . $fechaFormateada . "</td>";
                                 // En Acciones, puedes colocar botones o links para editar, eliminar, etc.
                                 $idPelicula = $fila['id_pelicula'];
                                 $idSala = $fila['id_sala'];
-                                $fechaUrl = urlencode($fila['fechahora']);
+                                $fechaHora = urlencode($fila['fechahora']);
                                 echo "<td>";
-                                echo "<a class='button-actualizar' href='editarFuncion.php?pelicula=$idPelicula&sala=$idSala&fecha=$fechaUrl'>Editar</a> ";
-                                echo "<a class='button-eliminar' href='eliminarFuncion.php?pelicula=$idPelicula&sala=$idSala&fecha=$fechaUrl' onclick='return confirm(\"¿Estás seguro de eliminar esta función?\")'>Eliminar</a>";
+                                echo "<a class='button-actualizar' href='Actualizar/Actualizar_Funcion.php?id_pelicula=$idPelicula&id_sala=$idSala&fechahora=$fechaHora'>Editar</a> ";
+                                echo "<a class='button-eliminar' href='Eliminar/Eliminar_Funcion.php?idPelicula=$idPelicula&idSala=$idSala&fechaHora=$fechaHora' onclick='return confirm(\"¿Estás seguro de eliminar esta función?\")'>Eliminar</a>";
                                 echo "</td>";
 
                                 echo "</tr>";
