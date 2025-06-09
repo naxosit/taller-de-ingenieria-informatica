@@ -12,23 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
         $error = "Todos los campos son obligatorios.";
     } else {
         try {
-            // Insertar la contraseña y recuperar su ID.
+
             $stmt = $db->prepare("INSERT INTO Contraseña (ContraseñaUsuario) VALUES (?) RETURNING Id_Contraseña");
             $stmt->execute([$password]);
             $id_contraseña = $stmt->fetchColumn();
 
-            // Insertar en "Perfil" con rol predeterminado 1 (cliente).
-            $rol = 'cliente'; // Rol por defecto
             $stmt = $db->prepare("INSERT INTO Perfil (Rut, Nombre, Apellido, Correo_Electronico, Rol, Id_Contraseña) 
                                   VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$rut, $nombre, $apellido, $email, $rol, $id_contraseña]);
+            $stmt->execute([$rut, $nombre, $apellido, $email, 'cliente', $id_contraseña]);
 
+            // Redirigir con mensaje
+            header("Location: login.php?success=1");
             exit;
         } catch(PDOException $e) {
             $error = "Error al registrar: " . $e->getMessage();
         }
     }
 }
+
 ?>
 
 
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
         <div class="error"><?= htmlspecialchars($error) ?></div>
       <?php endif; ?>
       
-      <form action="login.php" method="post">
+      <form action="" method="post">
         <div class="input-box">
           <input type="text" name="rut" required />
           <label>RUT (ej: 12345678-9)</label>

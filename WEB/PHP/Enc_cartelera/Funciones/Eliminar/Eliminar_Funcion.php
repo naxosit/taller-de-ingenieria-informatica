@@ -22,7 +22,7 @@ if (isset($_GET['idPelicula'], $_GET['idSala'], $_GET['fechaHora'])) {
         exit;
     }
 } else {
-    header("Location: ../Funciones.php");
+    header("Location: ../../Funciones.php");
     exit;
 }
 ?>

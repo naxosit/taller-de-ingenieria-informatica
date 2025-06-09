@@ -13,8 +13,9 @@ include_once("../../CONNECTION/conexion.php");
     <header>
         <div class="logo">Web Cine - Cartelera</div>
         <nav>
-            <a href="#">Iniciar Sesión</a>
-            <a href="#">Registrate</a>
+            <a href="vista_encargado.php">Peliculas</a>
+            <a href="vista_salas.php">Salas</a>
+            <a href="Funciones.php">Funciones</a>
         </nav>
     </header>
 

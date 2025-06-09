@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ");
         $stmt->execute([$pelicula_id, $sala_id, $fecha_hora]);
 
-        header("Location: Agregar_Funcion.php?mensaje=" . urlencode("Función agregada correctamente."));
+        header("Location: ../../Funciones.php?mensaje=" . urlencode("Función agregada correctamente."));
         exit;
     } catch (PDOException $e) {
         // Si el error es por clave duplicada
@@ -29,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $msg = "Error al guardar: " . $e->getMessage();
         }
 
-        header("Location: Agregar_Funcion.php?mensaje=" . urlencode($msg) . "&error=1");
+        header("Location: ../../Funciones.php?mensaje=" . urlencode($msg) . "&error=1");
         exit;
     }
 } else {
-    header("Location: Agregar_Funcion.php?mensaje=" . urlencode("Acceso no permitido.") . "&error=1");
+    header("Location: ../../Funciones.php?mensaje=" . urlencode("Acceso no permitido.") . "&error=1");
     exit;
 }

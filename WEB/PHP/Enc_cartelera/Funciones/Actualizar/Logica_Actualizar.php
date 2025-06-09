@@ -45,13 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $stmt->execute();
 
         // Redirigir al listado con un indicador de éxito
-        header("Location: ../Funciones.php?actualizado=1");
+        header("Location: ../../Funciones.php?actualizado=1");
         exit;
     } catch (PDOException $e) {
         die("Error al actualizar función: " . htmlspecialchars($e->getMessage()));
     }
 } else {
     // Si no se accedió por POST, redirigir de vuelta
-    header("Location: ../Funciones.php?actualizado=1");
+    header("Location: ../../Funciones.php?actualizado=1");
     exit;
 }

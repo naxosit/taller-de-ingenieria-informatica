@@ -25,7 +25,7 @@ if (isset($_GET['id_pelicula'], $_GET['id_sala'], $_GET['fechahora'])) {
     <header class="header">
         <div class="logo">Web Cine - Gestión de Funciones</div>
         <nav>
-            <a href="../Funciones.php">Lista de Funciones</a>
+            <a href="../../Funciones.php">Lista de Funciones</a>
         </nav>
     </header>
 

@@ -15,7 +15,7 @@
         <nav>
             <a href="Cartelera.php">Cartelera</a>
             <a href="vista_encargado.php">Películas</a>
-            <a href="#">Cines</a>
+            <a href="Funciones.php">Funciones</a>
         </nav>
     </header>
 

@@ -14,8 +14,8 @@
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
             <a href="Cartelera.php">Cartelera</a>
-            <a href="#"></a>
-            <a href="#"></a>
+            <a href="vista_salas">Salas</a>
+            <a href="Funciones.php">Funciones</a>
         </nav>
     </header>
 

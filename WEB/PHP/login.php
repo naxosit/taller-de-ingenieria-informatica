@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
               header("Location: encargado_butaca.php");
               break;
           default:
-              header("Location: index.php");
+              header("Location: Enc_cartelera/Cartelera.php");
       }
       exit();
   } else {
@@ -49,17 +49,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Web Cine</title>
   <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="../CSS/botones.css" />
 </head>
 <body>
   <header>
     <div class="logo">Web Cine</div>
     <nav>
-      <a href="#">Inicio</a>
-      <a href="#">Servicios</a>
-      <a href="#">Productos</a>
-      <a href="#">Contacto</a>
+      <a href="Enc_cartelera/Cartelera.php">Cartelera</a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
     </nav>
   </header>
+
+  <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+  <div class="mensaje-exito">Cuenta creada exitosamente. Por favor, inicia sesión.</div>
+  <?php endif; ?>
+
 
   <main>
     <section class="formulario">
