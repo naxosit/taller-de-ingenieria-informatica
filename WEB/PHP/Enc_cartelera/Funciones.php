@@ -19,7 +19,7 @@
         <nav>
             <a href="Cartelera.php">Cartelera</a>
             <a href="vista_encargado.php">Peliculas</a>
-            <a href="vista_salas">Salas</a>
+            <a href="vista_salas.php">Salas</a>
         </nav>
     </header>
 

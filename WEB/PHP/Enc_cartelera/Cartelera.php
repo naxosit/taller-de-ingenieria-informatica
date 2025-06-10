@@ -13,9 +13,6 @@ include_once("../../CONNECTION/conexion.php");
     <header>
         <div class="logo">Web Cine - Cartelera</div>
         <nav>
-            <a href="vista_encargado.php">Peliculas</a>
-            <a href="vista_salas.php">Salas</a>
-            <a href="Funciones.php">Funciones</a>
         </nav>
     </header>
 
@@ -79,8 +76,8 @@ include_once("../../CONNECTION/conexion.php");
                 <h3>Funciones</h3>
                 <?php
                 $queryFunciones = "
-                    SELECT f.FechaHora, s.Nombre AS sala, s.Tipo_pantalla, c.Nombre_cine,
-                           f.Id_Pelicula, f.Id_Sala
+                    SELECT f.idFuncion, f.FechaHora, s.Nombre AS sala, s.Tipo_pantalla, c.Nombre_cine,
+                        f.Id_Pelicula, f.Id_Sala
                     FROM Funcion f
                     INNER JOIN Sala s ON f.Id_Sala = s.idSala
                     INNER JOIN Cine c ON s.Cine_idCine = c.idCine
@@ -98,15 +95,15 @@ include_once("../../CONNECTION/conexion.php");
                     echo '<ul class="lista-funciones">';
                     foreach ($funciones as $f) {
                         $fecha = date("d-m-Y H:i", strtotime($f['fechahora']));
-                        $url = "../Boleteria.php?pelicula=" . urlencode($f['id_pelicula']) .
-                               "&sala=" . urlencode($f['id_sala']) .
-                               "&fecha=" . urlencode($f['fechahora']);
+                        $url = "../Boleteria.php?idFuncion=" . urlencode($f['idfuncion']);
+                        // Ejemplo para eliminar usando idFuncion:
+                        $urlEliminar = "Funciones/Eliminar/Eliminar_Funcion.php?idFuncion=" . urlencode($f['idfuncion']);
 
                         echo "<li>
                                 <strong>{$fecha}</strong><br>
                                 {$f['sala']} ({$f['tipo_pantalla']})<br>
-                                <a href='{$url}' class='boton-funcion'>Seleccionar Butacas</a>
-                              </li>";
+                                <a href='{$url}' class='boton-funcion'>Seleccionar Butacas</a> 
+                            </li>";
                     }
                     echo '</ul>';
                 else:

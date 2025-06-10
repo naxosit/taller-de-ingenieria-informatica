@@ -8,14 +8,14 @@ echo '</pre>';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     //Tomamos los datos de los inputs
-    $id = $_POST['id'] ?? '';
-    $nombre = $_POST['nombre'] ?? '';
-    $duracion = $_POST['duracion'] ?? '';
-    $sinopsis = $_POST['sinopsis'] ?? '';
-    $director = $_POST['director'] ?? '';
-    $genero = $_POST['genero'] ?? '';
-    $imagen = $_POST['imagen'] ?? '';
-    $id_cine = $_POST['id_cine'] ?? '';
+    $id = trim($_POST['id'] ?? '');
+    $nombre = trim($_POST['nombre'] ?? '');
+    $duracion = trim($_POST['duracion'] ?? '');
+    $sinopsis = trim($_POST['sinopsis'] ?? '');
+    $director = trim($_POST['director'] ?? '');
+    $genero = trim($_POST['genero'] ?? '');
+    $imagen = trim($_POST['imagen'] ?? '');
+    $id_cine = trim($_POST['id_cine'] ?? '');
 
     //Validamos los datos.
 

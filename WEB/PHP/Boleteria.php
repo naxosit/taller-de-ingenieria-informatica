@@ -1,35 +1,31 @@
 <?php
 include_once("../CONNECTION/conexion.php");
 
-$idPelicula = $_GET['pelicula'] ?? null;
-$idSala     = $_GET['sala']     ?? null;
-$fechaHora  = $_GET['fecha']    ?? null;
-
-if (!$idPelicula || !$idSala || !$fechaHora) {
-    die("Faltan parámetros de la función.");
+$idFuncion = $_GET['idFuncion'] ?? null;
+if (!$idFuncion) {
+    die("Falta el parámetro idFuncion.");
 }
 
 /* === datos de la función y la película ===================== */
 $sql = "
   SELECT p.nombre  AS nombre_pelicula,
          p.duracion,
-         f.fechahora
-  FROM   funcion f
-  JOIN   pelicula p ON p.idpelicula = f.id_pelicula
-  WHERE  f.id_pelicula = :pel
-    AND  f.id_sala     = :sal
-    AND  f.fechahora   = :fec
+         f.fechahora,
+         f.Id_Pelicula,
+         f.Id_Sala
+  FROM funcion f
+  JOIN pelicula p ON p.idpelicula = f.Id_Pelicula
+  WHERE f.idFuncion = :idFuncion
 ";
 $stmt = $conn->prepare($sql);
-$stmt->execute([
-    'pel' => $idPelicula,
-    'sal' => $idSala,
-    'fec' => $fechaHora
-]);
+$stmt->execute(['idFuncion' => $idFuncion]);
 $info = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$info) {
     die("Función no encontrada.");
 }
+
+$idPelicula = $info['id_pelicula'];
+$idSala = $info['id_sala'];
 
 /* === fechas inicio / fin ================================== */
 $fechaInicio = new DateTime($info['fechahora']);
@@ -44,24 +40,24 @@ $butacasSql = "
          CASE
            WHEN EXISTS (
                  SELECT 1
-                 FROM   boleto bol
-                 WHERE  bol.idbutaca            = b.id_butaca
-                   AND  bol.fecha_inicio_boleto = :inicio
-                   AND  bol.fecha_fin_boleto    = :fin
-                   AND  bol.estado_butaca       = 'ocupada'
-                   AND  bol.activo              = true
+                 FROM boleto bol
+                 WHERE bol.idbutaca = b.id_butaca
+                   AND bol.fecha_inicio_boleto = :inicio
+                   AND bol.fecha_fin_boleto = :fin
+                   AND bol.estado_butaca = 'ocupada'
+                   AND bol.activo = true
            ) THEN 'ocupada'
            ELSE 'disponible'
          END AS estado
-  FROM   butaca b
-  WHERE  b.id_sala = :sala
-  ORDER  BY b.fila, b.columna
+  FROM butaca b
+  WHERE b.id_sala = :sala
+  ORDER BY b.fila, b.columna
 ";
 $stmt = $conn->prepare($butacasSql);
 $stmt->execute([
-    'sala'   => $idSala,
+    'sala' => $idSala,
     'inicio' => $fechaInicio->format('Y-m-d H:i:s'),
-    'fin'    => $fechaFin->format('Y-m-d H:i:s')
+    'fin' => $fechaFin->format('Y-m-d H:i:s')
 ]);
 $butacas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -70,7 +66,7 @@ $butacas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Butacas - <?= htmlspecialchars($info['nombrePelicula']) ?></title>
+  <title>Butacas - <?= htmlspecialchars($info['nombre_pelicula']) ?></title>
   <link rel="stylesheet" href="../CSS/styles.css">
   <link rel="stylesheet" href="../CSS/cartelera.css">
   <link rel="stylesheet" href="../CSS/botones.css">
@@ -99,9 +95,6 @@ $butacas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <header>
   <div class="logo">Web Cine - <?= htmlspecialchars($info['nombre_pelicula']) ?></div>
   <nav>
-    <a href="vista_encargado.php">Peliculas</a>
-    <a href="vista_salas.php">Salas</a>
-    <a href="Funciones.php">Funciones</a>
   </nav>
 </header>
 <main class="cartelera-container">
@@ -124,6 +117,7 @@ $butacas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <input type="hidden" name="sala" value="<?= htmlspecialchars($idSala) ?>">
     <input type="hidden" name="fechaInicio" value="<?= $fechaInicio->format('Y-m-d H:i:s') ?>">
     <input type="hidden" name="fechaFin" value="<?= $fechaFin->format('Y-m-d H:i:s') ?>">
+    <input type="hidden" name="idFuncion" value="<?= htmlspecialchars($idFuncion) ?>">
 
     <button type="submit" class="boton-agregar">Confirmar Compra</button>
   </form>

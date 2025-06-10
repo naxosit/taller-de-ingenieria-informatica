@@ -1,72 +1,79 @@
 <?php
+session_start(); 
 include_once("../CONNECTION/conexion.php");
-session_start();
-
-// Zona horaria
 date_default_timezone_set('America/Santiago');
 
-// Obtener datos del formulario
-$butacas = explode(',', $_POST['butacasSeleccionadas']);
-$idPelicula = $_POST['pelicula'];
-$idSala = $_POST['sala'];
-$fechaInicio = $_POST['fechaInicio'];
-$fechaFin = $_POST['fechaFin'];
-$tipo = $_POST['tipo'];
-$marca = $_POST['marca'];
-$cuatroDig = $_POST['cuatroDig'];
-$fechaTransf = $_POST['fecha_transf'];
-$rut = $_SESSION['rut']; // Suponiendo que el usuario ya está logueado
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    die("Acceso no válido.");
+}
+// Obtener RUT de la sesión
+$rut = $_SESSION['rut'] ?? null;
+if (!$rut) {
+    die("Usuario no autenticado.");
+}
+
+// Recibir datos del formulario
+$tipo = $_POST['tipo'] ?? '';
+$marca = $_POST['marca'] ?? '';
+$cuatroDig = $_POST['cuatroDig'] ?? '';
+$fechaTransf = $_POST['fecha_transf'] ?? '';
+
+$butacasSeleccionadas = $_POST['butacasSeleccionadas'] ?? '';
+$idPelicula = $_POST['pelicula'] ?? '';
+$idSala = $_POST['sala'] ?? '';
+$fechaInicio = $_POST['fechaInicio'] ?? '';
+$fechaFin = $_POST['fechaFin'] ?? '';
+$idFuncion = $_POST['idFuncion'] ?? '';
+
+if (!$tipo || !$marca || !$cuatroDig || !$fechaTransf || !$butacasSeleccionadas || !$idFuncion) {
+    die("Faltan datos para procesar el pago.");
+}
 
 try {
     $conn->beginTransaction();
 
-    $boletosIds = [];
+    $butacasArray = explode(',', $butacasSeleccionadas);
+    $sqlBoleto = "INSERT INTO Boleto (RUT, IdButaca, IdPelicula, Estado_Butaca, Fecha_inicio_boleto, Fecha_fin_boleto, Activo)
+                VALUES (:rut, :idButaca, :idPelicula, 'ocupada', :fechaInicio, :fechaFin, true)";
+    $stmtBoleto = $conn->prepare($sqlBoleto);
 
-    // Insertar cada boleto
-    foreach ($butacas as $idButaca) {
-        // Validar si ya está ocupada en esa función
-        $check = $conn->prepare("SELECT COUNT(*) FROM Boleto 
-            WHERE IdButaca = :idButaca AND Fecha_inicio_boleto = :fecha AND Activo = true");
-        $check->execute(['idButaca' => $idButaca, 'fecha' => $fechaInicio]);
+    $sqlPago = "INSERT INTO Pago (Tipo, Marca, CuatroDig, Fecha_Transf, IdBoleto)
+                VALUES (:tipo, :marca, :cuatroDig, :fechaTransf, :idBoleto)";
+    $stmtPago = $conn->prepare($sqlPago);
 
-        if ($check->fetchColumn() > 0) {
-            throw new Exception("La butaca $idButaca ya está ocupada.");
-        }
+    $ultimoIdPago = null; // Inicializamos
+
+    foreach ($butacasArray as $idButaca) {
+        $idButaca = (int)trim($idButaca);
 
         // Insertar boleto
-        $stmt = $conn->prepare("INSERT INTO Boleto 
-            (RUT, IdPelicula, IdButaca, Estado_Butaca, Fecha_inicio_boleto, Fecha_fin_boleto, Activo)
-            VALUES (:rut, :pelicula, :butaca, 'ocupada', :inicio, :fin, true)");
-        $stmt->execute([
-            'rut' => $rut,
-            'pelicula' => $idPelicula,
-            'butaca' => $idButaca,
-            'inicio' => $fechaInicio,
-            'fin' => $fechaFin
+        $stmtBoleto->execute([
+            ':rut' => $_SESSION['rut'],
+            ':idButaca' => $idButaca,
+            ':idPelicula' => $idPelicula,
+            ':fechaInicio' => $fechaInicio,
+            ':fechaFin' => $fechaFin
         ]);
+        $idBoleto = $conn->lastInsertId();
 
-        $boletosIds[] = $conn->lastInsertId();
-    }
-
-    // Insertar un pago por cada boleto (puedes adaptarlo si prefieres un solo pago agrupado)
-    foreach ($boletosIds as $idBoleto) {
-        $stmtPago = $conn->prepare("INSERT INTO Pago 
-            (IdBoleto, Tipo, Marca, CuatroDig, Fecha_Transf)
-            VALUES (:idBoleto, :tipo, :marca, :cuatroDig, :fecha)");
+        // Insertar pago vinculado al boleto
         $stmtPago->execute([
-            'idBoleto' => $idBoleto,
-            'tipo' => $tipo,
-            'marca' => $marca,
-            'cuatroDig' => $cuatroDig,
-            'fecha' => $fechaTransf
+            ':tipo' => $tipo,
+            ':marca' => $marca,
+            ':cuatroDig' => $cuatroDig,
+            ':fechaTransf' => $fechaTransf,
+            ':idBoleto' => $idBoleto
         ]);
+
+         $ultimoIdPago = $conn->lastInsertId();
     }
 
     $conn->commit();
-    echo "Compra realizada exitosamente.";
 
-} catch (Exception $e) {
+    header("Location: ResumenPago.php?idPago=".$ultimoIdPago);
+    exit;
+
+} catch (PDOException $e) {
     $conn->rollBack();
-    echo "Error en la compra: " . $e->getMessage();
+    die("Error al procesar el pago: " . $e->getMessage());
 }
-?>

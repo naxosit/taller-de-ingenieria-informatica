@@ -140,8 +140,3 @@ ADD CONSTRAINT CHK_Correo_Cine
 CHECK (
     correo_cine ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(cl|com)$'  --Al momento de ingresar correo del cine sea del formato correcto
 );  
-
-
--- Cambios boleto, fecha_boleto cambie de Date a TIMESTAMP el atributo para registrar la hora
-
--- Cambios todos los id Etc pasaron de INT a BIGINT

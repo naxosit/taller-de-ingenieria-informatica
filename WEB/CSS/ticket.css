@@ -1,0 +1,55 @@
+.ticket {
+    max-width: 500px;
+    margin: 50px auto;
+    background: linear-gradient(to bottom right, #e0eaff, #d8d0ff);
+    border: 3px dashed #9a7bff;
+    border-radius: 20px;
+    padding: 30px 40px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #2e225a;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.ticket::before,
+.ticket::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #f2f4ff;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.ticket::before {
+    left: -20px;
+}
+
+.ticket::after {
+    right: -20px;
+}
+
+.ticket .page-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #432b8f;
+    border-bottom: 2px dashed #b29aff;
+    padding-bottom: 10px;
+}
+
+.ticket p {
+    font-size: 17px;
+    margin: 12px 0;
+}
+
+.ticket p strong {
+    display: inline-block;
+    width: 140px;
+    color: #5c4b8a;
+}
