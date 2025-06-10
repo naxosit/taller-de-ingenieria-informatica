@@ -61,8 +61,10 @@ if (isset($_GET['id'])) {
                         <td><label for="nombre">Nombre de la Sala:</label></td>
                         <td>
                             <input type="text" id="nombre" name="nombre" 
-                                   value="<?= htmlspecialchars($sala['nombre'] ?? '') ?>" 
-                                   required class="form-input" maxlength="100">
+                                value="<?= htmlspecialchars($sala['nombre'] ?? '') ?>" 
+                                required class="form-input" maxlength="100"
+                                pattern=".*\S+.*" 
+                                title="Por favor, ingrese un nombre válido (no solo espacios)">
                         </td>
                     </tr>
                     
