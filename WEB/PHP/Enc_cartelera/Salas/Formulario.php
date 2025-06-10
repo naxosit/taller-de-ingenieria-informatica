@@ -69,7 +69,7 @@ if (isset($_GET['id'])) {
                     <tr>
                         <td><label for="tipo_pantalla">Tipo de Pantalla:</label></td>
                         <td>
-                            <select id="tipo_pantalla" name="tipo_pantalla" class="form-input">
+                            <select id="tipo_pantalla" name="tipo_pantalla" class="form-input" required>
                                 <option value="">Seleccione...</option>
                                 <option value="2D" <?= ($sala['tipo_pantalla'] ?? '') == '2D' ? 'selected' : '' ?>>2D</option>
                                 <option value="3D" <?= ($sala['tipo_pantalla'] ?? '') == '3D' ? 'selected' : '' ?>>3D</option>
