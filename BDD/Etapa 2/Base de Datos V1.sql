@@ -22,20 +22,16 @@ CREATE TABLE Pelicula (
     Duracion INT,                                            -- Duración en minutos
     Sinopsis VARCHAR(500),                                   -- Descripción corta
     Director VARCHAR(45),                                    -- Nombre del director
-<<<<<<< HEAD
-    Genero VARCHAR(50),                                      -- Género (acción, drama, etc.)
-=======
     Genero VARCHAR(50),                                       -- Género (acción, drama, etc.)
->>>>>>> 453fe20ac9148e56de8478283a73c235d62e7a5a
     Imagen VARCHAR(225)										 -- Portada de la pelicula
 );
 
 -- Tabla que indica funciones (proyecciones) específicas de una película en una sala y fecha determinada
 CREATE TABLE Funcion (
+    idFuncion BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,
     Id_Pelicula BIGINT NOT NULL,
     Id_Sala BIGINT NOT NULL,
     FechaHora TIMESTAMP NOT NULL,                                     -- Fecha y hora de la función
-    PRIMARY KEY (Id_Pelicula, Id_Sala, FechaHora),
     FOREIGN KEY (Id_Pelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
@@ -50,14 +46,6 @@ CREATE TABLE Butaca (
     FOREIGN KEY (Id_Sala) REFERENCES Sala(idSala)
 );
 
--- Información sobre los pagos realizados por boletos
-CREATE TABLE Pago (
-    Id_Pago BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,                -- Identificador del pago
-    Tipo VARCHAR(45),                                        -- Tipo de tarjeta 
-    Marca VARCHAR(30),                                       -- Marca de la tarjeta (Visa, Mastercard)
-    CuatroDig VARCHAR(4),                                    -- Últimos 4 dígitos de la tarjeta
-    Fecha_Transf DATE                                       -- Fecha del pago o transacción	                      
-);
 
 -- Tabla que almacena las contraseñas cifradas de los perfiles
 CREATE TABLE Contraseña (
@@ -79,19 +67,29 @@ CREATE TABLE Perfil (
 
 -- Boleto generado para una película, butaca y pago específico
 CREATE TABLE Boleto (
+    Id_Boleto BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,
     RUT VARCHAR(12),
-    IdPago BIGINT NOT NULL,                                     -- Relación al pago
-    IdPelicula BIGINT NOT NULL,                                 -- Película asociada
-    IdButaca BIGINT NOT NULL,                                   -- Butaca reservada
-    Estado_Butaca VARCHAR(50),                               -- Estado (reservada, disponible, ocupada)
-    Fecha_boleto TIMESTAMP,                                       -- Fecha en que se compró
-    PRIMARY KEY (RUT, IdPago, IdPelicula, IdButaca),
+    IdPelicula BIGINT,                                          -- Película asociada
+    IdButaca BIGINT,                                            -- Butaca reservada
+    Estado_Butaca VARCHAR(50),                                  -- Estado (reservada, disponible, ocupada)
+    Fecha_inicio_boleto TIMESTAMP,                              --Fecha a la que inicia la funcion
+    Fecha_fin_boleto TIMESTAMP,                                 -- Fecha a la que termina la funcion
+    Activo BOOLEAN,                                             --Marca si esta activo el boleto o no.
     FOREIGN KEY (RUT) REFERENCES Perfil(Rut),
-    FOREIGN KEY (IdPago) REFERENCES Pago(Id_Pago),
     FOREIGN KEY (IdPelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca)
 );
 
+-- Información sobre los pagos realizados por boletos
+CREATE TABLE Pago (
+    Id_Pago BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,                -- Identificador del pago
+    IdBoleto BIGINT,                                         -- Id del boleto asociado al pago
+    Tipo VARCHAR(45),                                        -- Tipo de tarjeta 
+    Marca VARCHAR(30),                                       -- Marca de la tarjeta (Visa, Mastercard)
+    CuatroDig VARCHAR(4),                                    -- Últimos 4 dígitos de la tarjeta
+    Fecha_Transf TIMESTAMP,                                      -- Fecha del pago o transacción	                      
+    FOREIGN KEY (IdBoleto) REFERENCES Boleto(Id_Boleto)
+);
 
 -- Relación que indica qué perfil accede a qué cine
 CREATE TABLE Conectarse (

@@ -2,13 +2,11 @@
 include_once("../../../../CONNECTION/conexion.php");
 include_once("Cargar_Funcion.php");
 
-if (isset($_GET['id_pelicula'], $_GET['id_sala'], $_GET['fechahora'])) {
-    $id_pelicula = $_GET['id_pelicula'];
-    $id_sala = $_GET['id_sala'];
-    $fechahora = $_GET['fechahora'];
+if (isset($_GET['idFuncion'])) {
+    $idFuncion = $_GET['idFuncion'];
 
-    // Cargar función
-    $funcion = cargarFuncion($id_pelicula, $id_sala, $fechahora);
+    // Cargar función por ID
+    $funcion = cargarFuncion($idFuncion);
 }
 ?>
 
@@ -35,9 +33,7 @@ if (isset($_GET['id_pelicula'], $_GET['id_sala'], $_GET['fechahora'])) {
         <div class="formulario-agregar">
             <form id="form-funcion" action="Logica_Actualizar.php" method="POST">
                 <!-- Campos ocultos para claves primarias -->
-                <input type="hidden" name="id_pelicula" value="<?= htmlspecialchars($funcion['id_pelicula']) ?>">
-                <input type="hidden" name="id_sala" value="<?= htmlspecialchars($funcion['id_sala']) ?>">
-                <input type="hidden" name="fechahora_original" value="<?= htmlspecialchars($funcion['fechahora']) ?>">
+                <input type="hidden" name="idFuncion" value="<?= htmlspecialchars($funcion['idfuncion']) ?>">
 
                 <table class="form-table">
                     <tr>

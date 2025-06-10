@@ -7,18 +7,15 @@ INSERT INTO Pelicula (Nombre, Duracion, Sinopsis, Director, Genero, Imagen) VALU
 
 -- Inserciones de cines en la tabla Cine
 INSERT INTO Cine (Nombre_cine, correo_cine, telefono, Ubicacion) VALUES
-('CinePlanet Santiago Centro', 'contacto@santiago-cineplanet.cl', 226789321, 'Av. Libertador Bernardo O’Higgins 3470, Santiago'),
-('Cinemark Alto Las Condes', 'info@cinemark.cl', 223456789, 'Av. Kennedy 9001, Las Condes, Santiago'),
-('CineHoyts La Reina', 'servicio@hoyts.cl', 227654321, 'Av. Ossa 655, La Reina, Santiago'),
-('Cinemark Plaza Oeste', 'contacto@cinemarkplaza.cl', 225678901, 'Av. Américo Vespucio 1501, Cerrillos, Santiago'),
-('Cine Arte Alameda', 'info@cineartealameda.cl', 229876543, 'Av. Libertador Bernardo O’Higgins 139, Santiago Centro');
+('Cine Meyer', 'contacto@cinemeyer.cl', 226789321, 'Calle Meyer 1234, Osorno'),
+('Cine Chuyaca', 'info@chuyacacine.cl', 223456789, 'Av. Chuyaca 4321, Osorno');
 
 INSERT INTO Sala (Nombre, Tipo_pantalla, Cine_idCine) VALUES
 ('Sala 1', '2D', 1),
 ('Sala 2', '3D', 1),
-('Sala Premium', 'IMAX', 2),
-('Sala Junior', '2D', 3),
-('Sala VIP', '4DX', 4);
+('Sala Premium', 'IMAX', 1),
+('Sala 1', '2D', 2),
+('Sala 2', '4DX', 2);
 
 INSERT INTO Funcion (Id_Pelicula, Id_Sala, FechaHora) VALUES
 (1, 1, '2025-05-22 18:00:00'),
@@ -26,3 +23,20 @@ INSERT INTO Funcion (Id_Pelicula, Id_Sala, FechaHora) VALUES
 (3, 3, '2025-05-23 17:00:00'),
 (4, 4, '2025-05-24 21:00:00'),
 (5, 5, '2025-05-25 16:00:00');
+
+--Insertamos butacas a las salas
+DO $$
+DECLARE
+    fila CHAR;
+    columna INT;
+    sala_id INT;
+BEGIN
+    FOR sala_id IN 1..5 LOOP
+        FOREACH fila IN ARRAY ARRAY['A','B','C','D','E'] LOOP
+            FOR columna IN 1..8 LOOP
+                INSERT INTO Butaca (Id_TipoButaca, Id_Sala, Fila, Columna)
+                VALUES (1, sala_id, fila, columna);
+            END LOOP;
+        END LOOP;
+    END LOOP;
+END $$;

@@ -1,28 +1,25 @@
 <?php
 include_once("../../../../CONNECTION/conexion.php");
 
-if (isset($_GET['idPelicula'], $_GET['idSala'], $_GET['fechaHora'])) {
-    $idPelicula = (int)$_GET['idPelicula'];
-    $idSala = (int)$_GET['idSala'];
-    $fechaHora = $_GET['fechaHora'];
+if (isset($_GET['idFuncion'])) {
+    $idFuncion = (int)$_GET['idFuncion'];
 
     try {
-        $stmt = $conn->prepare("DELETE FROM Funcion WHERE Id_Pelicula = ? AND Id_Sala = ? AND fechaHora = ?");
-        $stmt->execute([$idPelicula, $idSala, $fechaHora]);
+        $stmt = $conn->prepare("DELETE FROM Funcion WHERE idFuncion = ?");
+        $stmt->execute([$idFuncion]);
 
         if ($stmt->rowCount() > 0){
-            header("Location: Eliminar_Funcion.php?eliminado=1");
+            header("Location: ../../Funciones.php?eliminado=1");
         } else {
-            header("Location: Eliminar_Funcion.php");
+            header("Location: ../../Funciones.php?error=1&mensaje=" . urlencode("No se encontró la función a eliminar."));
         }
         exit;   
     } catch (PDOException $e) {
-        //Redireccion en caso de error
-        header("Location: Eliminar_Funcion.php?error=1");
+        header("Location: ../../Funciones.php?error=1&mensaje=" . urlencode("Error al eliminar: " . $e->getMessage()));
         exit;
     }
 } else {
-    header("Location: ../../Funciones.php");
+    header("Location: ../../Funciones.php?error=1&mensaje=" . urlencode("Parámetro idFuncion faltante."));
     exit;
 }
 ?>

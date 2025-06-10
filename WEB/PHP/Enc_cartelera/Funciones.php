@@ -45,42 +45,40 @@
                     <?php
                     try {
                         $query = "SELECT 
-                                    f.Id_Pelicula,
-                                    f.Id_Sala,
-                                    f.FechaHora,
-                                    p.Nombre AS Pelicula,
-                                    s.Nombre AS Sala,
-                                    c.Nombre_cine AS Cine
-                                FROM Funcion f
-                                JOIN Pelicula p ON f.Id_Pelicula = p.idPelicula
-                                JOIN Sala s ON f.Id_Sala = s.idSala
-                                JOIN Cine c ON s.Cine_idCine = c.idCine
-                                ORDER BY c.Nombre_cine, p.Nombre, f.FechaHora";
+                                f.idFuncion,
+                                f.FechaHora,
+                                p.Nombre AS Pelicula,
+                                s.Nombre AS Sala,
+                                c.Nombre_cine AS Cine
+                            FROM Funcion f
+                            JOIN Pelicula p ON f.Id_Pelicula = p.idPelicula
+                            JOIN Sala s ON f.Id_Sala = s.idSala
+                            JOIN Cine c ON s.Cine_idCine = c.idCine
+                            ORDER BY c.Nombre_cine, p.Nombre, f.FechaHora";
 
-                        $stmt = $conn->query($query);
-                        
-                        if ($stmt->rowCount() > 0) {
-                            foreach ($stmt as $fila) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($fila['pelicula'] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($fila['sala'] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($fila['cine'] ?? '') . "</td>";
-                                $fechaFormateada = date("d-m-Y H:i", strtotime($fila['fechahora']));
-                                echo "<td>" . $fechaFormateada . "</td>";
-                                // En Acciones, puedes colocar botones o links para editar, eliminar, etc.
-                                $idPelicula = $fila['id_pelicula'];
-                                $idSala = $fila['id_sala'];
-                                $fechaHora = urlencode($fila['fechahora']);
-                                echo "<td>";
-                                echo "<a class='button-actualizar' href='Funciones/Actualizar/Actualizar_Funcion.php?id_pelicula=$idPelicula&id_sala=$idSala&fechahora=$fechaHora'>Editar</a> ";
-                                echo "<a class='button-eliminar' href='Funciones/Eliminar/Eliminar_Funcion.php?idPelicula=$idPelicula&idSala=$idSala&fechaHora=$fechaHora' onclick='return confirm(\"¿Estás seguro de eliminar esta función?\")'>Eliminar</a>";
-                                echo "</td>";
+                    $stmt = $conn->query($query);
 
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='5'>No se encontraron funciones registradas</td></tr>";
+                    if ($stmt->rowCount() > 0) {
+                        foreach ($stmt as $fila) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($fila['pelicula'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($fila['sala'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($fila['cine'] ?? '') . "</td>";
+                            $fechaFormateada = date("d-m-Y H:i", strtotime($fila['fechahora']));
+                            echo "<td>" . $fechaFormateada . "</td>";
+                            
+                            $idFuncion = $fila['idfuncion'];
+
+                            echo "<td>";
+                            echo "<a class='button-actualizar' href='Funciones/Actualizar/Actualizar_Funcion.php?idFuncion=$idFuncion'>Editar</a> ";
+                            echo "<a class='button-eliminar' href='Funciones/Eliminar/Eliminar_Funcion.php?idFuncion=$idFuncion' onclick='return confirm(\"¿Estás seguro de eliminar esta función?\")'>Eliminar</a>";
+                            echo "</td>";
+
+                            echo "</tr>";
                         }
+                    } else {
+                        echo "<tr><td colspan='5'>No se encontraron funciones registradas</td></tr>";
+                    }
                     } catch (PDOException $e) {
                         echo "<tr><td colspan='5'>Error al obtener funciones: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
                     }

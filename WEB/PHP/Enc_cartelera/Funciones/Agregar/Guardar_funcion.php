@@ -2,8 +2,8 @@
 include_once("../../../../CONNECTION/conexion.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pelicula_id = $_POST['pelicula'];
-    $sala_id = $_POST['sala'];
+    $pelicula_id = $_POST['id_pelicula'];
+    $sala_id = $_POST['id_sala'];
     $fecha_hora = $_POST['fecha_hora'];
 
     if (empty($pelicula_id) || empty($sala_id) || empty($fecha_hora)) {

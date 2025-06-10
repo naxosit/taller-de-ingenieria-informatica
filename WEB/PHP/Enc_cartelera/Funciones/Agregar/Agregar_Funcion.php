@@ -34,7 +34,7 @@
                         <td><label for="pelicula">Pelicula:</label></td>
                         <td>
                             <!-- Película -->
-                            <select name="pelicula" required>
+                            <select name="id_pelicula" required>
                                 <option value="">Seleccione una película</option>
                                 <?php foreach ($peliculas as $p): ?>
                                     <option value="<?= $p['idpelicula'] ?>"><?= htmlspecialchars($p['nombre']) ?></option>
@@ -47,7 +47,7 @@
                     <tr>
                         <td><label for="sala">Sala:</label></td>
                         <td>
-                            <select id="sala" name="sala" required class="form-input">
+                            <select id="id_sala" name="id_sala" required class="form-input">
                                 <option value="">Seleccione una sala</option>
                                 <?php foreach ($salas as $s): ?>
                                     <option value="<?= $s['idsala'] ?>">
