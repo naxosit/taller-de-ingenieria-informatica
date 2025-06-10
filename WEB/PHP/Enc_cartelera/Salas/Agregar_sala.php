@@ -52,7 +52,7 @@ $cines = cargarCines();
                     <tr>
                         <td><label for="tipo_pantalla">Tipo de Pantalla:</label></td>
                         <td>
-                            <select id="tipo_pantalla" name="tipo_pantalla" class="form-input">
+                            <select id="tipo_pantalla" name="tipo_pantalla" required class="form-input">
                                 <option value="">Seleccione...</option>
                                 <option value="2D">2D</option>
                                 <option value="3D">3D</option>

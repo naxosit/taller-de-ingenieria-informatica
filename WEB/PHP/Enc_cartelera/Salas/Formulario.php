@@ -61,15 +61,17 @@ if (isset($_GET['id'])) {
                         <td><label for="nombre">Nombre de la Sala:</label></td>
                         <td>
                             <input type="text" id="nombre" name="nombre" 
-                                   value="<?= htmlspecialchars($sala['nombre'] ?? '') ?>" 
-                                   required class="form-input" maxlength="100">
+                                value="<?= htmlspecialchars($sala['nombre'] ?? '') ?>" 
+                                required class="form-input" maxlength="100"
+                                pattern=".*\S+.*" 
+                                title="Por favor, ingrese un nombre válido (no solo espacios)">
                         </td>
                     </tr>
                     
                     <tr>
                         <td><label for="tipo_pantalla">Tipo de Pantalla:</label></td>
                         <td>
-                            <select id="tipo_pantalla" name="tipo_pantalla" class="form-input">
+                            <select id="tipo_pantalla" name="tipo_pantalla" class="form-input" required>
                                 <option value="">Seleccione...</option>
                                 <option value="2D" <?= ($sala['tipo_pantalla'] ?? '') == '2D' ? 'selected' : '' ?>>2D</option>
                                 <option value="3D" <?= ($sala['tipo_pantalla'] ?? '') == '3D' ? 'selected' : '' ?>>3D</option>
