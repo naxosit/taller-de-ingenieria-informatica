@@ -183,10 +183,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <h3>Butacas liberadas:</h3>
                         <ul>
                             <?php foreach ($detalles_butacas as $butaca): 
-                                if (isset($butaca['Fila'], $butaca['Columna'], $butaca['Id_Butaca'])): ?>
+                                $fila = $butaca['Fila'] ?? $butaca['fila'] ?? '';
+                                $columna = $butaca['Columna'] ?? $butaca['columna'] ?? '';
+                                $id = $butaca['Id_Butaca'] ?? $butaca['id_butaca'] ?? $butaca['id'] ?? '';
+                                
+                                if (!empty($fila) && !empty($columna) && !empty($id)): ?>
                                 <li>
-                                    Butaca <?= htmlspecialchars($butaca['Fila']) . htmlspecialchars($butaca['Columna']) ?> 
-                                    (ID: <?= htmlspecialchars($butaca['Id_Butaca']) ?>)
+                                    Butaca <?= htmlspecialchars($fila) . htmlspecialchars($columna) ?>
                                 </li>
                             <?php endif; endforeach; ?>
                         </ul>
