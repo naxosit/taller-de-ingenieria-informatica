@@ -9,22 +9,42 @@ require __DIR__ . '/../../CONNECTION/conexion.php';
 
 // Procesar cambio de rol mediante el rut.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
-  $rut = $_POST['rut'];
-  $nuevo_rol = $_POST['nuevo_rol'];
-  
-  try {
-      // Actualiza el rol en la base de datos usando el RUT.
-      $stmt = $db->prepare("UPDATE Perfil SET Rol = :rol WHERE Rut = :rut");
-      $stmt->execute([
-          ':rol' => $nuevo_rol, // Actualiza el rol
-          ':rut' => $rut        // Identifica el usuario por su RUT
-      ]);
-      $mensaje = "Rol actualizado para ".htmlspecialchars($rut);
-  } catch(PDOException $e) {
-      $error = "Error: ".$e->getMessage();
-  }
+    $rut = $_POST['rut'];
+    $nuevo_rol = $_POST['nuevo_rol'];
+    
+    try {
+        // Actualiza el rol en la base de datos usando el RUT.
+        $stmt = $db->prepare("UPDATE Perfil SET Rol = :rol WHERE Rut = :rut");
+        $stmt->execute([
+            ':rol' => $nuevo_rol, // Actualiza el rol
+            ':rut' => $rut        // Identifica el usuario por su RUT
+        ]);
+        $mensaje = "Rol actualizado para ".htmlspecialchars($rut);
+    } catch(PDOException $e) {
+        $error = "Error: ".$e->getMessage();
+    }
 }
 
+// Procesar eliminación de usuario mediante el rut.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) {
+    $rut = $_POST['rut'];
+    
+    try {
+        // Elimina el usuario de la base de datos usando el RUT.
+        $stmt = $db->prepare("DELETE FROM Perfil WHERE Rut = :rut");
+        $stmt->execute([
+            ':rut' => $rut
+        ]);
+        
+        if ($stmt->rowCount() > 0) {
+            $mensaje = "Usuario con RUT ".htmlspecialchars($rut)." eliminado correctamente";
+        } else {
+            $error = "No se encontró el usuario con RUT ".htmlspecialchars($rut);
+        }
+    } catch(PDOException $e) {
+        $error = "Error al eliminar usuario: ".$e->getMessage();
+    }
+}
 
 // Obtener los datos del perfil y los roles.
 try {
@@ -62,16 +82,33 @@ try {
   <title>Panel Admin - Web Cine</title>
   <link rel="stylesheet" href="../../CSS/styles.css" />
     <link rel="stylesheet" href="../../CSS/botones.css" />
+    <style>
+        .button-eliminar {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .button-eliminar:hover {
+            background-color: #d32f2f;
+        }
+        .acciones-container {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
 </head>
 <body>
 
     <header class="header">
     <div class="logo">Web Cine - Administrador</div>
         <nav>
-            <a href="../Enc_cartelera/Cartelera.php">Vista Cartelera</a>
-            <a href="../Enc_cartelera/vista_salas.php">Vista Salas</a>
-            <a href="../Enc_cartelera/Funciones.php">Vista Funciones</a>
-            <a href="../Enc_cartelera/vista_encargado.php">Vista Peliculas</a>
+            <a href="../Enc_cartelera/vista_encargado.php">Vista Cartelera</a>
+            <a href="#">Vista Butaca</a>
+            <a href="#"></a>
         </nav>
     </header>
 
@@ -123,7 +160,7 @@ try {
         <th>Nombre</th>
         <th>Apellido</th>
         <th>Rol</th>
-        <th>Acción</th>
+        <th>Acciones</th>
       </tr>
       <?php foreach ($ultimos_usuarios as $usuario): ?>
       <tr>
@@ -132,17 +169,24 @@ try {
         <td><?= htmlspecialchars($usuario['apellido']) ?></td>
         <td><?= htmlspecialchars($usuario['rol']) ?></td>
         <td>
-          <form method="post">
-            <input type="hidden" name="rut" value="<?= $usuario['rut'] ?>">
-            <select name="nuevo_rol">
-              <?php foreach ($roles as $idRol => $nombreRol): ?>
-              <option value="<?= $nombreRol ?>" <?= $usuario['rol'] === $nombreRol ? 'selected' : '' ?>>
-                <?= ucfirst(str_replace('_', ' ', $nombreRol)) ?>
-              </option>
-              <?php endforeach; ?>
-            </select>
-            <button type="submit" class='button-eliminar' name="cambiar_rol">Actualizar</button>
-          </form>
+          <div class="acciones-container">
+            <form method="post" style="display: inline;">
+              <input type="hidden" name="rut" value="<?= $usuario['rut'] ?>">
+              <select name="nuevo_rol">
+                <?php foreach ($roles as $idRol => $nombreRol): ?>
+                <option value="<?= $nombreRol ?>" <?= $usuario['rol'] === $nombreRol ? 'selected' : '' ?>>
+                  <?= ucfirst(str_replace('_', ' ', $nombreRol)) ?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+              <button type="submit" class="button" name="cambiar_rol">Actualizar</button>
+            </form>
+            
+            <form method="post" style="display: inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+              <input type="hidden" name="rut" value="<?= $usuario['rut'] ?>">
+              <button type="submit" class="button-eliminar" name="eliminar_usuario">Eliminar</button>
+            </form>
+          </div>
         </td>
       </tr>
       <?php endforeach; ?>
