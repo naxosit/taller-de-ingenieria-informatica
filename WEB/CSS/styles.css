@@ -120,7 +120,7 @@ main {
 }
 
 .boton:hover {
-  background-color: #6c52e2;
+  background-color: hwb(251 32% 12%);
 }
 
 .registrarse {

@@ -1,144 +1,43 @@
 <?php
-// Conexión a la base de datos (igual que en tu código original)
-$host = 'localhost';
-$dbname = 'BD_CINE';
-$username = 'postgres';
-$password = '123456';
-
-try {
-    $conn = new PDO("pgsql:host=$host;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
-
-// Procesar formulario para actualizar butaca
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['actualizar_butaca'])) {
-    $id_boleto = $_POST['id_boleto'];
-    $nueva_butaca = $_POST['nueva_butaca'];
-    
-    try {
-        // Iniciar transacción
-        $conn->beginTransaction();
-        
-        // 1. Verificar que el boleto existe y está activo
-        $stmt = $conn->prepare("SELECT IdButaca FROM Boleto WHERE Id_Boleto = :id_boleto AND Activo = true");
-        $stmt->bindParam(':id_boleto', $id_boleto);
-        $stmt->execute();
-        $butaca_actual = $stmt->fetchColumn();
-        
-        if ($butaca_actual) {
-            // 2. Verificar que la nueva butaca está disponible
-            $stmt = $conn->prepare("SELECT COUNT(*) FROM Boleto WHERE IdButaca = :nueva_butaca AND Activo = true");
-            $stmt->bindParam(':nueva_butaca', $nueva_butaca);
-            $stmt->execute();
-            $butaca_ocupada = $stmt->fetchColumn();
-            
-            if ($butaca_ocupada == 0) {
-                // 3. Actualizar el boleto con la nueva butaca
-                $stmt = $conn->prepare("UPDATE Boleto SET IdButaca = :nueva_butaca WHERE Id_Boleto = :id_boleto");
-                $stmt->bindParam(':nueva_butaca', $nueva_butaca);
-                $stmt->bindParam(':id_boleto', $id_boleto);
-                $stmt->execute();
-                
-                // 4. Obtener detalles de ambas butacas para mostrar
-                $stmt = $conn->prepare("SELECT Id_Butaca, Fila, Columna FROM Butaca WHERE Id_Butaca IN (:butaca_actual, :nueva_butaca)");
-                $stmt->bindParam(':butaca_actual', $butaca_actual);
-                $stmt->bindParam(':nueva_butaca', $nueva_butaca);
-                $stmt->execute();
-                $detalles_butacas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
-                $conn->commit();
-                $mensaje = "Butaca actualizada correctamente";
-            } else {
-                $conn->rollBack();
-                $mensaje = "La butaca seleccionada no está disponible";
-            }
-        } else {
-            $conn->rollBack();
-            $mensaje = "El boleto no existe o no está activo";
-        }
-    } catch(PDOException $e) {
-        if ($conn->inTransaction()) {
-            $conn->rollBack();
-        }
-        $mensaje = "Error al procesar la solicitud: " . $e->getMessage();
-    }
-}
+include_once("../../CONNECTION/conexion.php");
+include_once("Actualizar_butaca_logica.php");
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Actualizar Butaca</title>
+    <link rel="stylesheet" href="../../CSS/styles.css">
+    <link rel="stylesheet" href="../../CSS/botones.css">
     <style>
-        /* Estilos similares a tu código original */
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background-color: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #1976D2;
-            text-align: center;
-            margin-bottom: 25px;
-        }
         .form-group {
             margin-bottom: 20px;
         }
         label {
-            display: block;
-            margin-bottom: 8px;
             font-weight: bold;
-            color: #333;
         }
-        input[type="text"], input[type="number"] {
+        .form-input, select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
             font-size: 16px;
         }
-        button {
-            background-color: #1976D2;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #1565C0;
-        }
-        .message {
-            margin-top: 25px;
+        .mensaje-exito, .mensaje-error {
+            margin-top: 20px;
             padding: 15px;
             border-radius: 4px;
-            border-left: 5px solid;
+            font-weight: bold;
         }
-        .success {
+        .mensaje-exito {
             background-color: #e8f5e9;
-            border-color: #2e7d32;
             color: #1b5e20;
+            border-left: 5px solid #2e7d32;
         }
-        .error {
+        .mensaje-error {
             background-color: #ffebee;
-            border-color: #c62828;
             color: #b71c1c;
+            border-left: 5px solid #c62828;
         }
         .butacas-info {
             margin-top: 15px;
@@ -146,56 +45,132 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['actualizar_butaca'])) 
             background-color: #f5f5f5;
             border-radius: 4px;
         }
+        .page-title {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #6b51e1;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 0;
+            color: #6b51e1;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #6b51e1;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        select.form-select {
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='gray' d='M70 95L30 55h80z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px 16px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        select.form-select:hover {
+            border-color: #888;
+        }
+
+        select.form-select:focus {
+            outline: none;
+            border-color: #6b51e1;
+        }
+
+        input[type="number"].form-input {
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            padding: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"].form-input:focus {
+            border-color: #1976D2;
+            outline: none;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Actualizar Butaca de Boleto</h1>
-        
-        <form method="post">
-            <div class="form-group">
-                <label for="id_boleto">ID del Boleto:</label>
-                <input type="number" id="id_boleto" name="id_boleto" required>
+<header>
+    <div class="logo">Web Cine - Gestión de Compras</div>
+    <nav>
+        <a href="Cartelera.php">Cartelera</a>
+        <a href="vista_encargado.php">Películas</a>
+        <a href="vista_salas.php">Salas</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1 class="page-title">Actualizar Butaca de Boleto</h1>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="id_boleto">ID del Boleto:</label>
+            <input type="number" id="id_boleto" name="id_boleto" class="form-input" required
+                value="<?= isset($_POST['id_boleto']) ? htmlspecialchars($_POST['id_boleto']) : '' ?>">
+        </div>
+
+        <button type="submit" name="cargar_butacas" class="boton-agregar">Cargar Butacas Disponibles</button>
+
+        <?php if (!empty($butacas_disponibles)): ?>
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="nueva_butaca">Nueva Butaca Disponible:</label>
+                <select id="nueva_butaca" name="nueva_butaca" class="form-select" required>
+                    <?php foreach ($butacas_disponibles as $butaca): ?>
+                        <option value="<?= $butaca['id_butaca'] ?>">
+                            <?= htmlspecialchars($butaca['fila'] . $butaca['columna']) ?> (ID: <?= $butaca['id_butaca'] ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
-            
-            <div class="form-group">
-                <label for="nueva_butaca">Nueva Butaca (ID):</label>
-                <input type="number" id="nueva_butaca" name="nueva_butaca" required>
-            </div>
-            
-            <button type="submit" name="actualizar_butaca">Actualizar Butaca</button>
-        </form>
-        
-        <?php if (isset($mensaje)): ?>
-            <div class="message <?php echo (strpos($mensaje, 'Error') === false) ? 'success' : 'error'; ?>">
-                <p><?php echo $mensaje; ?></p>
-                
-                <?php if (isset($detalles_butacas) && !empty($detalles_butacas)): ?>
-                    <div class="butacas-info">
-                        <h3>Detalles del cambio:</h3>
-                        <?php 
-                        $butaca_actual = null;
-                        $nueva_butaca = null;
-                        
-                        foreach ($detalles_butacas as $butaca) {
-                            $id = $butaca['Id_Butaca'] ?? $butaca['id_butaca'] ?? $butaca['id'] ?? '';
-                            $fila = $butaca['Fila'] ?? $butaca['fila'] ?? '';
-                            $columna = $butaca['Columna'] ?? $butaca['columna'] ?? '';
-                            
-                            if ($id == $butaca_actual) {
-                                $butaca_actual = "Butaca {$fila}{$columna} (ID: {$id})";
-                            } else {
-                                $nueva_butaca = "Butaca {$fila}{$columna} (ID: {$id})";
-                            }
-                        }
-                        ?>
-                        
-                        <p><strong>Butaca anterior:</strong> <?= $butaca_actual ?? 'No disponible' ?></p>
-                        <p><strong>Nueva butaca:</strong> <?= $nueva_butaca ?? 'No disponible' ?></p>
-                    </div>
-                <?php endif; ?>
-            </div>
+
+            <button type="submit" name="actualizar_butaca" class="boton-agregar">Actualizar Butaca</button>
         <?php endif; ?>
-    </div>
+    </form>
+
+    <?php if ($mensaje): ?>
+        <div class="<?= strpos($mensaje, 'correctamente') !== false ? 'mensaje-exito' : 'mensaje-error' ?>">
+            <?= htmlspecialchars($mensaje) ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($detalles_butacas)): ?>
+        <div class="butacas-info">
+            <h3>Detalles de las Butacas:</h3>
+            <ul>
+                <?php foreach ($detalles_butacas as $butaca):
+                    $fila = $butaca['fila'] ?? $butaca['Fila'] ?? '';
+                    $columna = $butaca['columna'] ?? $butaca['Columna'] ?? '';
+                    ?>
+                    <li>Butaca <?= htmlspecialchars($fila . $columna) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+</div>
 </body>
 </html>
