@@ -62,9 +62,6 @@ if (!$info) {
         <label>Últimos 4 dígitos:
             <input type="text" name="cuatroDig" maxlength="4" pattern="\d{4}" required>
         </label><br>
-        <label>Fecha y hora de transferencia:
-            <input type="datetime-local" name="fecha_transf" value="<?= date('Y-m-d\TH:i') ?>" required>
-        </label><br><br>
 
         <!-- Datos ocultos para el procesamiento -->
         <input type="hidden" name="butacasSeleccionadas" value="<?= htmlspecialchars($butacasSeleccionadas) ?>">
@@ -72,7 +69,9 @@ if (!$info) {
         <input type="hidden" name="sala" value="<?= htmlspecialchars($idSala) ?>">
         <input type="hidden" name="fechaInicio" value="<?= htmlspecialchars($fechaInicio) ?>">
         <input type="hidden" name="fechaFin" value="<?= htmlspecialchars($fechaFin) ?>">
-        <input type="hidden" name="idFuncion" value="<?= htmlspecialchars($idFuncion) ?>"> <!-- NUEVO -->
+        <input type="hidden" name="idFuncion" value="<?= htmlspecialchars($idFuncion) ?>">
+        <input type="hidden" name="fecha_transf" value="<?= date('Y-m-d\TH:i') ?>">
+
 
         <button type="submit">Pagar</button>
     </form> 

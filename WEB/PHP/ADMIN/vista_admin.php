@@ -25,6 +25,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_rol'])) {
   }
 }
 
+// Procesar eliminación de usuario mediante el rut.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) {
+    $rut = $_POST['rut'];
+    
+    try {
+        // Elimina el usuario de la base de datos usando el RUT.
+        $stmt = $db->prepare("DELETE FROM Perfil WHERE Rut = :rut");
+        $stmt->execute([
+            ':rut' => $rut
+        ]);
+        
+        if ($stmt->rowCount() > 0) {
+            $mensaje = "Usuario con RUT ".htmlspecialchars($rut)." eliminado correctamente";
+        } else {
+            $error = "No se encontró el usuario con RUT ".htmlspecialchars($rut);
+        }
+    } catch(PDOException $e) {
+        $error = "Error al eliminar usuario: ".$e->getMessage();
+    }
+}
+
 
 // Obtener los datos del perfil y los roles.
 try {
@@ -135,6 +156,8 @@ try {
         <td><?= htmlspecialchars($usuario['rol']) ?></td>
         <td>
           <form method="post">
+        <div class="acciones">
+          <form method="post">
             <input type="hidden" name="rut" value="<?= $usuario['rut'] ?>">
             <select name="nuevo_rol">
               <?php foreach ($roles as $idRol => $nombreRol): ?>
@@ -144,7 +167,11 @@ try {
               <?php endforeach; ?>
             </select>
             <button type="submit" class='button-eliminar' name="cambiar_rol">Actualizar</button>
+                      <form method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+            <input type="hidden" name="rut" value="<?= $usuario['rut'] ?>">
+            <button type="submit" class="button-eliminar" name="eliminar_usuario">Eliminar</button>
           </form>
+        </div>
         </td>
       </tr>
       <?php endforeach; ?>
