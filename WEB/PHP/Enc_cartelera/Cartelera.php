@@ -13,6 +13,8 @@ include_once("../../CONNECTION/conexion.php");
     <header>
         <div class="logo">Web Cine - Cartelera</div>
         <nav>
+            <a href="../login.php">Inicio de Sesion</a>
+            <a href="../Registro.php">Crear Cuenta</a>
         </nav>
     </header>
 

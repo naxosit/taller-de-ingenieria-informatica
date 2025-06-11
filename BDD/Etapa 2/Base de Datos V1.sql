@@ -75,7 +75,7 @@ CREATE TABLE Boleto (
     Fecha_inicio_boleto TIMESTAMP,                              --Fecha a la que inicia la funcion
     Fecha_fin_boleto TIMESTAMP,                                 -- Fecha a la que termina la funcion
     Activo BOOLEAN,                                             --Marca si esta activo el boleto o no.
-    FOREIGN KEY (RUT) REFERENCES Perfil(Rut),
+    FOREIGN KEY (RUT) REFERENCES Perfil(Rut) ON DELETE CASCADE,
     FOREIGN KEY (IdPelicula) REFERENCES Pelicula(idPelicula),
     FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca) ON DELETE CASCADE
 );
