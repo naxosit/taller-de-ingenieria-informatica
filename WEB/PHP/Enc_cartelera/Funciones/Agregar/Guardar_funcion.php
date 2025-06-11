@@ -11,6 +11,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    //Validar que la fecha y hora  no estén en el pasado
+    $fechaHoraIngresada = new DateTime($fecha_hora);
+    $fechaHoraActual = new DateTime();
+
+    if ($fechaHoraIngresada < $fechaHoraActual){
+        header("Location: Agregar_Funcion.php?mensaje=".urldecode("La fecha y hora deben ser futuras.") . "&error=1");
+        exit;
+    }
+
     try {
         // Insertar función
         $stmt = $conn->prepare("

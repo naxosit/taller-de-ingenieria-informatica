@@ -62,7 +62,7 @@
                     <tr>
                         <td><label for="fecha_hora">Fecha y Hora:</label></td>
                         <td>
-                            <input type="datetime-local" id="fecha_hora" name="fecha_hora" required class="form-input">
+                            <input type="datetime-local" id="fecha_hora" name="fecha_hora" min="<?=date('Y-m-d\TH:i')?> required class="form-input">
                         </td>
                     </tr>
 
