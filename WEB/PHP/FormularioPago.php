@@ -2,7 +2,7 @@
 include_once("../CONNECTION/conexion.php");
 
 // Configurar zona horaria correcta
-date_default_timezone_set('America/Santiago');  // Cambia por tu zona horaria
+date_default_timezone_set('America/Santiago');  
 
 // Recibimos los datos enviados desde Boleteria.php
 $butacasSeleccionadas = $_POST['butacasSeleccionadas'] ?? '';
@@ -47,8 +47,8 @@ if (!$info) {
         <label>Tipo de Tarjeta:
             <select id = "tipo" name="tipo" require>
               <option value="">-- Seleccione una tarjeta--</option>
-              <option value="Debito">Debito</option>
-              <option value="Credito">Credito</option>
+              <option value="Débito">Débito</option>
+              <option value="Crédito">Crédito</option>
             </select><br>
         </label><br>
         <label>Marca:
