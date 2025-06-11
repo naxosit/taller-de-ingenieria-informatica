@@ -72,6 +72,7 @@ try {
             <a href="../Enc_cartelera/vista_salas.php">Vista Salas</a>
             <a href="../Enc_cartelera/Funciones.php">Vista Funciones</a>
             <a href="../Enc_cartelera/vista_encargado.php">Vista Peliculas</a>
+            <a href="../Enc_cartelera/anulacion_compra.php">Anular Compra</a>
         </nav>
     </header>
 

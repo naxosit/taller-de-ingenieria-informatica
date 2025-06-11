@@ -77,7 +77,7 @@ CREATE TABLE Boleto (
     Activo BOOLEAN,                                             --Marca si esta activo el boleto o no.
     FOREIGN KEY (RUT) REFERENCES Perfil(Rut),
     FOREIGN KEY (IdPelicula) REFERENCES Pelicula(idPelicula),
-    FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca)
+    FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca) ON DELETE CASCADE
 );
 
 -- Información sobre los pagos realizados por boletos
@@ -88,7 +88,7 @@ CREATE TABLE Pago (
     Marca VARCHAR(30),                                       -- Marca de la tarjeta (Visa, Mastercard)
     CuatroDig VARCHAR(4),                                    -- Últimos 4 dígitos de la tarjeta
     Fecha_Transf TIMESTAMP,                                      -- Fecha del pago o transacción	                      
-    FOREIGN KEY (IdBoleto) REFERENCES Boleto(Id_Boleto)
+    FOREIGN KEY (IdBoleto) REFERENCES Boleto(Id_Boleto) ON DELETE CASCADE
 );
 
 -- Relación que indica qué perfil accede a qué cine
