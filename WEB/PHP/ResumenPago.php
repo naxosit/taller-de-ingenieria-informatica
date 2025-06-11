@@ -12,7 +12,7 @@ if (!$rutSesion) {
     die("Usuario no autenticado.");
 }
 
-// Paso 1: Obtener los datos del pago original
+// Obtener los datos del pago original
 $sqlPago = "SELECT Tipo, Marca, CuatroDig, Fecha_Transf FROM Pago WHERE Id_Pago = :idPago";
 $stmtPago = $conn->prepare($sqlPago);
 $stmtPago->execute([':idPago' => $idPago]);
