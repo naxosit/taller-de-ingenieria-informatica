@@ -1,6 +1,6 @@
 <?php
 // cargar_pelicula.php
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../../../CONNECTION/conexion.php");
 
 function cargarPelicula($id_pelicula) {
     global $conn;

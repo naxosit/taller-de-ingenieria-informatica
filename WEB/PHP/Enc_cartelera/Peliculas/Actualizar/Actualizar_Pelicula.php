@@ -1,5 +1,5 @@
 <?php
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../../../CONNECTION/conexion.php");
 include_once("cargar_pelicula.php");
 
 if (isset($_GET['id'])) {
@@ -16,14 +16,14 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Película - Web Cine</title>
-    <link rel="stylesheet" href="../../../CSS/styles.css">
-    <link rel="stylesheet" href="../../../CSS/formulario.css">
+    <link rel="stylesheet" href="../../../../CSS/styles.css">
+    <link rel="stylesheet" href="../../../../CSS/formulario.css">
 </head>
 <body>
     <header class="header">
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="../vista_encargado.php">Lista de Peliculas</a>
+            <a href="../../Peliculas.php">Lista de Peliculas</a>
             <a href="#"></a>
             <a href="#"></a>
         </nav>

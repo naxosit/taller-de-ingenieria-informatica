@@ -1,5 +1,5 @@
 <?php
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../../../CONNECTION/conexion.php");
 include_once("cargar_sala.php");
 
 // Habilitar visualización de errores (solo para desarrollo)
@@ -16,16 +16,16 @@ $cines = cargarCines();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Sala - Web Cine</title>
-    <link rel="stylesheet" href="../../../CSS/styles.css">
-    <link rel="stylesheet" href="../../../CSS/formulario.css">
+    <link rel="stylesheet" href="../../../../CSS/styles.css">
+    <link rel="stylesheet" href="../../../../CSS/formulario.css">
 </head>
 <body>
     <header class="header">
         <div class="logo">Web Cine - Gestión de Salas</div>
         <nav>
-            <a href="../vista_salas.php">Lista de Salas</a>
-            <a href="../Peliculas/vista_pelicula.php">Películas</a>
-            <a href="../Cines/vista_cine.php">Cines</a>
+            <a href="../../Salas.php">Lista de Salas</a>
+            <a href="../../Peliculas.php">Películas</a>
+            <a href="#">Cines</a>
         </nav>
     </header>
 

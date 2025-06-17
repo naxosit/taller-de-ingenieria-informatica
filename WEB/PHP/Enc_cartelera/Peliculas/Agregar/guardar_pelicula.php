@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../CONNECTION/conexion.php'; // Asegúrate de que $conn es una instancia válida de PDO
+require_once __DIR__ . '/../../../../CONNECTION/conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre'] ?? '');
@@ -27,14 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':imagen' => $imagen
         ]);
 
-        header("Location: ../vista_encargado.php?mensaje=" . urlencode("Película guardada con éxito"));
+        header("Location: ../../Peliculas.php?mensaje=" . urlencode("Película guardada con éxito"));
         exit;
     } catch (PDOException $e) {
-        header("Location: ../vista_encargado.php?mensaje=" . urlencode("Error al guardar: " . $e->getMessage()) . "&error=1");
+        header("Location: ../../Peliculas.php?mensaje=" . urlencode("Error al guardar: " . $e->getMessage()) . "&error=1");
         exit;
     }
 } else {
-    header("Location: ../vista_encargado.php?mensaje=" . urlencode("Acceso inválido") . "&error=1");
+    header("Location: ../../Peliculas.php?mensaje=" . urlencode("Acceso inválido") . "&error=1");
     exit;
 }
 ?>

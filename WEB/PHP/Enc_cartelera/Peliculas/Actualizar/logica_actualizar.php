@@ -1,5 +1,5 @@
 <?php
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../../../CONNECTION/conexion.php");
 echo '<pre>';
 var_dump($_POST);
 echo '</pre>';
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $stmtPeli -> execute([$nombre, $duracion, $sinopsis, $director, $genero, $imagen, $id]);
 
         //Redirijimos de vuela al listado de peliculas con indicar de éxito.
-        header("Location: ../vista_encargado.php?actualizado=1");
+        header("Location: ../../Peliculas.php?actualizado=1");
         exit;
 
     } catch (PDOException $e) {

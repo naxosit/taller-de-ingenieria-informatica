@@ -1,6 +1,6 @@
 <?php
 // cargar_sala.php
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../../../CONNECTION/conexion.php");
 
 function cargarSala($id_sala) {
     global $conn;

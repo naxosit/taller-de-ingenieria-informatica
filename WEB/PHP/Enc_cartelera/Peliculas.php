@@ -14,7 +14,7 @@
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
             <a href="Cartelera.php">Cartelera</a>
-            <a href="vista_salas">Salas</a>
+            <a href="Salas.php">Salas</a>
             <a href="Funciones.php">Funciones</a>
         </nav>
     </header>
@@ -33,7 +33,7 @@
         <?php endif; ?>
         
         <div class = "contenedor-boton-agregar">
-            <a href="Peliculas/Agregar_pelicula.php" class="boton-agregar">Agregar Pelicula</a> 
+            <a href="Peliculas/Agregar/Agregar_Pelicula.php" class="boton-agregar">Agregar Pelicula</a> 
         </div>
 
         <div class="card">
@@ -76,8 +76,8 @@
                                     (strlen($fila['sinopsis']) > 50 ? substr($fila['sinopsis'], 0, 50) . '...' : $fila['sinopsis']) : '';
                                 echo "<td>" . htmlspecialchars($sinopsis) . "</td>";
                                 echo "<td><div class='acciones'>";
-                                echo "<a href='Peliculas/Actualizar.php?id=" . urlencode($fila['id']) . "' class='button-actualizar'>Actualizar</a>";
-                                echo "<a href='Peliculas/Eliminar.php?id=" . urlencode($fila['id']) . "' class='button-eliminar' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta película?');\">Eliminar</a>";
+                                echo "<a href='Peliculas/Actualizar/Actualizar_Pelicula.php?id=" . urlencode($fila['id']) . "' class='button-actualizar'>Actualizar</a>";
+                                echo "<a href='Peliculas/Eliminar/Eliminar_Pelicula.php?id=" . urlencode($fila['id']) . "' class='button-eliminar' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta película?');\">Eliminar</a>";
                                 echo "</div></td>";
 
 

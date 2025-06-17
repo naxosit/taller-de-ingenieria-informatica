@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../CONNECTION/conexion.php';
+require_once __DIR__ . '/../../../../CONNECTION/conexion.php';
 
 // Verificar que la solicitud sea POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -54,7 +54,7 @@ try {
     // Ejecutar la inserción
     if ($stmt->execute()) {
         // Redirigir a la lista de salas con mensaje de éxito
-        header("Location: ../vista_salas.php?success=" . urlencode("Sala agregada correctamente"));
+        header("Location: ../../Salas.php?success=" . urlencode("Sala agregada correctamente"));
         exit;
     } else {
         throw new Exception("Error al guardar la sala en la base de datos");

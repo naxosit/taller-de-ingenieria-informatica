@@ -14,7 +14,7 @@
         <div class="logo">Web Cine - Gestión de Salas</div>
         <nav>
             <a href="Cartelera.php">Cartelera</a>
-            <a href="vista_encargado.php">Películas</a>
+            <a href="Peliculas.php">Películas</a>
             <a href="Funciones.php">Funciones</a>
         </nav>
     </header>
@@ -33,7 +33,7 @@
         <?php endif; ?>
         
         <div class = "contenedor-boton-agregar">
-            <a href="Salas/Agregar_sala.php" class="boton-agregar">Agregar Sala</a> 
+            <a href="Salas/Agregar/Agregar_sala.php" class="boton-agregar">Agregar Sala</a> 
         </div>
 
         <div class="card">
@@ -69,8 +69,8 @@
                                 echo "<td>" . htmlspecialchars($fila['tipo_pantalla'] ?? 'No especificado') . "</td>";
                                 echo "<td>" . htmlspecialchars($fila['nombre_cine'] ?? '') . "</td>";
                                 echo "<td><div class='acciones'>";
-                                echo "<a href='Salas/Formulario.php?id=" . urlencode($fila['id']) . "' class='button-actualizar'>Actualizar</a>";
-                                echo "<a href='Salas/Eliminar.php?id=" . urlencode($fila['id']) . "' class='button-eliminar' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta sala?');\">Eliminar</a>";
+                                echo "<a href='Salas/Actualizar/Actualizar_Sala.php?id=" . urlencode($fila['id']) . "' class='button-actualizar'>Actualizar</a>";
+                                echo "<a href='Salas/Eliminar/Eliminar_Sala.php?id=" . urlencode($fila['id']) . "' class='button-eliminar' onclick=\"return confirm('¿Estás seguro de que deseas eliminar esta sala?');\">Eliminar</a>";
                                 echo "</div></td>";
                             }
                         } else {

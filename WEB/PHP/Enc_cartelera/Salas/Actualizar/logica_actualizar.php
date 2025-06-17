@@ -1,5 +1,5 @@
 <?php
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../../../CONNECTION/conexion.php");
 
 // Debug (opcional)
 echo '<pre>';
@@ -39,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Verificar si se realizaron cambios
         if ($stmtSala->rowCount() > 0) {
-            header("Location: ../vista_salas.php?actualizado=1");
+            header("Location: ../../Salas.php?actualizado=1");
         } else {
             // No se modificaron registros (posiblemente los datos eran iguales)
-            header("Location: ../vista_salas.php?actualizado=0");
+            header("Location: ../../Salas.php?actualizado=0");
         }
         exit;
 
@@ -56,6 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     // Si no es método POST, redirigir
-    header("Location: ../vista_salas.php");
+    header("Location: ../../Salas.php");
     exit;
 }
