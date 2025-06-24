@@ -1,0 +1,213 @@
+:root {
+  --primary: #4f42b5;
+  --primary-dark: #3a3087;
+  --light: #ffffff;
+  --dark: #0d0d0d;
+  --gray: #f5f5f5;
+  --gray-dark: #e0e0e0;
+  --text: #333333;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--light);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.summary-card,
+.payment-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 30px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 10px;
+}
+
+.movie-info {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.poster {
+  width: 120px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster i {
+  font-size: 3rem;
+  color: #aaa;
+}
+
+.details {
+  flex: 1;
+}
+
+.movie-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--dark);
+}
+
+.format {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.info-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.info-label {
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.ticket-summary {
+  background: var(--gray);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.total-row {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--gray-dark);
+}
+
+.btn-summary {
+  background: var(--primary);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-summary:hover {
+  background: var(--primary-dark);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--gray-dark);
+  border-radius: 4px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.card-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.disclaimer {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.disclaimer-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.disclaimer-item i {
+  margin-right: 10px;
+  color: var(--primary);
+}
+
+.btn-pay {
+  background: var(--primary);
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.btn-pay:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(79, 66, 181, 0.3);
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .card-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+.poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}

@@ -31,7 +31,7 @@
             <form id="form-pelicula" action="Guardar_funcion.php" method="POST">
                 <table class="form-table">
                     <tr>
-                        <td><label for="pelicula">Pelicula:</label></td>
+                        <td><label for="pelicula">Película:</label></td>
                         <td>
                             <!-- Película -->
                             <select name="id_pelicula" required>

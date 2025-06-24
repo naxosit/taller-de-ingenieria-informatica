@@ -3,8 +3,8 @@
 $host = 'localhost';
 $port = '5432';
 $dbname = 'BD_CINE';
-$db_user = 'postgres';  // Cambiado de $user a $db_user para consistencia
-$db_pass = 'torresdiaz1811'; // Cambiado de $password a $db_pass
+$db_user = 'postgres';  
+$db_pass = 'torresdiaz1811';
 
 // Configuración PDO
 $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";

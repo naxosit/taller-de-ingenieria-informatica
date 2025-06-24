@@ -69,14 +69,14 @@ CREATE TABLE Perfil (
 CREATE TABLE Boleto (
     Id_Boleto BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,
     RUT VARCHAR(12),
-    IdPelicula BIGINT,                                          -- Película asociada
+    IdFuncion BIGINT,                                          -- Película asociada
     IdButaca BIGINT,                                            -- Butaca reservada
     Estado_Butaca VARCHAR(50),                                  -- Estado (reservada, disponible, ocupada)
     Fecha_inicio_boleto TIMESTAMP,                              --Fecha a la que inicia la funcion
     Fecha_fin_boleto TIMESTAMP,                                 -- Fecha a la que termina la funcion
     Activo BOOLEAN,                                             --Marca si esta activo el boleto o no.
     FOREIGN KEY (RUT) REFERENCES Perfil(Rut) ON DELETE CASCADE,
-    FOREIGN KEY (IdPelicula) REFERENCES Pelicula(idPelicula),
+    FOREIGN KEY (IdFuncion) REFERENCES Funcion(idFuncion),
     FOREIGN KEY (IdButaca) REFERENCES Butaca(Id_Butaca) ON DELETE CASCADE
 );
 

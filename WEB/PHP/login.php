@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
               header("Location: encargado_butaca.php");
               break;
           default:
-              header("Location: Enc_cartelera/Cartelera.php");
+              header("Location: Cliente/Index.php");
       }
       exit();
   } else {
