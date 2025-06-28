@@ -42,7 +42,6 @@ try {
       <a href="peliculas.php">Películas</a>
       <a href="#">Cines</a>
       <a href="#">Promociones</a>
-      <a href="#">Socios</a>
       <a href="#">Confitería</a>
     </div>
 
@@ -58,7 +57,7 @@ try {
     </div>
   </nav>
 
-  <!-- Carrusel con estilo azul - CORREGIDO -->
+  <!-- Carrusel con estilo azul -->
   <div class="carousel-container">
     <button class="carousel-btn left" onclick="prevSlide()">
       <i class="fas fa-chevron-left"></i>

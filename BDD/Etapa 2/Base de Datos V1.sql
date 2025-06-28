@@ -47,22 +47,21 @@ CREATE TABLE Butaca (
 );
 
 
--- Tabla que almacena las contraseñas cifradas de los perfiles
-CREATE TABLE Contraseña (
-    Id_Contraseña BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,
-    ContraseñaUsuario VARCHAR(225) NOT NULL                  -- Contraseña del usuario
-);
-
-
 -- Perfiles de usuarios que pueden acceder al sistema (clientes o personal)
 CREATE TABLE Perfil (
     Rut VARCHAR(12) PRIMARY KEY,                             -- Identificador chileno único
     Nombre VARCHAR(45),                                      -- Nombre del usuario
     Apellido VARCHAR(45),                                    -- Apellido del usuario
     Correo_Electronico VARCHAR(100),                         -- Correo del usuario
-    Rol VARCHAR(40) NOT NULL,                                -- Rol (cliente, administrador, etc.)
-    Id_Contraseña BIGINT NOT NULL,                              -- FK a la contraseña asociada
-    FOREIGN KEY (Id_Contraseña) REFERENCES Contraseña(Id_Contraseña)
+    Rol VARCHAR(40) NOT NULL                                 -- Rol (cliente, administrador, etc.)
+);
+
+-- Tabla que almacena las contraseñas cifradas de los perfiles
+CREATE TABLE Contraseña (
+    Id_Contraseña BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1) PRIMARY KEY,
+    ContraseñaUsuario VARCHAR(225) NOT NULL,                  -- Contraseña del usuario
+    Rut VARCHAR(12) NOT NULL,
+    FOREIGN KEY (Rut) REFERENCES Perfil(Rut) ON DELETE CASCADE
 );
 
 -- Boleto generado para una película, butaca y pago específico

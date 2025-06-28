@@ -1,7 +1,7 @@
 <?php
 require_once '../../CONNECTION/conexion.php';
 
-$RUT = '21445918-2';
+$RUT = '21.445.918-2';
 $Nombre = 'Admin';
 $Apellido = 'General';
 $Correo_electronico = 'admin@cine.com';
@@ -17,21 +17,23 @@ try {
     if ($stmt->rowCount() == 0) {
         $conn->beginTransaction();
 
-        // Insertar la contraseña y obtener el ID
-        $stmt = $conn->prepare("INSERT INTO Contraseña (ContraseñaUsuario) VALUES (:pass) RETURNING Id_Contraseña");
-        $stmt->execute([':pass' => $Contraseña]);
-        $id_contraseña = $stmt->fetchColumn();
-
-        // Insertar el perfil con el ID de la contraseña
-        $stmt = $conn->prepare("INSERT INTO Perfil (RUT, Nombre, Apellido, Correo_electronico, Rol, Id_Contraseña) 
-                                VALUES (:rut, :nombre, :apellido, :correo, :rol, :id_contra)");
+        // 1. Insertar primero el perfil
+        $stmt = $conn->prepare("INSERT INTO Perfil (RUT, Nombre, Apellido, Correo_electronico, Rol) 
+                                VALUES (:rut, :nombre, :apellido, :correo, :rol)");
         $stmt->execute([
             ':rut' => $RUT,
             ':nombre' => $Nombre,
             ':apellido' => $Apellido,
             ':correo' => $Correo_electronico,
-            ':rol' => $Rol,
-            ':id_contra' => $id_contraseña
+            ':rol' => $Rol
+        ]);
+
+        // 2. Insertar la contraseña asociada al RUT
+        $stmt = $conn->prepare("INSERT INTO Contraseña (ContraseñaUsuario, Rut) 
+                                VALUES (:pass, :rut)");
+        $stmt->execute([
+            ':pass' => $Contraseña,
+            ':rut' => $RUT
         ]);
 
         $conn->commit();
@@ -40,7 +42,9 @@ try {
         echo "El admin ya existe.";
     }
 } catch (PDOException $e) {
-    $conn->rollBack();
+    if ($conn->inTransaction()) {
+        $conn->rollBack();
+    }
     echo "Error: " . $e->getMessage();
 }
 ?>

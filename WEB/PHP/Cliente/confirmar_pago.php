@@ -50,7 +50,7 @@ foreach ($asientos as $idButaca) {
     $duracion = $funcion['duracion']; // Asegúrate de incluir 'duracion' en tu SELECT inicial
     $fechaFin = date('Y-m-d H:i:s', strtotime("+$duracion minutes", strtotime($fechaInicio)));
     
-    $rutUsuario = $_SESSION['rut_usuario']; // Obtener RUT de la sesión
+    $rutUsuario = $_SESSION['rut']; // Obtener RUT de la sesión
     
     $stmtBoleto->bindParam(':rut', $rutUsuario);
     $stmtBoleto->bindParam(':idFuncion', $idFuncion);
