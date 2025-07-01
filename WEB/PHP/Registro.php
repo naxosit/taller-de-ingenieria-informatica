@@ -103,8 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnregistrar'])) {
       </div>
 
       <div class="menu">
-        <a href="peliculas.php">Películas</a>
-        <a href="#">Cines</a>
+        <a href="Cliente/peliculas.php">Películas</a>
+        <a href="Cliente/cines.php">Cines</a>
         <a href="#">Promociones</a>
         <a href="#">Confitería</a>
       </div>

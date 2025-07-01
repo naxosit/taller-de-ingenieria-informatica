@@ -45,16 +45,16 @@ try {
       <a href="#">Confitería</a>
     </div>
 
-    <div class="actions">
-      <a href="../login.php" class="btn btn-login">
-        <i class="fas fa-user"></i>
-        <span>Iniciar sesión</span>
-      </a>
-      <button class="btn btn-register">
-        <i class="fas fa-user-plus"></i>
-        <span>Registrarse</span>
-      </button>
-    </div>
+      <div class="actions">
+        <a href="../login.php" class="btn btn-login">
+          <i class="fas fa-user"></i>
+          <span>Iniciar sesión</span>
+        </a>
+        <a href="../Registro.php" class="btn btn-tickets">
+          <i class="fas fa-user-plus"></i>
+          <span>Registrarse</span>
+        </a>
+      </div>
   </nav>
 
   <!-- Carrusel con estilo azul -->
@@ -66,25 +66,22 @@ try {
     <div class="carousel-slides" id="slides">
       <div class="carousel-slide" style="background-image: url('https://i.ytimg.com/vi/hJVL8U6ROck/maxresdefault.jpg')">
         <div class="slide-content">
-          <h2>COMO ENTRENAR A TU DRAGON</h2>
-          <p>La sentencia final - Vive la experiencia cinematográfica más emocionante del año</p>
-          <button class="btn btn-tickets">Comprar entradas</button>
+          <h2>ESTRENOS EXCLUSIVOS</h2>
+          <p>Disfruta de las mejores películas antes que nadie en nuestros cines con salas premium.</p>
         </div>
       </div>
       
       <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')">
         <div class="slide-content">
-          <h2>ESTRENOS EXCLUSIVOS</h2>
-          <p>Disfruta de las mejores películas antes que nadie en nuestras salas premium</p>
-          <button class="btn btn-tickets">Ver más</button>
+          <h2>CONFITERIA DELICIOSA</h2>
+          <p>Date un gusto y disfruta de mejor manera con nuestros productos de confiteria.</p>
         </div>
       </div>
       
       <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')">
         <div class="slide-content">
           <h2>PROMOCIONES ESPECIALES</h2>
-          <p>Martes y miércoles 2x1 en todas las películas.</p>
-          <button class="btn btn-tickets">Ver promociones</button>
+          <p>Martes y miércoles 2x1 en todas las películas (Si estudias Ing Civil Informatica precio normal).</p>
         </div>
       </div>
     </div>
@@ -104,10 +101,7 @@ try {
     <h2 class="section-title">Películas en cartelera</h2>
     
     <div class="filters">
-      <button class="filter-btn active">Todas</button>
-      <button class="filter-btn">Estrenos</button>
-      <button class="filter-btn">Próximamente</button>
-      <button class="filter-btn">Más vistas</button>
+      <button class="filter-btn active">Estrenos</button>
     </div>
     
     <div class="movies-container">
@@ -118,12 +112,6 @@ try {
             <div class="movie-info">
               <h3 class="movie-title"><?php echo htmlspecialchars($pelicula['nombre']); ?></h3>
               <div class="movie-genre"><?php echo htmlspecialchars($pelicula['genero']); ?></div>
-              <button class="movie-btn ">Comprar entradas</button>
-              <script>
-                document.querySelector('.movie-btn').addEventListener('click', function() {
-                    window.location.href = 'peliculas.php';
-                });
-              </script>
             </div>
           </div>
         <?php endforeach; ?>

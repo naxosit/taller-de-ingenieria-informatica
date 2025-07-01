@@ -11,7 +11,7 @@ try {
     $idFuncion = isset($_GET['idFuncion']) ? $_GET['idFuncion'] : null;
     
     if ($idFuncion) {
-        // Consulta modificada para obtener detalles de la función
+        // Consulta para obtener detalles de la función
         $stmt = $pdo->prepare("
             SELECT 
                 F.*, 
@@ -21,7 +21,8 @@ try {
                 P.genero,
                 S.nombre AS nombre_sala,
                 C.nombre_cine,
-                CI.nombreciudad AS ubicacion  -- Obtenemos el nombre de la ciudad desde la tabla Ciudad
+                C.ubicacion AS direccion,
+                CI.nombreciudad AS ciudad
             FROM funcion F
             JOIN pelicula P ON F.id_pelicula = P.idpelicula
             JOIN sala S ON F.id_sala = S.idsala
@@ -34,6 +35,15 @@ try {
         $funcion = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($funcion) {
+            //Combiar la dirección y ciudad
+            $ubicacion = '';
+            if (!empty($funcion['direccion'])){
+              $ubicacion = $funcion['direccion'];
+            }
+            if (!empty($funcion['ciudad'])){
+              $ubicacion .= ($ubicacion ? ',':'').$funcion['ciudad'];
+            }   
+            $funcion['ubicacion'] = $ubicacion ?: 'Ubicación no disponible';       
             // Consulta para obtener asientos ocupados en esta función
             $stmt = $pdo->prepare("
                 SELECT B.idbutaca
@@ -90,20 +100,19 @@ if (!$idFuncion || !$funcion || !$asientosSala) {
       <a href="peliculas.php">Películas</a>
       <a href="cines.php">Cines</a>
       <a href="#">Promociones</a>
-      <a href="#">Socios</a>
       <a href="#">Confitería</a>
     </div>
 
-    <div class="actions">
-      <button class="btn btn-login">
-        <i class="fas fa-user"></i>
-        <span>Iniciar sesión</span>
-      </button>
-
-      <button class="btn btn-register">
-        <i class="fas fa-user-plus"></i>
-        <span>Registrarse</span>
-      </button>
+      <div class="actions">
+        <a href="../login.php" class="btn btn-login">
+          <i class="fas fa-user"></i>
+          <span>Iniciar sesión</span>
+        </a>
+        <a href="../Registro.php" class="btn btn-tickets">
+          <i class="fas fa-user-plus"></i>
+          <span>Registrarse</span>
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -137,6 +146,7 @@ if (!$idFuncion || !$funcion || !$asientosSala) {
       <div class="info-item">
         <h3><i class="fas fa-map-marker-alt"></i> Cine</h3>
         <p><?php echo htmlspecialchars($funcion['nombre_cine']); ?></p>
+        <p><?php echo htmlspecialchars($funcion['ubicacion']); ?></p>
       </div>
       
       <div class="info-item">

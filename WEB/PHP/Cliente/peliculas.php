@@ -74,23 +74,22 @@ try {
 
     <div class="menu">
       <a href="#" class="active">Películas</a>
-      <a href="#">Cines</a>
+      <a href="cines.php">Cines</a>
       <a href="#">Promociones</a>
       <a href="#">Socios</a>
       <a href="#">Confitería</a>
     </div>
 
-    <div class="actions">
-      <button class="btn btn-login">
-        <i class="fas fa-user"></i>
-        <span>Iniciar sesión</span>
-      </button>
-
-      <button class="btn btn-register">
-        <i class="fas fa-user-plus"></i>
-        <span>Registrarse</span>
-      </button>
-    </div>
+      <div class="actions">
+        <a href="../login.php" class="btn btn-login">
+          <i class="fas fa-user"></i>
+          <span>Iniciar sesión</span>
+        </a>
+        <a href="../Registro.php" class="btn btn-tickets">
+          <i class="fas fa-user-plus"></i>
+          <span>Registrarse</span>
+        </a>
+      </div>
   </nav>
 
   <!-- Contenido principal -->

@@ -19,23 +19,31 @@ try {
     $pelicula = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($pelicula) {
-      // Consulta simplificada para obtener cine con ciudad
+      // Consulta ACTUALIZADA para obtener cine con dirección y ciudad
       $stmt = $pdo->prepare("
-                SELECT 
-                    Cine.idCine, 
-                    Cine.Nombre_cine AS nombre_cine,
-                    Ciudad.NombreCiudad AS ubicacion
-                FROM Cine 
-                LEFT JOIN Ciudad ON Cine.idCiudad = Ciudad.idCiudad
-                WHERE Cine.idCine = :idCine
-            ");
+        SELECT 
+            Cine.idCine, 
+            Cine.Nombre_cine AS nombre_cine,
+            Cine.ubicacion AS direccion, 
+            Ciudad.NombreCiudad AS ciudad
+        FROM Cine 
+        LEFT JOIN Ciudad ON Cine.idCiudad = Ciudad.idCiudad
+        WHERE Cine.idCine = :idCine
+    ");
       $stmt->bindParam(':idCine', $idCine);
       $stmt->execute();
       $cine = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      // Manejar caso donde no haya ciudad registrada
-      if ($cine && empty($cine['ubicacion'])) {
-        $cine['ubicacion'] = 'Ubicación no disponible';
+      // Combinar dirección y ciudad
+      if ($cine) {
+        $ubicacion = '';
+        if (!empty($cine['direccion'])) {
+          $ubicacion = $cine['direccion'];
+        }
+        if (!empty($cine['ciudad'])) {
+          $ubicacion .= ($ubicacion ? ', ' : '') . $cine['ciudad'];
+        }
+        $cine['ubicacion'] = $ubicacion ?: 'Ubicación no disponible'; // Guardar en misma clave
       }
       if ($cine) {
         // Obtener funciones para esta película en el cine específico
@@ -111,16 +119,16 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
       <a href="#">Confitería</a>
     </div>
 
-    <div class="actions">
-      <button class="btn btn-login">
-        <i class="fas fa-user"></i>
-        <span>Iniciar sesión</span>
-      </button>
-
-      <button class="btn btn-register">
-        <i class="fas fa-user-plus"></i>
-        <span>Registrarse</span>
-      </button>
+      <div class="actions">
+        <a href="../login.php" class="btn btn-login">
+          <i class="fas fa-user"></i>
+          <span>Iniciar sesión</span>
+        </a>
+        <a href="../Registro.php" class="btn btn-tickets">
+          <i class="fas fa-user-plus"></i>
+          <span>Registrarse</span>
+        </a>
+      </div>
     </div>
   </nav>
 
