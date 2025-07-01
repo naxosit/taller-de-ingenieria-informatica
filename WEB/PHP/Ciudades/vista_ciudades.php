@@ -129,7 +129,7 @@ try {
             foreach ($regiones as $row) {
                 // Generamos un enlace (<a>) con una clase para darle estilo de botón
                 // La URL será 'ciudades_por_region.php' y pasaremos el idregion como parámetro GET
-                echo "<li><a href='ciudades_por_region.php" . htmlspecialchars($row["idregion"]) . "' class='region-button'>";
+                echo "<li><a href='ciudades_por_region.php?idregion=" . htmlspecialchars($row["idregion"]) . "' class='region-button'>";
                 echo htmlspecialchars($row["nombreregion"]);
                 echo "</a></li>";
             }

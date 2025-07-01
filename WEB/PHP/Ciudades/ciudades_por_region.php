@@ -5,13 +5,13 @@ include_once("../../../CONNECTION/conexion.php");
 
 // 1. Obtener el idRegion de la URL (parámetro GET)
 // Se usa intval() para asegurar que el valor sea un entero, lo cual es crucial para la seguridad.
-$idregion = isset($_GET['idregion']) ? intval($_GET['idregion']) : 0;
+$id_region = isset($_GET['idregion']) ? intval($_GET['idregion']) : 0;
 
 // Si no se proporcionó un ID de región válido (es decir, es 0 o no se encontró en la URL),
 // se detiene la ejecución del script y se muestra un mensaje de error.
-// Alternativamente, podrías redirigir al usuario a la página principal de regiones.
-if ($idregion === 0) {
-    die("Error: No se ha especificado una región válida.");
+// Alternativamente, podrías redirigir al usuario a la página principal de regiones si prefieres.
+if ($id_region === 0) {
+    die("Error: No se ha especificado una región válida para mostrar ciudades.");
     // Ejemplo de redirección:
     // header("Location: mostrar_regiones.php");
     // exit();
@@ -22,10 +22,10 @@ if ($idregion === 0) {
 $nombre_region = "Región Desconocida"; // Valor por defecto si no se encuentra la región
 try {
     // Prepara la consulta para obtener el nombre de la región de la tabla 'Region'.
-    $sql_region_nombre = "SELECT nombreregion FROM Region WHERE idregion = :idregion";
+    $sql_region_nombre = "SELECT NombreRegion FROM Region WHERE idRegion = :id_region";
     $stmt_region_nombre = $conn->prepare($sql_region_nombre);
-    // Bindea el parámetro :idregion con el valor obtenido de la URL. PDO::PARAM_INT especifica que es un entero.
-    $stmt_region_nombre->bindParam(':idregion', $idregion, PDO::PARAM_INT);
+    // Bindea el parámetro :id_region con el valor obtenido de la URL. PDO::PARAM_INT especifica que es un entero.
+    $stmt_region_nombre->bindParam(':id_region', $id_region, PDO::PARAM_INT);
     $stmt_region_nombre->execute();
     // Obtiene la primera fila del resultado.
     $region_info = $stmt_region_nombre->fetch();
@@ -42,13 +42,13 @@ try {
 
 // 3. Consulta a la base de datos para obtener las ciudades de la región específica.
 // Se utilizan los nombres de tabla y columnas que proporcionaste: 'Ciudad', 'idCiudad', 'NombreCiudad', 'idRegion'.
-$sql_ciudades = "SELECT idCiudad, NombreCiudad FROM Ciudad WHERE idRegion = :idregion ORDER BY NombreCiudad ASC";
+$sql_ciudades = "SELECT idCiudad, NombreCiudad FROM Ciudad WHERE idRegion = :id_region ORDER BY NombreCiudad ASC";
 
 try {
     // Prepara la consulta para obtener las ciudades.
     $stmt_ciudades = $conn->prepare($sql_ciudades);
-    // Bindea el parámetro :idregion con el ID de la región.
-    $stmt_ciudades->bindParam(':idregion', $idregion, PDO::PARAM_INT);
+    // Bindea el parámetro :id_region con el ID de la región.
+    $stmt_ciudades->bindParam(':id_region', $id_region, PDO::PARAM_INT);
     $stmt_ciudades->execute();
     // Obtiene todas las ciudades como un array de arrays asociativos.
     $ciudades = $stmt_ciudades->fetchAll();
@@ -189,7 +189,7 @@ try {
             // Itera sobre cada ciudad y la muestra en un elemento de lista.
             foreach ($ciudades as $row) {
                 // htmlspecialchars es crucial para prevenir ataques de Cross-Site Scripting (XSS).
-                echo "<li><span>" . htmlspecialchars($row["NombreCiudad"]) . "</span> <span>ID: " . htmlspecialchars($row["idCiudad"]) . "</span></li>";
+                echo "<li><span>" . htmlspecialchars($row["nombreciudad"]);
                 // Aquí podrías añadir un enlace para cada ciudad si necesitas ir a un nivel más profundo
                 // Por ejemplo, a una página de detalles de la ciudad o para seleccionar una ubicación específica.
             }
@@ -201,7 +201,7 @@ try {
         ?>
         <!-- Botón para volver a la página de regiones -->
         <div style="text-align: center;">
-            <a href="mostrar_regiones.php" class="back-button">Volver a Regiones</a>
+            <a href="vista_ciudades.php" class="back-button">Volver a Regiones</a>
         </div>
     </div>
 
