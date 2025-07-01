@@ -11,7 +11,7 @@ try {
     $idFuncion = isset($_GET['idFuncion']) ? $_GET['idFuncion'] : null;
     
     if ($idFuncion) {
-        // Consulta para obtener detalles de la función
+        // Consulta modificada para obtener detalles de la función
         $stmt = $pdo->prepare("
             SELECT 
                 F.*, 
@@ -21,11 +21,12 @@ try {
                 P.genero,
                 S.nombre AS nombre_sala,
                 C.nombre_cine,
-                C.ubicacion
+                CI.nombreciudad AS ubicacion  -- Obtenemos el nombre de la ciudad desde la tabla Ciudad
             FROM funcion F
             JOIN pelicula P ON F.id_pelicula = P.idpelicula
             JOIN sala S ON F.id_sala = S.idsala
             JOIN cine C ON S.cine_idcine = C.idcine
+            JOIN ciudad CI ON C.idciudad = CI.idciudad  -- Unimos con la tabla Ciudad
             WHERE F.idfuncion = :idFuncion
         ");
         $stmt->bindParam(':idFuncion', $idFuncion);
@@ -49,7 +50,7 @@ try {
                 SELECT id_butaca, fila, columna 
                 FROM butaca 
                 WHERE id_sala = :idSala
-                ORDER BY fila, CAST(columna AS INTEGER)  -- ¡Cambio importante aquí!
+                ORDER BY fila, CAST(columna AS INTEGER)
             ");
             $stmt->bindParam(':idSala', $funcion['id_sala']);
             $stmt->execute();
@@ -87,7 +88,7 @@ if (!$idFuncion || !$funcion || !$asientosSala) {
 
     <div class="menu">
       <a href="peliculas.php">Películas</a>
-      <a href="#">Cines</a>
+      <a href="cines.php">Cines</a>
       <a href="#">Promociones</a>
       <a href="#">Socios</a>
       <a href="#">Confitería</a>

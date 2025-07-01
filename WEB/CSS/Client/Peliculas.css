@@ -189,6 +189,37 @@ body {
   color: var(--text);
 }
 
+/* Estilos adicionales para el nuevo filtro */
+.filter-group-city {
+  margin-bottom: 20px;
+}
+
+.filter-group-city h3 {
+  margin-bottom: 8px;
+  color: #4f42b5;
+}
+
+.filter-select-city {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.filter-select-city:focus {
+  border-color: #0d6efd;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+}
+
+.city-icon {
+  color: #4f42b5;
+  margin-right: 8px;
+}
+
 /* Listado de películas */
 .movies-list {
   flex: 1;

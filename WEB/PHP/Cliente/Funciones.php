@@ -4,30 +4,42 @@ include_once("../../CONNECTION/conexion.php");
 session_start();
 
 try {
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $db_user, $db_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Obtener ID de la película y cine desde la URL
-    $idPelicula = isset($_GET['id']) ? $_GET['id'] : null;
-    $idCine = isset($_GET['idCine']) ? $_GET['idCine'] : null;
-    
-    if ($idPelicula && $idCine) {
-        // Consulta para obtener detalles de la película
-        $stmt = $pdo->prepare("SELECT * FROM Pelicula WHERE idPelicula = :id");
-        $stmt->bindParam(':id', $idPelicula);
-        $stmt->execute();
-        $pelicula = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if ($pelicula) {
-            // Consulta para obtener detalles del cine
-            $stmt = $pdo->prepare("SELECT * FROM Cine WHERE idCine = :idCine");
-            $stmt->bindParam(':idCine', $idCine);
-            $stmt->execute();
-            $cine = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($cine) {
-                // Obtener funciones para esta película en el cine específico
-                $stmt = $pdo->prepare("
+  $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $db_user, $db_pass);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  // Obtener ID de la película y cine desde la URL
+  $idPelicula = isset($_GET['id']) ? $_GET['id'] : null;
+  $idCine = isset($_GET['idCine']) ? $_GET['idCine'] : null;
+
+  if ($idPelicula && $idCine) {
+    // Consulta para obtener detalles de la película
+    $stmt = $pdo->prepare("SELECT * FROM Pelicula WHERE idPelicula = :id");
+    $stmt->bindParam(':id', $idPelicula);
+    $stmt->execute();
+    $pelicula = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($pelicula) {
+      // Consulta simplificada para obtener cine con ciudad
+      $stmt = $pdo->prepare("
+                SELECT 
+                    Cine.idCine, 
+                    Cine.Nombre_cine AS nombre_cine,
+                    Ciudad.NombreCiudad AS ubicacion
+                FROM Cine 
+                LEFT JOIN Ciudad ON Cine.idCiudad = Ciudad.idCiudad
+                WHERE Cine.idCine = :idCine
+            ");
+      $stmt->bindParam(':idCine', $idCine);
+      $stmt->execute();
+      $cine = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      // Manejar caso donde no haya ciudad registrada
+      if ($cine && empty($cine['ubicacion'])) {
+        $cine['ubicacion'] = 'Ubicación no disponible';
+      }
+      if ($cine) {
+        // Obtener funciones para esta película en el cine específico
+        $stmt = $pdo->prepare("
                     SELECT F.*, S.Nombre AS nombre_sala
                     FROM Funcion F
                     JOIN Sala S ON F.Id_Sala = S.idSala
@@ -36,42 +48,43 @@ try {
                     AND F.FechaHora > NOW() 
                     ORDER BY F.FechaHora
                 ");
-                $stmt->bindParam(':idPelicula', $idPelicula);
-                $stmt->bindParam(':idCine', $idCine);
-                $stmt->execute();
-                $funciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
-                // Agrupar funciones por fecha
-                $funcionesAgrupadas = [];
-                foreach ($funciones as $funcion) {
-                    $fecha = date('Y-m-d', strtotime($funcion['fechahora']));
-                    
-                    if (!isset($funcionesAgrupadas[$fecha])) {
-                        $funcionesAgrupadas[$fecha] = [];
-                    }
-                    
-                    $funcionesAgrupadas[$fecha][] = [
-                        'idFuncion' => $funcion['idfuncion'],
-                        'hora' => date('H:i', strtotime($funcion['fechahora'])),
-                        'sala' => $funcion['nombre_sala']
-                    ];
-                }
-            }
+        $stmt->bindParam(':idPelicula', $idPelicula);
+        $stmt->bindParam(':idCine', $idCine);
+        $stmt->execute();
+        $funciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Agrupar funciones por fecha
+        $funcionesAgrupadas = [];
+        foreach ($funciones as $funcion) {
+          $fecha = date('Y-m-d', strtotime($funcion['fechahora']));
+
+          if (!isset($funcionesAgrupadas[$fecha])) {
+            $funcionesAgrupadas[$fecha] = [];
+          }
+
+          $funcionesAgrupadas[$fecha][] = [
+            'idFuncion' => $funcion['idfuncion'],
+            'hora' => date('H:i', strtotime($funcion['fechahora'])),
+            'sala' => $funcion['nombre_sala']
+          ];
         }
+      }
     }
+  }
 } catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+  die("Error de conexión: " . $e->getMessage());
 }
 
 // Si no se encontró la película o cine, redirigir
 if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
-    header("Location: peliculas.php");
-    exit;
+  header("Location: peliculas.php");
+  exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title><?php echo $pelicula['nombre']; ?> - Cine Azul</title>
@@ -80,6 +93,7 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../CSS/Client/Funciones.css">
 </head>
+
 <body>
 
   <!-- Barra de navegación con azul -->
@@ -91,7 +105,7 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
 
     <div class="menu">
       <a href="peliculas.php">Películas</a>
-      <a href="#">Cines</a>
+      <a href="cines.php">Cines</a>
       <a href="#">Promociones</a>
       <a href="#">Socios</a>
       <a href="#">Confitería</a>
@@ -116,30 +130,30 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
       <div class="movie-poster">
         <img src="<?php echo htmlspecialchars($pelicula['imagen']); ?>" alt="<?php echo htmlspecialchars($pelicula['nombre']); ?>">
       </div>
-      
+
       <div class="movie-info">
         <h1 class="movie-title"><?php echo htmlspecialchars($pelicula['nombre']); ?></h1>
-        
+
         <div class="movie-meta">
           <span><i class="fas fa-film"></i> <?php echo htmlspecialchars($pelicula['genero']); ?></span>
           <span><i class="fas fa-clock"></i> <?php echo htmlspecialchars($pelicula['duracion']); ?> min</span>
-          <span><i class="fas fa-user"></i> <?php echo '+14';?></span>
+          <span><i class="fas fa-user"></i> <?php echo '+14'; ?></span>
         </div>
-        
+
         <h3 class="section-title">Sinopsis</h3>
         <p class="movie-description"><?php echo htmlspecialchars($pelicula['sinopsis']); ?></p>
-        
+
         <div class="movie-details">
           <div class="detail-item">
             <h4>Director</h4>
             <p><?php echo htmlspecialchars($pelicula['director'] ?? 'No disponible'); ?></p>
           </div>
-          
+
           <div class="detail-item">
             <h4>Idioma</h4>
             <p>Subtitulada | Doblada</p>
           </div>
-          
+
           <div class="detail-item">
             <h4>Formato Disponible</h4>
             <p>2D.CONV</p>
@@ -147,7 +161,7 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
         </div>
       </div>
     </div>
-    
+
     <!-- Información del cine seleccionado -->
     <div class="cinema-info">
       <div class="cinema-icon">
@@ -158,16 +172,16 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
         <p><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($cine['ubicacion']); ?></p>
       </div>
     </div>
-    
+
     <!-- Sección de funciones -->
     <div class="showtimes-container">
       <h2 class="section-title">Funciones Disponibles</h2>
-      
+
       <?php if (!empty($funcionesAgrupadas)): ?>
         <?php foreach ($funcionesAgrupadas as $fecha => $horarios): ?>
           <div class="date-group">
             <h3 class="date-title"><?php echo date('l, d F', strtotime($fecha)); ?></h3>
-            
+
             <div class="showtimes-grid">
               <?php foreach ($horarios as $horario): ?>
                 <a href="Asientos.php?idFuncion=<?php echo $horario['idFuncion']; ?>" class="showtime-btn">
@@ -195,7 +209,7 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
         <i class="fas fa-film"></i>
         <span>Cine Azul</span>
       </div>
-      
+
       <div class="social-icons">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -203,7 +217,7 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
         <a href="#"><i class="fab fa-youtube"></i></a>
         <a href="#"><i class="fab fa-tiktok"></i></a>
       </div>
-      
+
       <p>Disfruta del mejor cine en nuestras modernas salas con tecnología de última generación.</p>
       <p>© 2023 Cine Azul. Todos los derechos reservados.</p>
       <div class="copyright">
@@ -220,7 +234,7 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
         document.querySelectorAll('.showtime-btn').forEach(b => {
           b.classList.remove('active');
         });
-        
+
         // Seleccionar este horario
         this.classList.add('active');
       });
@@ -228,4 +242,5 @@ if (!$idPelicula || !$idCine || !$pelicula || !$cine) {
   </script>
 
 </body>
+
 </html>

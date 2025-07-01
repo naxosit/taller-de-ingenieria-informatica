@@ -1,3 +1,20 @@
+-- Regiones
+INSERT INTO Region (idRegion, NombreRegion) VALUES
+(10, 'Región de Los Lagos'),
+(13, 'Región Metropolitana de Santiago'),
+(14, 'Región de Los Ríos');
+
+-- Ciudades
+INSERT INTO Ciudad (idCiudad, idRegion, NombreCiudad) VALUES
+(10301, 10, 'Osorno'),
+(10101, 10, 'Puerto Montt');
+
+-- Cines
+INSERT INTO Cine (Nombre_cine, correo_cine, telefono, ubicacion, idCiudad) VALUES
+('Cine Meyer', 'contacto@cinemeyer.cl', 226789321, 'Eduardo Meyer Eggers 3280', 10301),
+('Cine Chuyaca', 'info@chuyacacine.cl', 223456789, 'Av Alberto - Hertha Fuchslocher 1305', 10301);
+
+-- Películas
 INSERT INTO Pelicula (Nombre, Duracion, Sinopsis, Director, Genero, Imagen) VALUES
 ('Inception', 148, 'Un ladrón que roba secretos corporativos a través del uso de la tecnología de los sueños.', 'Christopher Nolan', 'Ciencia ficción', 'https://i.blogs.es/bfb0b4/inception-origen-nuevo-cartel/450_1000.jpg'),
 ('Cómo entrenar a tu dragón', 125, 'Un joven vikingo aspira a cazar dragones, pero se convierte inesperadamente en amigo de un joven dragón.', 'Dean DeBlois', 'Aventura, Fantasia', 'https://m.media-amazon.com/images/M/MV5BY2E5YjE2YTQtZGIxYi00YTU4LTk3YzItYmMyZTM3M2I5ZTM3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'),
@@ -5,11 +22,7 @@ INSERT INTO Pelicula (Nombre, Duracion, Sinopsis, Director, Genero, Imagen) VALU
 ('Avengers: Endgame', 181, 'Los Vengadores se enfrentan a Thanos en una batalla épica.', 'Anthony y Joe Russo', 'Acción', 'https://hips.hearstapps.com/hmg-prod/images/poster-vengadores-endgame-1552567490.jpg'),
 ('Oppenheimer', 180, 'Durante la Segunda Guerra Mundial, el teniente general Leslie Groves designa al físico J. Robert Oppenheimer para un grupo de trabajo que está desarrollando el Proyecto Manhattan, cuyo objetivo consiste en fabricar la primera bomba atómica.', 'Christopher Nolan', 'Suspenso', 'https://pics.filmaffinity.com/Oppenheimer-828933592-large.jpg');
 
--- Inserciones de cines en la tabla Cine
-INSERT INTO Cine (Nombre_cine, correo_cine, telefono, Ubicacion) VALUES
-('Cine Meyer', 'contacto@cinemeyer.cl', 226789321, 'Calle Meyer 1234, Osorno'),
-('Cine Chuyaca', 'info@chuyacacine.cl', 223456789, 'Av. Chuyaca 4321, Osorno');
-
+-- Salas
 INSERT INTO Sala (Nombre, Tipo_pantalla, Cine_idCine) VALUES
 ('Sala 1', '2D', 1),
 ('Sala 2', '3D', 1),
@@ -17,6 +30,7 @@ INSERT INTO Sala (Nombre, Tipo_pantalla, Cine_idCine) VALUES
 ('Sala 1', '2D', 2),
 ('Sala 2', '4DX', 2);
 
+-- Funciones
 INSERT INTO Funcion (Id_Pelicula, Id_Sala, FechaHora) VALUES
 (1, 1, '2025-06-22 18:00:00'),
 (2, 2, '2025-06-22 20:30:00'),
@@ -24,7 +38,7 @@ INSERT INTO Funcion (Id_Pelicula, Id_Sala, FechaHora) VALUES
 (4, 4, '2025-06-24 21:00:00'),
 (5, 5, '2025-06-25 16:00:00');
 
---Insertamos butacas a las salas
+-- Butacas
 DO $$
 DECLARE
     fila CHAR;
