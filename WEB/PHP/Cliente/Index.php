@@ -40,7 +40,7 @@ try {
 
     <div class="menu">
       <a href="peliculas.php">Películas</a>
-      <a href="#">Cines</a>
+      <a href="cines.php">Cines</a>
       <a href="#">Promociones</a>
       <a href="#">Confitería</a>
     </div>
@@ -144,15 +144,15 @@ try {
       <div class="social-icons">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/_.victor.alexis._/"><i class="fab fa-instagram"></i></a>
         <a href="#"><i class="fab fa-youtube"></i></a>
         <a href="#"><i class="fab fa-tiktok"></i></a>
       </div>
       
       <p>Disfruta del mejor cine en nuestras modernas salas con tecnología de última generación.</p>
-      <p>© 2023 Cine Azul. Todos los derechos reservados.</p>
+      <p>© 2025 Cine Azul. Todos los derechos reservados.</p>
       <div class="copyright">
-        <p>Este sitio es solo con fines educativos. Las imágenes son de Unsplash.</p>
+        <p>Este sitio es solo con fines educativos.</p>
       </div>
     </div>
   </footer>

@@ -1,162 +1,16 @@
-/* Estilos para el mensaje de éxito */
-.mensaje-exito {
-  background-color: #e8f5e9;
-  color: var(--success);
-  padding: 15px;
-  border-radius: 4px;
-  text-align: center;
-  margin: 20px auto;
-  max-width: 500px;
-  box-shadow: var(--shadow);
-}
-
-/* Contenedor principal del formulario */
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 240px); /* Resta altura de header y footer */
-  padding: 40px 20px;
-  margin-top: 80px; /* Compensa navbar fijo */
-}
-
-.form-container {
-  background: var(--light);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
-  padding: 40px;
-  width: 100%;
-  max-width: 500px;
-  transition: all 0.3s ease;
-}
-
-.form-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.form-header h1 {
-  font-size: 2rem;
-  color: var(--primary);
-  margin-bottom: 10px;
-}
-
-.form-header p {
-  color: #666;
-  font-size: 1rem;
-}
-
-/* Mensaje de error */
-.error {
-  background-color: #ffebee;
-  color: var(--danger);
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 500;
-}
-
-/* Grupos de inputs */
-.input-group {
-  position: relative;
-  margin-bottom: 25px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.input-group input {
-  width: 100%;
-  padding: 12px 15px 12px 40px;
-  border: 1px solid var(--gray-dark);
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.input-group input:focus {
-  outline: none;
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 2px rgba(79, 66, 181, 0.2);
-}
-
-.input-group i {
-  position: absolute;
-  left: 15px;
-  bottom: 12px;
-  color: #777;
-}
-
-/* Botón de envío */
-.btn-submit {
-  background: var(--gradient);
-  color: white;
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 10px;
-}
-
-.btn-submit:hover {
-  background: linear-gradient(
-    135deg,
-    var(--primary-dark) 0%,
-    var(--primary) 100%
-  );
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Pie del formulario */
-.form-footer {
-  text-align: center;
-  margin-top: 20px;
-  color: #666;
-}
-
-.form-footer p {
-  margin: 8px 0;
-}
-
-.form-footer a {
-  color: var(--primary);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.form-footer a:hover {
-  color: var(--primary-dark);
-  text-decoration: underline;
-}
-
-/* Estilos mejorados solo para el área de login */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(
-    100vh - 80px - 100px
-  ); /* Altura total menos navbar y footer */
+  min-height: calc(100vh - 80px - 100px);
+  /* Altura total menos navbar y footer */
   padding: 40px 20px;
   background-color: var(--gray);
 }
 
 .login-box {
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   background: var(--light);
   border-radius: 12px;
   overflow: hidden;
@@ -291,25 +145,15 @@ main {
   text-decoration: underline;
 }
 
-.error,
-.mensaje-exito {
+.error {
+  background-color: #ffebee;
+  color: var(--danger);
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 6px;
   text-align: center;
   font-size: 0.95rem;
-}
-
-.error {
-  background-color: #ffebee;
-  color: var(--danger);
   border: 1px solid rgba(244, 67, 54, 0.2);
-}
-
-.mensaje-exito {
-  background-color: #e8f5e9;
-  color: var(--success);
-  border: 1px solid rgba(76, 175, 80, 0.2);
 }
 
 /* Animaciones */
@@ -318,13 +162,14 @@ main {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.form-container {
+.login-box {
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -341,12 +186,4 @@ main {
   .login-header h1 {
     font-size: 1.5rem;
   }
-
-  .login-icon {
-    font-size: 2.5rem;
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
-  }
-  
 }
