@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
             }
         }
         
-        $stmt = $db->prepare("SELECT c.contraseñausuario AS password, p.rol as rol
+        $stmt = $db->prepare("SELECT c.contraseñausuario AS password, p.rol as rol, p.nombre, p.apellido
                             FROM perfil p
                             INNER JOIN contraseña c ON p.rut = c.rut
                             WHERE p.rut = ?");
@@ -41,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
         if ($usuario && $usuario['password'] === $password) {
             $_SESSION['rut'] = $rut;
             $_SESSION['rol'] = $usuario['rol'];
+            $_SESSION['nombre'] = $usuario['nombre'];
+            $_SESSION['apellido'] = $usuario['apellido'];
         
             switch (strtolower($usuario['rol'])) {
                 case 'admin':

@@ -1,0 +1,178 @@
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.boletos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.boleto-card {
+    background: rgb(255, 255, 255);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 5px solid var(--primary);
+}
+
+.boleto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.boleto-card.futuro {
+    border-left-color: var(--primary);
+}
+
+.boleto-card.pasado {
+    border-left-color: var(--gray-dark);
+    opacity: 0.8;
+}
+
+.boleto-header {
+    background: var(--primary);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boleto-card.futuro .boleto-header {
+    background: var(--primary);
+}
+
+.boleto-card.pasado .boleto-header {
+    background: var(--gray-dark);
+}
+
+.boleto-header h2 {
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.estado {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.boleto-info {
+    padding: 25px 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
+
+.info-item i {
+    width: 30px;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.boleto-card.futuro .info-item i {
+    color: var(--primary);
+}
+
+.boleto-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--gray);
+    border-top: 1px solid var(--gray-dark);
+}
+
+.fecha-compra {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.btn-descargar {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.btn-descargar:hover {
+    background: var(--primary-dark);
+}
+
+.no-boletos {
+    text-align: center;
+    padding: 50px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 30px;
+}
+
+.no-boletos i {
+    font-size: 4rem;
+    color: var(--gray-dark);
+    margin-bottom: 20px;
+}
+
+.no-boletos p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.btn-ver-peliculas {
+    background: var(--primary);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.btn-ver-peliculas:hover {
+    background: var(--primary-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .boletos-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .boleto-card {
+        max-width: 100%;
+    }
+    
+    .boleto-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .boleto-footer {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+}

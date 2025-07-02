@@ -1,0 +1,127 @@
+/* Estilos para el menú de usuario */
+.user-menu {
+  position: relative;
+  display: inline-block;
+  z-index: 1001;
+}
+
+.user-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: background 0.3s;
+  height: 44px;
+}
+
+.user-btn:hover {
+  background: var(--primary-dark);
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  width: 250px;
+  z-index: 1000;
+  display: none;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.user-menu:hover .user-dropdown {
+  display: block;
+}
+
+.user-info {
+  padding: 15px;
+  border-bottom: 1px solid var(--gray-dark);
+  background: var(--gray);
+}
+
+.user-name {
+  font-weight: 600;
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.user-rut {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.3s;
+  font-size: 0.95rem;
+}
+
+.dropdown-item:hover {
+  background: var(--gray);
+  color: var(--primary);
+}
+
+.dropdown-item i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .user-menu {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .user-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .user-dropdown {
+    width: 100%;
+    right: auto;
+    left: 0;
+  }
+}
+
+/* Mensaje de éxito */
+.mensaje-exito {
+  background: var(--success);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-weight: 500;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

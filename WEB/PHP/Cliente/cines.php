@@ -49,6 +49,7 @@ try {
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../CSS/Client/styles.css">
   <link rel="stylesheet" href="../../CSS/Client/Cines.css">
+    <link rel="stylesheet" href="../../CSS/Client/menusuario.css">
 </head>
 
 <body>
@@ -67,7 +68,28 @@ try {
       <a href="#">Confitería</a>
     </div>
 
-      <div class="actions">
+    <div class="actions">
+      <?php if (isset($_SESSION['rut'])): ?>
+        <div class="user-menu">
+          <button class="user-btn">
+            <i class="fas fa-user-circle"></i>
+            <span><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="user-dropdown">
+            <div class="user-info">
+              <span class="user-name"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></span>
+              <span class="user-rut"><?= htmlspecialchars($_SESSION['rut']) ?></span>
+            </div>
+            <a href="mis_boletos.php" class="dropdown-item">
+              <i class="fas fa-ticket-alt"></i> Mis Boletos
+            </a>
+            <a href="../logout.php" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      <?php else: ?>
         <a href="../login.php" class="btn btn-login">
           <i class="fas fa-user"></i>
           <span>Iniciar sesión</span>
@@ -76,7 +98,8 @@ try {
           <i class="fas fa-user-plus"></i>
           <span>Registrarse</span>
         </a>
-      </div>
+      <?php endif; ?>
+    </div>
   </nav>
 
   <!-- Sección de cines -->
