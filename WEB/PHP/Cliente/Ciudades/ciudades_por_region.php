@@ -189,7 +189,8 @@ try {
             // Itera sobre cada ciudad y la muestra en un elemento de lista.
             foreach ($ciudades as $row) {
                 // htmlspecialchars es crucial para prevenir ataques de Cross-Site Scripting (XSS).
-                echo "<li><span>" . htmlspecialchars($row["nombreciudad"]);
+                echo "<li><span>" . htmlspecialchars($row["nombreciudad"]) . "</span>";
+                echo "<a href='direccion_maps_ciudades.php?idciudad=" . htmlspecialchars($row["idciudad"]) . "' class='back-button' style='margin-left: 10px; padding: 5px 10px; font-size: 0.8em;'>Ver Cines</a>";
                 // Aquí podrías añadir un enlace para cada ciudad si necesitas ir a un nivel más profundo
                 // Por ejemplo, a una página de detalles de la ciudad o para seleccionar una ubicación específica.
             }

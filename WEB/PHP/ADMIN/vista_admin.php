@@ -95,6 +95,7 @@ try {
             <a href="../Enc_cartelera/Peliculas.php">Vista Peliculas</a>
             <a href="../Enc_cartelera/anulacion_compra.php">Anular Compra</a>
             <a href="../Enc_cartelera/actualizar_compra.php">Modificar Butacas Compradas</a>
+            <a href="ModUbiCine/vista_editar_url.php">Modificar Ubicaciones de Cines</a>
         </nav>
     </header>
 
