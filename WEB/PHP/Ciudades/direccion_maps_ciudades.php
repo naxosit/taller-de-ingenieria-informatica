@@ -163,7 +163,7 @@ try {
 
         <div style="text-align: center;">
             <?php if ($id_region !== 0): ?>
-                <a href="vista_ciudades.php?idregion=<?php echo htmlspecialchars($id_region); ?>" class="back-button">Volver a Ciudades de la Región</a>
+                <a href="ciudades_por_region.php?idregion=<?php echo htmlspecialchars($id_region); ?>" class="back-button">Volver a Ciudades de la Región</a>
             <?php else: ?>
                 <a href="vista_ciudades.php" class="back-button">Volver a Ciudades</a>
             <?php endif; ?>
