@@ -1,7 +1,7 @@
 <?php
 // Incluye el archivo de conexión a la base de datos.
 // Asegúrate de que esta ruta sea correcta y que 'conexion.php' inicialice la variable $conn como un objeto PDO.
-include_once("../../CONNECTION/conexion.php");
+include_once("../../../CONNECTION/conexion.php");
 
 // 1. Obtener el idRegion de la URL (parámetro GET)
 // Se usa intval() para asegurar que el valor sea un entero, lo cual es crucial para la seguridad.

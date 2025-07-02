@@ -1,7 +1,6 @@
 <?php
 // Incluye el archivo de conexión a la base de datos.
-include_once("../../CONNECTION/conexion.php");
-
+include_once("../../../CONNECTION/conexion.php");
 // 1. Obtener el idCiudad de la URL (parámetro GET)
 $id_ciudad = isset($_GET['idciudad']) ? intval($_GET['idciudad']) : 0;
 

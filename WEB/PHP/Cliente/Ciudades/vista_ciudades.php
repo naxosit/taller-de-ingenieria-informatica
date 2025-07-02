@@ -1,7 +1,7 @@
 <?php
 // Asegúrate de que la ruta a tu archivo de conexión es correcta.
 // Si tu archivo de conexión maneja la configuración y la inicialización de $conn como un objeto PDO, está bien.
-include_once("../../CONNECTION/conexion.php");
+include_once("../../../CONNECTION/conexion.php");
 
 // 2. Consulta a la base de datos para obtener las regiones
 // Usamos los nombres de tabla y columnas que me proporcionaste (region, idregion, nombreregion)
@@ -25,7 +25,8 @@ try {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Regiones de nuestros cines</title> <link rel="stylesheet" href="../../../CSS/styles.css">
+    <title>Regiones de nuestros cines</title>
+    <link rel="stylesheet" href="../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../CSS/botones.css">
     <style>
         /* Estilos generales, algunos ya los tenías */
@@ -91,6 +92,25 @@ try {
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
+        /* === NUEVO ESTILO PARA EL BOTÓN DE VOLVER === */
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 10px; /* Margen superior para separarlo, centrado horizontalmente */
+            background-color: #7f8c8d; /* Un color neutro/secundario */
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #95a5a6;
+        }
+        
         /* Estilos para tu navegación y logo existentes */
         .page-title { /* Puedes quitar esto si <h1> es el título principal */
             text-align: center;
@@ -138,6 +158,11 @@ try {
             echo "<p class='no-regions'>No se encontraron regiones en la base de datos.</p>";
         }
         ?>
+        
+        <!-- === BOTÓN AÑADIDO === -->
+        <!-- La ruta "../../../index.php" asume que tu index está tres niveles arriba. Ajústala si es necesario. -->
+        <a href="../Index.php" class="back-button">Volver al Inicio</a>
+
     </div>
 
     <?php
