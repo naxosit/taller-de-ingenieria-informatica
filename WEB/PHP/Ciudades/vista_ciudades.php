@@ -1,7 +1,7 @@
 <?php
 // Asegúrate de que la ruta a tu archivo de conexión es correcta.
 // Si tu archivo de conexión maneja la configuración y la inicialización de $conn como un objeto PDO, está bien.
-include_once("../../../CONNECTION/conexion.php");
+include_once("../../CONNECTION/conexion.php");
 
 // 2. Consulta a la base de datos para obtener las regiones
 // Usamos los nombres de tabla y columnas que me proporcionaste (region, idregion, nombreregion)
@@ -17,7 +17,7 @@ try {
 } catch (PDOException $e) {
     die("Error al ejecutar la consulta: " . $e->getMessage());
 }
-
+    
 ?>
 
 <!DOCTYPE html>
