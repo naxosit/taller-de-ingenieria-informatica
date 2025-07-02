@@ -62,6 +62,9 @@ try {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cines en <?php echo $nombre_ciudad; ?> - Direcciones</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
     <link rel="stylesheet" href="../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../CSS/botones.css">
     <style>
@@ -148,7 +151,8 @@ try {
             foreach ($direcciones as $row) {
                 echo "<li>";
                 echo "<strong>" . htmlspecialchars($row["nombre_cine"]) . "</strong><br>";
-                echo "<a href='" . htmlspecialchars($row["url"]) . "' target='_blank'>" . htmlspecialchars($row["url"]) . "</a>";
+                // En lugar de texto, usamos la etiqueta <i> de Font Awesome
+                echo "<a href='" . htmlspecialchars($row["url"]) . "' target='_blank' title='Abrir en Google Maps'><i class='fa-solid fa-map-location-dot'></i></a>";  
                 echo "</li>";
             }
             echo "</ul>";
