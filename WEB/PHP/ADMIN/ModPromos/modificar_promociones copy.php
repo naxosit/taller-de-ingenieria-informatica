@@ -67,7 +67,7 @@ if (isset($_SESSION['status_message'])) {
 }
 
 
-$dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo', 'Todos'];
+$dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 ?>
 
 <!DOCTYPE html>
