@@ -43,7 +43,7 @@ try {
     <div class="menu">
       <a href="peliculas.php">Películas</a>
       <a href="cines.php">Cines</a>
-      <a href="#">Promociones</a>
+      <a href="Promociones/promociones.php">Promociones</a>
       <a href="#">Confitería</a>
     </div>
 
