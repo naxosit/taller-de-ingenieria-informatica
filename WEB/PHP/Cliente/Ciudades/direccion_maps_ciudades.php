@@ -1,6 +1,7 @@
 <?php
 // Incluye el archivo de conexión a la base de datos.
 include_once("../../../CONNECTION/conexion.php");
+
 // 1. Obtener el idCiudad de la URL (parámetro GET)
 $id_ciudad = isset($_GET['idciudad']) ? intval($_GET['idciudad']) : 0;
 
@@ -14,8 +15,8 @@ $nombre_ciudad = "Ciudad Desconocida";
 $id_region = 0; // Inicializar la variable para evitar errores.
 
 try {
-    // MODIFICACIÓN: Se añade idRegion a la consulta SELECT.
-    $sql_ciudad_info = "SELECT NombreCiudad, idRegion FROM Ciudad WHERE idCiudad = :id_ciudad";
+    // MODIFICACIÓN: La consulta SQL ahora usa nombres en minúsculas para mayor compatibilidad con PostgreSQL.
+    $sql_ciudad_info = "SELECT nombreciudad, idregion FROM ciudad WHERE idciudad = :id_ciudad";
     $stmt_ciudad_info = $conn->prepare($sql_ciudad_info);
     $stmt_ciudad_info->bindParam(':id_ciudad', $id_ciudad, PDO::PARAM_INT);
     $stmt_ciudad_info->execute();
@@ -23,7 +24,6 @@ try {
     
     if ($ciudad_info) {
         $nombre_ciudad = htmlspecialchars($ciudad_info['nombreciudad']);
-        // MODIFICACIÓN: Se asigna el valor de idRegion a la variable.
         $id_region = intval($ciudad_info['idregion']); 
     }
 } catch (PDOException $e) {
@@ -31,16 +31,17 @@ try {
 }
 
 // 3. Consulta a la base de datos para obtener las URLs de Maps de los cines en la ciudad.
+// MODIFICACIÓN: La consulta SQL ahora usa nombres en minúsculas.
 $sql_direcciones_maps = "
     SELECT
-        DM.URL,
-        C.Nombre_cine
+        dm.url,
+        c.nombre_cine
     FROM
-        DireccionMaps AS DM
+        direccionmaps AS dm
     JOIN
-        Cine AS C ON DM.idCine = C.idCine
+        cine AS c ON dm.idcine = c.idcine
     WHERE
-        DM.idCiudad = :id_ciudad
+        dm.idciudad = :id_ciudad
 ";
 
 $direcciones = [];
@@ -48,7 +49,8 @@ try {
     $stmt_direcciones_maps = $conn->prepare($sql_direcciones_maps);
     $stmt_direcciones_maps->bindParam(':id_ciudad', $id_ciudad, PDO::PARAM_INT);
     $stmt_direcciones_maps->execute();
-    $direcciones = $stmt_direcciones_maps->fetchAll();
+    // PDO para PostgreSQL devuelve los nombres de columna en minúsculas por defecto.
+    $direcciones = $stmt_direcciones_maps->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Error al ejecutar la consulta de direcciones de Maps: " . $e->getMessage());
 }
@@ -149,8 +151,8 @@ try {
             echo "<ul>";
             foreach ($direcciones as $row) {
                 echo "<li>";
+                // Los índices del array asociativo ya están en minúsculas, lo cual es correcto.
                 echo "<strong>" . htmlspecialchars($row["nombre_cine"]) . "</strong><br>";
-                // En lugar de texto, usamos la etiqueta <i> de Font Awesome
                 echo "<a href='" . htmlspecialchars($row["url"]) . "' target='_blank' title='Abrir en Google Maps'><i class='fa-solid fa-map-location-dot'></i></a>";  
                 echo "</li>";
             }
