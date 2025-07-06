@@ -17,10 +17,7 @@
     <header>
         <div class="logo">Web Cine - Gestión de Cines</div>
         <nav>
-            <a href="Cartelera.php">Cartelera</a>
-            <a href="Peliculas.php">Peliculas</a>
-            <a href="Salas.php">Salas</a>
-            <a href="Funciones.php">Funciones</a>
+            <a href="vista_admin.php">Volver</a>
         </nav>
     </header>
 

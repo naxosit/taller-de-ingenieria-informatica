@@ -17,9 +17,9 @@
     <header>
         <div class="logo">Web Cine - Gestión de Funciones</div>
         <nav>
-            <a href="Cartelera.php">Cartelera</a>
-            <a href="vista_encargado.php">Peliculas</a>
-            <a href="vista_salas.php">Salas</a>
+            <a href="../Cliente/Index.php">Vista Cliente</a>
+            <a href="Peliculas.php">Peliculas</a>
+            <a href="Enc_cartelera.php">Volver</a>
         </nav>
     </header>
 

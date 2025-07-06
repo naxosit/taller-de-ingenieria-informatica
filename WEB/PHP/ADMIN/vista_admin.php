@@ -89,14 +89,12 @@ try {
     <header class="header">
     <div class="logo">Web Cine - Administrador</div>
         <nav>
-            <a href="../Enc_cartelera/Cartelera.php">Vista Cartelera</a>
-            <a href="../Enc_cartelera/vista_salas.php">Vista Salas</a>
-            <a href="../Enc_cartelera/Funciones.php">Vista Funciones</a>
-            <a href="../Enc_cartelera/Peliculas.php">Vista Peliculas</a>
-            <a href="../Enc_cartelera/anulacion_compra.php">Anular Compra</a>
-            <a href="../Enc_cartelera/actualizar_compra.php">Modificar Butacas Compradas</a>
+            <a href="Cines.php">Cines</a>
+            <a href="Salas.php">Salas</a>
+            <a href="../Cliente/Index.php">Vista Cliente</a>
+            <a href="../Enc_cartelera/Enc_cartelera.php">Vista Enc. Cartelera</a>
+            <a href="../Enc_promoyconfi/Enc_promoyconfi.php">Vista Enc. Promo y Confi</a>
             <a href="ModUbiCine/vista_editar_url.php">Modificar Ubicaciones de Cines</a>
-            <a href="../Enc_cartelera/Cines.php">Vista Cines</a>
         </nav>
     </header>
 

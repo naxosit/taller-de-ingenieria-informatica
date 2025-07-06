@@ -132,9 +132,9 @@ try {
     </div>
 
     <div class="menu">
-      <a href="peliculas.php">Películas</a>
-      <a href="cines.php">Cines</a>
-      <a href="#">Promociones</a>
+      <a href="../Cliente/peliculas.php">Películas</a>
+      <a href="../Cliente/cines.php">Cines</a>
+      <a href="../Cliente/Promociones/promociones.php">Promociones</a>
       <a href="#">Confitería</a>
     </div>
 
@@ -173,32 +173,26 @@ try {
   </nav>
 
   <div class="main-container">
-    <h1 class="page-title">Gestión de Butacas</h1>
+    <h1 class="page-title">Gestión confiteria y promociones</h1>
     
     <div class="welcome-message">
-      <p>Bienvenido al panel de gestión de butacas. Desde aquí podrás controlar las peliculas en cartelera, las funciones proximas, 
-        ademas de las vistas de las salas. Selecciona una de las opciones disponibles para comenzar.</p>
+      <p>Bienvenido al panel de gestión de confiteria y promociones. Desde aqui podrias agregar productos
+        que se añadiran a la confiteria del cine y gestionarlos, ademas de programar y gestionar las promociones semanales.
+      </p>
     </div>
     
     <div class="buttons-container">
       <a href="Peliculas.php" class="big-button">
-        <i class="fa-solid fa-film"></i>
-        <h2>Peliculas</h2>
-        <p>Visualiza las peliculas que tiene el cine, ademas de editar y modificar estas mismas.</p>
+        <i class="fa-solid fa-burger"></i>
+        <h2>Productos</h2>
+        <p>Gestiona los productos que se encontraran en la seccion de confiteria en tu cine.</p>
       </a>
       
-      <a href="Funciones.php" class="big-button">
-        <i class="fa-solid fa-video"></i>
-        <h2>Funciones</h2>
-        <p>Desde aqui podra ver las funciones pasadas y futuras. Ademas de la creacion de funciones
-            para fechas futuras.
+      <a href="ModPromos/modificar_promociones.php" class="big-button">
+        <i class="fa-solid fa-gift"></i>
+        <h2>Promociones</h2>
+        <p>Desde aqui podra ver las promociones existentes correspondiende a su dia, ademas de agregar algunas nuevas.
         </p>
-      </a>
-      
-      <a href="#" class="big-button">
-        <i class="fas fa-chair"></i>
-        <h2>Butacas</h2>
-        <p>Para actualizar boletos o anular compras de clientes. Utilizar RUT del cliente.</p>
       </a>
     </div>
   </div>

@@ -13,9 +13,7 @@
     <header>
         <div class="logo">Web Cine - Gestión de Salas</div>
         <nav>
-            <a href="Cartelera.php">Cartelera</a>
-            <a href="Peliculas.php">Películas</a>
-            <a href="Funciones.php">Funciones</a>
+            <a href="vista_admin.php">Volver</a>
         </nav>
     </header>
 
