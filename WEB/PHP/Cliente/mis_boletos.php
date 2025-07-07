@@ -145,12 +145,6 @@ try {
               <span class="fecha-compra">
                 Comprado el <?= date('d/m/Y', strtotime($boleto['fechacompra'])) ?>
               </span>
-              
-              <?php if ($esFutura): ?>
-                <button class="btn-descargar">
-                  <i class="fas fa-download"></i> Descargar
-                </button>
-              <?php endif; ?>
             </div>
           </div>
         <?php endforeach; ?>
@@ -159,7 +153,7 @@ try {
       <div class="no-boletos">
         <i class="fas fa-ticket-alt"></i>
         <p>No tienes boletos comprados</p>
-        <a href="../peliculas.php" class="btn-ver-peliculas">Ver películas disponibles</a>
+        <a href="peliculas.php" class="btn-ver-peliculas">Ver películas disponibles</a>
       </div>
     <?php endif; ?>
   </div>
@@ -178,6 +172,7 @@ try {
         <a href="https://www.instagram.com/_.victor.alexis._/"><i class="fab fa-instagram"></i></a>
         <a href="#"><i class="fab fa-youtube"></i></a>
         <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="Ciudades/vista_ciudades.php"><i class="fas fa-map-marker-alt"></i></a>
       </div>
 
       <p>Disfruta del mejor cine en nuestras modernas salas con tecnología de última generación.</p>

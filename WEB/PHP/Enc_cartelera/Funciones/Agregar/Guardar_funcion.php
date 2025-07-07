@@ -4,19 +4,67 @@ include_once("../../../../CONNECTION/conexion.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pelicula_id = $_POST['id_pelicula'];
     $sala_id = $_POST['id_sala'];
-    $fecha_hora = $_POST['fecha_hora'];
+    $fecha = $_POST['fecha'];
+    $hora = $_POST['hora'];
+    
+    // Combinar fecha y hora
+    $fecha_hora = $fecha . ' ' . $hora;
 
-    if (empty($pelicula_id) || empty($sala_id) || empty($fecha_hora)) {
-        header("Location: Agregar_Funcion.php?mensaje=" . urlencode("Todos los campos son obligatorios.") . "&error=1");
+    // Validar formato de hora
+    if (!preg_match('/^\d{2}:\d{2}$/', $hora)) {
+        $params = http_build_query([
+            'id_pelicula' => $pelicula_id,
+            'id_sala' => $sala_id,
+            'fecha' => $fecha,
+            'hora' => $hora,
+            'error' => 1
+        ]);
+        header("Location: Agregar_Funcion.php?mensaje=" . urlencode("Formato de hora inválido") . "&$params");
+        exit;
+    }
+    
+    // Validar componentes de hora
+    list($horas, $minutos) = explode(':', $hora);
+    $horas = (int)$horas;
+    $minutos = (int)$minutos;
+    
+    if ($horas < 0 || $horas > 23) {
+        $params = http_build_query([
+            'id_pelicula' => $pelicula_id,
+            'id_sala' => $sala_id,
+            'fecha' => $fecha,
+            'hora' => $hora,
+            'error' => 1
+        ]);
+        header("Location: Agregar_Funcion.php?mensaje=" . urlencode("Hora inválida (00-23)") . "&$params");
+        exit;
+    }
+    
+    if ($minutos < 0 || $minutos > 59) {
+        $params = http_build_query([
+            'id_pelicula' => $pelicula_id,
+            'id_sala' => $sala_id,
+            'fecha' => $fecha,
+            'hora' => $hora,
+            'error' => 1
+        ]);
+        header("Location: Agregar_Funcion.php?mensaje=" . urlencode("Minutos inválidos (00-59)") . "&$params");
         exit;
     }
 
-    //Validar que la fecha y hora  no estén en el pasado
+    // Validar que la fecha sea futura
     $fechaHoraIngresada = new DateTime($fecha_hora);
     $fechaHoraActual = new DateTime();
 
-    if ($fechaHoraIngresada < $fechaHoraActual){
-        header("Location: Agregar_Funcion.php?mensaje=".urldecode("La fecha y hora deben ser futuras.") . "&error=1");
+    if ($fechaHoraIngresada <= $fechaHoraActual) {
+        $params = http_build_query([
+            'id_pelicula' => $pelicula_id,
+            'id_sala' => $sala_id,
+            'fecha' => $fecha,
+            'hora' => $hora,
+            'error' => 1
+        ]);
+        header("Location: Agregar_Funcion.php?mensaje=" . urlencode("La fecha y hora deben ser futuras") . "&$params");
         exit;
     }
 
@@ -31,14 +79,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../../Funciones.php?mensaje=" . urlencode("Función agregada correctamente."));
         exit;
     } catch (PDOException $e) {
-        // Si el error es por clave duplicada
+        $params = http_build_query([
+            'id_pelicula' => $pelicula_id,
+            'id_sala' => $sala_id,
+            'fecha' => $fecha,
+            'hora' => $hora,
+            'error' => 1
+        ]);
+        
         if ($e->getCode() == 23000) {
             $msg = "Ya existe una función con esa película, sala y hora.";
         } else {
             $msg = "Error al guardar: " . $e->getMessage();
         }
 
-        header("Location: ../../Funciones.php?mensaje=" . urlencode($msg) . "&error=1");
+        header("Location: Agregar_Funcion.php?mensaje=" . urlencode($msg) . "&$params");
         exit;
     }
 } else {

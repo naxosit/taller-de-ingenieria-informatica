@@ -182,7 +182,7 @@ try {
     </div>
     
     <div class="buttons-container">
-      <a href="Peliculas.php" class="big-button">
+      <a href="Confiteria/confiteriadmin.php" class="big-button">
         <i class="fa-solid fa-burger"></i>
         <h2>Productos</h2>
         <p>Gestiona los productos que se encontraran en la seccion de confiteria en tu cine.</p>

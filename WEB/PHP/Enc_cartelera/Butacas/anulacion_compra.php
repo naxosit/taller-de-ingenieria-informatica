@@ -1,5 +1,5 @@
 <?php
-include_once("../../CONNECTION/conexion.php");
+include_once("../../../CONNECTION/conexion.php");
 
 try {
     $conn = new PDO("pgsql:host=$host;dbname=$dbname", $db_user, $db_pass);

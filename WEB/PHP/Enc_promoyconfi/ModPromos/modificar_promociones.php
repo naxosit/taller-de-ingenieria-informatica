@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $descripcion = trim($_POST['descripcionpromocion']);
             $dia = trim($_POST['diapromocion']);
 
-            if (empty($nombre) || empty($dia)) {
-                $_SESSION['status_message'] = "Error: El nombre y el día de la promoción son obligatorios.";
+            if (empty($nombre) || empty($descripcion) || empty($dia) || ctype_space($descripcion)) {
+                $_SESSION['status_message'] = "Error: Todos los campos son obligatorios y no pueden contener solo espacios.";
             } else {
                 if ($id_promocion > 0) {
                     // --- Actualizar una promoción existente ---
@@ -111,7 +111,7 @@ $dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado',
             </div>
             <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                <textarea id="descripcion" name="descripcionpromocion"></textarea>
+                <textarea id="descripcion" name="descripcionpromocion" required></textarea>
             </div>
             <div class="form-group">
                 <label for="dia">Día de la Promoción</label>
@@ -144,7 +144,7 @@ $dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado',
                     </div>
                     <div class="form-group">
                         <label>Descripción</label>
-                        <textarea name="descripcionpromocion"><?php echo htmlspecialchars($promo['descripcionpromocion']); ?></textarea>
+                        <textarea name="descripcionpromocion" required><?php echo htmlspecialchars($promo['descripcionpromocion']); ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Día de la Promoción</label>

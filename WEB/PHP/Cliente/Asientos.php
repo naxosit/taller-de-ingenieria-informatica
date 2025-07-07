@@ -260,6 +260,7 @@ if (!$idFuncion || !$funcion || !$asientosSala) {
         <a href="#"><i class="fab fa-instagram"></i></a>
         <a href="#"><i class="fab fa-youtube"></i></a>
         <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="Ciudades/vista_ciudades.php"><i class="fas fa-map-marker-alt"></i></a>
       </div>
       
       <p>Disfruta del mejor cine en nuestras modernas salas con tecnología de última generación.</p>

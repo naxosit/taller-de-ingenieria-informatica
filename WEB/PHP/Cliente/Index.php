@@ -1,7 +1,6 @@
 <?php
 include_once("../../CONNECTION/conexion.php");
 session_start();
-// Establecer conexión con la base de datos (ajusta estos valores)
 
 try {
   $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $db_user, $db_pass);
@@ -44,7 +43,7 @@ try {
       <a href="peliculas.php">Películas</a>
       <a href="cines.php">Cines</a>
       <a href="Promociones/promociones.php">Promociones</a>
-      <a href="#">Confitería</a>
+      <a href="../Enc_promoyconfi/confiteriacliente.php">Confitería</a>
     </div>
 
     <div class="actions">

@@ -195,7 +195,7 @@ try {
         </p>
       </a>
       
-      <a href="#" class="big-button">
+      <a href="Butacas/Actualizar_compra.php" class="big-button">
         <i class="fas fa-chair"></i>
         <h2>Butacas</h2>
         <p>Para actualizar boletos o anular compras de clientes. Utilizar RUT del cliente.</p>
