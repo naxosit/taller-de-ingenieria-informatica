@@ -65,7 +65,6 @@ try {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ciudades de <?php echo $nombre_region; ?></title>
-    <!-- Incluye tus hojas de estilo CSS. Asegúrate de que las rutas sean correctas. -->
     <link rel="stylesheet" href="../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../CSS/botones.css">
     <style>

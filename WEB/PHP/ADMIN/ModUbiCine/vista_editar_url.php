@@ -5,7 +5,7 @@ session_start();
 // Incluye el archivo de conexión a la base de datos.
 include_once("../.././../CONNECTION/conexion.php");
 
-// --- LÓGICA DEL BACKEND (SE EJECUTA SI SE ENVÍA UN FORMULARIO) ---
+// --- LÓGICA DEL BACKEND
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Se obtiene el ID del cine de forma segura (usando 'idcine' en minúsculas).
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nueva_url = isset($_POST['nueva_url']) ? trim($_POST['nueva_url']) : '';
 
             if (!empty($nueva_url) && filter_var($nueva_url, FILTER_VALIDATE_URL)) {
-                // MODIFICACIÓN: Nombres en minúsculas.
+                // Nombres en minúsculas.
                 $sql_check = "SELECT idcine FROM direccionmaps WHERE idcine = :id_cine";
                 $stmt_check = $conn->prepare($sql_check);
                 $stmt_check->bindParam(':id_cine', $id_cine, PDO::PARAM_INT);
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt_ciudad->execute();
                     $cine_data = $stmt_ciudad->fetch(PDO::FETCH_ASSOC);
 
-                    // MODIFICACIÓN: Usar 'idciudad' (minúsculas) para la comprobación y asignación.
+                    // Usar 'idciudad' (minúsculas) para la comprobación y asignación.
                     if ($cine_data && isset($cine_data['idciudad']) && $cine_data['idciudad'] !== null) {
                         $id_ciudad = $cine_data['idciudad'];
                         

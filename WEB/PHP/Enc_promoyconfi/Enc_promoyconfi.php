@@ -132,10 +132,11 @@ try {
     </div>
 
     <div class="menu">
+      <a href="../Cliente/Index.php">Inicio</a>
       <a href="../Cliente/peliculas.php">Películas</a>
       <a href="../Cliente/cines.php">Cines</a>
       <a href="../Cliente/Promociones/promociones.php">Promociones</a>
-      <a href="#">Confitería</a>
+      <a href="../Enc_promoyconfi/confiteriacliente.php">Confitería</a>
     </div>
 
     <div class="actions">

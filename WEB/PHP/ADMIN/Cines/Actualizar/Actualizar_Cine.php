@@ -139,7 +139,7 @@ unset($_SESSION['form_data']);
                                         // Determinar si esta ciudad debe estar seleccionada
                                         $selected = false;
                                         
-                                        // Si hay datos de formulario guardados (error previo)
+                                        // Si hay datos de formulario guardados
                                         if (isset($form_data['ciudad_id'])) {
                                             $selected = ($form_data['ciudad_id'] == $ciudad['id']);
                                         } 

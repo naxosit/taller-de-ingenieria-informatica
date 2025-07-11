@@ -124,7 +124,7 @@ try {
 
 <body>
 
-  <!-- Barra de navegación con azul -->
+  <!-- Barra de navegación-->
   <nav class="navbar">
     <div class="logo">
       <i class="fas fa-film"></i>
@@ -132,10 +132,11 @@ try {
     </div>
 
     <div class="menu">
-      <a href="peliculas.php">Películas</a>
-      <a href="cines.php">Cines</a>
-      <a href="#">Promociones</a>
-      <a href="#">Confitería</a>
+      <a href="../Cliente/Index.php">Inicio</a>
+      <a href="../Cliente/peliculas.php">Películas</a>
+      <a href="../Cliente/cines.php">Cines</a>
+      <a href="../Cliente/Promociones/promociones.php">Promociones</a>
+      <a href="../Enc_promoyconfi/confiteriacliente.php">Confitería</a>
     </div>
 
     <div class="actions">

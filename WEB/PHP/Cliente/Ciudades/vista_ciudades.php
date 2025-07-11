@@ -159,8 +159,6 @@ try {
         }
         ?>
         
-        <!-- === BOTÓN AÑADIDO === -->
-        <!-- La ruta "../../../index.php" asume que tu index está tres niveles arriba. Ajústala si es necesario. -->
         <a href="../Index.php" class="back-button">Volver al Inicio</a>
 
     </div>

@@ -53,7 +53,7 @@ try {
     $total_usuarios = $db->query("SELECT COUNT(*) FROM Perfil")->fetchColumn();
     
     // Cantidad de usuarios por rol.
-    $roles = ['admin', 'encargado cartelera', 'encargado_butaca', 'cliente'];
+    $roles = ['admin', 'encargado cartelera', 'encargado confiteria', 'cliente'];
     $usuarios_por_rol = [];
 
     foreach ($roles as $rol) {
@@ -119,20 +119,20 @@ try {
       <tr>
         <th>Total de usuarios</th>
         <th>Administradores</th>
-        <th>Enc. Sala</th>
+        <th>Enc. cartelera</th>
       </tr>
       <tr>
         <td><?= $total_usuarios ?></td>
         <td><?= $usuarios_por_rol['admin'] ?? 0 ?></td>
-        <td><?= $usuarios_por_rol['encargado_sala'] ?? 0 ?></td>
+        <td><?= $usuarios_por_rol['encargado cartelera'] ?? 0 ?></td>
       </tr>
       <tr>
-        <th>Enc. Butaca</th>
+        <th>Enc. Confiteria y promos</th>
         <th>Clientes</th>
         <th>Total de activos</th>
       </tr>
       <tr>
-        <td><?= $usuarios_por_rol['encargado_butaca'] ?? 0 ?></td>
+        <td><?= $usuarios_por_rol['encargado confiteria'] ?? 0 ?></td>
         <td><?= $usuarios_por_rol['cliente'] ?? 0 ?></td>
         <td><?= array_sum($usuarios_por_rol) ?></td>
       </tr>

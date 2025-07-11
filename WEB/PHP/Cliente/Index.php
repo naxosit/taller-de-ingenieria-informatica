@@ -40,6 +40,7 @@ try {
     </div>
 
     <div class="menu">
+      <a href="Index.php">Inicio</a>
       <a href="peliculas.php">Películas</a>
       <a href="cines.php">Cines</a>
       <a href="Promociones/promociones.php">Promociones</a>
