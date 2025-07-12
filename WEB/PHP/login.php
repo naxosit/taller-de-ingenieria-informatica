@@ -49,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnlogin'])) {
                     header("Location: admin/vista_admin.php");
                     break;
                 case 'encargado cartelera':
-                    header("Location: Enc_cartelera/vista_encargado.php");
+                    header("Location: Enc_cartelera/Enc_cartelera.php");
                     break;
-                case 'encargado butaca':
-                    header("Location: encargado_butaca.php");
+                case 'encargado confiteria':
+                    header("Location: Enc_promoyconfi/Enc_promoyconfi.php");
                     break;
                 default:
                     header("Location: Cliente/Index.php");

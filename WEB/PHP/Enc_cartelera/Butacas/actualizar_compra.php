@@ -256,9 +256,8 @@ include_once("Actualizar_butaca_logica.php");
     <header>
         <div class="logo">Web Cine - Gestión de Compras</div>
         <nav>
-            <a href="Cartelera.php">Cartelera</a>
-            <a href="vista_encargado.php">Películas</a>
-            <a href="vista_salas.php">Salas</a>
+            <a href="anulacion_compra.php">Anular Compra</a>
+            <a href="../Enc_cartelera.php">Volver</a>
         </nav>
     </header>
 

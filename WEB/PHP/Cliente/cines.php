@@ -62,10 +62,11 @@ try {
     </div>
 
     <div class="menu">
+      <a href="Index.php">Inicio</a>
       <a href="peliculas.php">Películas</a>
       <a href="#" class="active">Cines</a>
-      <a href="#">Promociones</a>
-      <a href="#">Confitería</a>
+      <a href="Promociones/promociones.php">Promociones</a>
+      <a href="../Enc_promoyconfi/confiteriacliente.php">Confitería</a>
     </div>
 
     <div class="actions">

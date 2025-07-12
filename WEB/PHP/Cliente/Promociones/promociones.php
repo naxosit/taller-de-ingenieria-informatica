@@ -57,7 +57,6 @@ if ($result && pg_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Promociones de la Semana - CineMax</title>
-    <!-- Se utiliza Tailwind CSS para un diseño moderno y responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -132,6 +131,5 @@ if ($result && pg_num_rows($result) > 0) {
 
 <?php
 // --- CIERRE DE LA CONEXIÓN ---
-// Es una buena práctica cerrar la conexión cuando el script ha terminado.
 pg_close($conn);
 ?>

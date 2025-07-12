@@ -114,8 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anular Compras</title>
-    <link rel="stylesheet" href="../../CSS/styles.css">
-    <link rel="stylesheet" href="../../CSS/botones.css">
+    <link rel="stylesheet" href="../../../CSS/styles.css">
+    <link rel="stylesheet" href="../../../CSS/botones.css">
     <style>
         .form-group {
             margin-bottom: 20px;
@@ -213,9 +213,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <header>
         <div class="logo">Web Cine - Gestión de Compras</div>
         <nav>
-            <a href="Cartelera.php">Cartelera</a>
-            <a href="vista_encargado.php">Películas</a>
-            <a href="vista_salas.php">Salas</a>
+            <a href="actualizar_compra.php">Actualizar Butacas</a>
+            <a href="../Enc_cartelera.php">Volver</a>
         </nav>
     </header>
 

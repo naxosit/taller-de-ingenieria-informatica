@@ -15,7 +15,7 @@ $nombre_ciudad = "Ciudad Desconocida";
 $id_region = 0; // Inicializar la variable para evitar errores.
 
 try {
-    // MODIFICACIÓN: La consulta SQL ahora usa nombres en minúsculas para mayor compatibilidad con PostgreSQL.
+    // La consulta SQL ahora usa nombres en minúsculas para mayor compatibilidad con PostgreSQL.
     $sql_ciudad_info = "SELECT nombreciudad, idregion FROM ciudad WHERE idciudad = :id_ciudad";
     $stmt_ciudad_info = $conn->prepare($sql_ciudad_info);
     $stmt_ciudad_info->bindParam(':id_ciudad', $id_ciudad, PDO::PARAM_INT);
@@ -31,7 +31,7 @@ try {
 }
 
 // 3. Consulta a la base de datos para obtener las URLs de Maps de los cines en la ciudad.
-// MODIFICACIÓN: La consulta SQL ahora usa nombres en minúsculas.
+// La consulta SQL ahora usa nombres en minúsculas.
 $sql_direcciones_maps = "
     SELECT
         dm.url,
