@@ -14,24 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Validar que no estén vacíos
         if (empty($nombre)) {
-            $errores[] = "El nombre no puede estar vacío";
+            $errores['nombre'] = "El nombre no puede estar vacío";
         }
         if (empty($descripcion)) {
-            $errores[] = "La descripción no puede estar vacía";
+            $errores['descripcion'] = "La descripción no puede estar vacía";
         }
         if (empty($imagen)) {
-            $errores[] = "La URL de la imagen es requerida";
+            $errores['imagen'] = "La URL de la imagen es requerida";
         }
 
         // Validar categoría
         $categoriasPermitidas = ['Snacks', 'Bebidas', 'Promos'];
         if (!in_array($categoria, $categoriasPermitidas)) {
-            $errores[] = "Categoría no válida";
+            $errores['categoria'] = "Categoría no válida";
         }
 
         // Validar precio
         if (!is_numeric($precio) || $precio < 500) {
-            $errores[] = "El precio debe ser un número y al menos $500";
+            $errores['precio'] = "El precio debe ser un número y al menos $500";
         }
 
         // Verificar que la URL sea válida
@@ -41,24 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        // Si hay errores, lanzar excepción
-        if (!empty($errores)) {
-            throw new Exception(implode("<br>", $errores));
-        }
-
-        $query = "INSERT INTO confiteria (nombre, descripcion, categoria, precio, imagen) 
+        if (empty($errores)) {
+            $query = "INSERT INTO confiteria (nombre, descripcion, categoria, precio, imagen) 
                   VALUES (:nombre, :descripcion, :categoria, :precio, :imagen)";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':descripcion', $descripcion);
-        $stmt->bindParam(':categoria', $categoria);
-        $stmt->bindParam(':precio', $precio);
-        $stmt->bindParam(':imagen', $imagen);
-        $stmt->execute();
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':categoria', $categoria);
+            $stmt->bindParam(':precio', $precio);
+            $stmt->bindParam(':imagen', $imagen);
+            $stmt->execute();
 
         $mensaje = "Producto agregado con éxito!";
         header("Location: confiteriadmin.php?mensaje=" . urlencode($mensaje));
         exit();
+        }
+        // si hay errores no hacemos nada y el formulario se muestra con mensajes
+
     } catch (Exception $e) {
         $mensaje = "Error al agregar producto:<br>" . $e->getMessage();
         $error = true;
@@ -141,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td><label for="precio">Precio:</label></td>
                     <td>
                         <input type="number" id="precio" name="precio" 
-                               min="500" step="100" 
+                               min="500" step="10" 
                                value="<?= htmlspecialchars($_POST['precio'] ?? '') ?>" 
                                required class="form-input">
                         <small>Mínimo $500</small>
