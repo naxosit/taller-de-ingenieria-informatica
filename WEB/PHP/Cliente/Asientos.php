@@ -305,7 +305,7 @@ if (!$idFuncion || !$funcion || !$asientosSala) {
       });
       
       const totalPrice = selectedSeats.length * seatPrice;
-      totalPriceElement.textContent = `Total: $${totalPrice.toFixed(2)}`;
+      totalPriceElement.textContent = `Total: $${totalPrice}`;
       
       const confirmButton = document.getElementById('confirmButton');
       confirmButton.disabled = selectedSeats.length === 0;
