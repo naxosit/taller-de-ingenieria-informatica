@@ -125,13 +125,14 @@ if (isset($_GET['id'])) {
                     <label for="precio">Precio ($):</label>
                     <input type="number" id="precio" name="precio" 
                            value="<?= htmlspecialchars($producto['precio'] ?? '') ?>" 
-                           min="500" required 
+                           min="500" step="10" required 
                            class="form-input <?= isset($errores['precio']) ? 'error-field' : '' ?>">
                     <?php if (isset($errores['precio'])): ?>
                         <div class="error-message"><?= $errores['precio'] ?></div>
                     <?php else: ?>
                         <div class="error-message">Mínimo $500</div>
                     <?php endif; ?>
+
                 </div>
                 
                 <div class="form-group">
