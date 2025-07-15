@@ -121,8 +121,8 @@ try {
                         <label for="card-type">Tipo de tarjeta</label>
                         <select id="card-type" name="card-type" required>
                             <option value="">Seleccionar</option>
-                            <option value="debito">Débito</option>
-                            <option value="credit">Crédito</option>
+                            <option value="débito">Débito</option>
+                            <option value="crédito">Crédito</option>
                         </select>
                     </div>
                     
