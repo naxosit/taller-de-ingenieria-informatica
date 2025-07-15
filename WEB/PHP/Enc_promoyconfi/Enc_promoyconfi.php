@@ -174,11 +174,11 @@ try {
   </nav>
 
   <div class="main-container">
-    <h1 class="page-title">Gestión confiteria y promociones</h1>
+    <h1 class="page-title">Gestión confitería y promociones</h1>
     
     <div class="welcome-message">
-      <p>Bienvenido al panel de gestión de confiteria y promociones. Desde aqui podrias agregar productos
-        que se añadiran a la confiteria del cine y gestionarlos, ademas de programar y gestionar las promociones semanales.
+      <p>Bienvenido al panel de gestión de confiteria y promociones. Desde aquí podras agregar productos
+        que se añadirán a la confitería del cine y gestionarlos, además de programar y gestionar las promociones semanales.
       </p>
     </div>
     
@@ -186,13 +186,13 @@ try {
       <a href="Confiteria/confiteriadmin.php" class="big-button">
         <i class="fa-solid fa-burger"></i>
         <h2>Productos</h2>
-        <p>Gestiona los productos que se encontraran en la seccion de confiteria en tu cine.</p>
+        <p>Gestiona los productos que se encontrarán en la sección de confitería en tu cine.</p>
       </a>
       
       <a href="ModPromos/modificar_promociones.php" class="big-button">
         <i class="fa-solid fa-gift"></i>
         <h2>Promociones</h2>
-        <p>Desde aqui podra ver las promociones existentes correspondiende a su dia, ademas de agregar algunas nuevas.
+        <p>Desde aquí podrá ver las promociones existentes correspondiende a su día, además de agregar algunas nuevas.
         </p>
       </a>
     </div>
@@ -218,7 +218,7 @@ try {
       <p>Disfruta del mejor cine en nuestras modernas salas con tecnología de última generación.</p>
       <p>© 2025 Cine Azul. Todos los derechos reservados.</p>
       <div class="copyright">
-        <p>Este sitio es solo con fines educativos.</p>
+        <p>Este sitio es únicamente para fines educativos.</p>
       </div>
     </div>
   </footer>
