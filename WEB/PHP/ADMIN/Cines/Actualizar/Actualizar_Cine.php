@@ -32,38 +32,52 @@ unset($_SESSION['form_data']);
     <link rel="stylesheet" href="../../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../../CSS/formulario.css">
     <script>
-        function validarCampo(input) {
-            const valor = input.value.trim();
-            if (valor === '') {
-                input.setCustomValidity('Este campo no puede estar vacío');
-            } else if (!/\S/.test(valor)) {
-                input.setCustomValidity('No se permiten campos con solo espacios');
-            } else {
-                input.setCustomValidity('');
+    function validarCampo(input) {
+        const valor = input.value.trim();
+        if (valor === '') {
+            input.setCustomValidity('Este campo no puede estar vacío');
+        } else if (!/\S/.test(valor)) {
+            input.setCustomValidity('No se permiten campos con solo espacios');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    function validarFormulario() {
+        const campos = [
+            document.getElementById('nombre'),
+            document.getElementById('correo'),
+            document.getElementById('telefono'),
+            document.getElementById('ubicacion')
+        ];
+
+        let valido = true;
+
+        // Validación general
+        for (const campo of campos) {
+            validarCampo(campo);
+            if (campo.validity.customError) {
+                campo.reportValidity();
+                valido = false;
             }
         }
 
-        function validarFormulario() {
-            const campos = [
-                document.getElementById('nombre'),
-                document.getElementById('correo'),
-                document.getElementById('telefono'),
-                document.getElementById('ubicacion')
-            ];
-            
-            let valido = true;
-            
-            for (const campo of campos) {
-                validarCampo(campo);
-                if (campo.validity.customError) {
-                    campo.reportValidity();
-                    valido = false;
-                }
-            }
-            
-            return valido;
+        // Validación específica para correo
+        const correoInput = document.getElementById('correo');
+        const correo = correoInput.value.trim();
+        const regexCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (valido && !regexCorreo.test(correo)) {
+            correoInput.setCustomValidity('Por favor, ingrese un correo válido (ejemplo: usuario@gmail.com)');
+            correoInput.reportValidity();
+            valido = false;
+        } else {
+            correoInput.setCustomValidity('');
         }
-    </script>
+
+        return valido;
+    }
+</script>
 </head>
 <body>
     <header class="header">
