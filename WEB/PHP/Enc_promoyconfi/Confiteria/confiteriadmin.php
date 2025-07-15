@@ -7,7 +7,7 @@ session_start();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Confiteria - Web Cine</title>
+    <title>Confitería - Web Cine</title>
     <link rel="stylesheet" href="../../../CSS/styles.css">
 
     <link rel="stylesheet" href="../../../CSS/botones.css">
@@ -30,7 +30,7 @@ session_start();
         
         <?php if (isset($_GET['eliminado'])): ?>
             <div class="mensaje success">
-                Producto eliminado correctamente!
+                ¡Producto eliminado correctamente!
             </div>
         <?php endif; ?>
 
@@ -66,7 +66,7 @@ session_start();
                         <td>{$producto['nombre']}</td>
                         <td>{$producto['descripcion']}</td>
                         <td>{$producto['categoria']}</td>
-                        <td>$" . number_format($producto['precio'], 2) . "</td>
+                        <td>$" . number_format($producto['precio']) . "</td>
                         <td><img src='{$producto['imagen']}' alt='{$producto['nombre']}' style='width: 50px; height: auto;'></td>
                         <td class='acciones'>
                             <a href='actualizar_producto.php?id={$producto['id_producto']}' 
