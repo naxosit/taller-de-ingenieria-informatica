@@ -236,7 +236,7 @@ if (!$idFuncion || !$funcion || !$asientosSala) {
         </div>
         
         <div class="total-price" id="totalPrice">
-          Total: $0.00
+          Total: $0
         </div>
         
         <button class="btn btn-confirm" id="confirmButton">
