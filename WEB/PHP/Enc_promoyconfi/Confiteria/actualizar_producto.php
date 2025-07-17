@@ -90,21 +90,21 @@ if (isset($_GET['id'])) {
                 
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" 
-                           value="<?= htmlspecialchars($producto['nombre'] ?? '') ?>" 
-                           required class="form-input <?= isset($errores['nombre']) ? 'error-field' : '' ?>">
-                    <?php if (isset($errores['nombre'])): ?>
-                        <div class="error-message"><?= $errores['nombre'] ?></div>
-                    <?php endif; ?>
+                    <input type="text" id="nombre" name="nombre" required
+                    value="<?= htmlspecialchars($producto['nombre'] ?? '') ?>" 
+                    class="form-input <?= isset($errores['nombre']) ? 'error-field' : '' ?>"
+                    oninvalid="this.setCustomValidity('El nombre no puede estar vacío o tener solo espacios')"
+                    oninput="this.setCustomValidity('')">
+
                 </div>
                 
                 <div class="form-group">
                     <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" name="descripcion" rows="3" 
-                              required class="form-input <?= isset($errores['descripcion']) ? 'error-field' : '' ?>"><?= htmlspecialchars($producto['descripcion'] ?? '') ?></textarea>
-                    <?php if (isset($errores['descripcion'])): ?>
-                        <div class="error-message"><?= $errores['descripcion'] ?></div>
-                    <?php endif; ?>
+                    <textarea id="descripcion" name="descripcion" rows="3" required
+                    class="form-input <?= isset($errores['descripcion']) ? 'error-field' : '' ?>"
+                    oninvalid="this.setCustomValidity('La descripción no puede estar vacía o tener solo espacios')"
+                    oninput="this.setCustomValidity('')"><?= htmlspecialchars($producto['descripcion'] ?? '') ?></textarea>
+
                 </div>
                 
                 <div class="form-group">
@@ -123,14 +123,13 @@ if (isset($_GET['id'])) {
                 
                 <div class="form-group">
                     <label for="precio">Precio ($):</label>
-                    <input type="number" id="precio" name="precio" 
+                    <input type="number" id="precio" name="precio" required
                            value="<?= htmlspecialchars($producto['precio'] ?? '') ?>" 
                            min="500" step="10" required 
                            class="form-input <?= isset($errores['precio']) ? 'error-field' : '' ?>">
                     <?php if (isset($errores['precio'])): ?>
                         <div class="error-message"><?= $errores['precio'] ?></div>
                     <?php else: ?>
-                        <div class="error-message">Mínimo $500</div>
                     <?php endif; ?>
 
                 </div>
@@ -140,8 +139,11 @@ if (isset($_GET['id'])) {
                     <div class="url-container">
                         <div class="url-input">
                             <input type="text" id="imagen" name="imagen" 
-                                   value="<?= htmlspecialchars($producto['imagen'] ?? '') ?>" 
-                                   required class="form-input <?= isset($errores['imagen']) ? 'error-field' : '' ?>">
+                            value="<?= htmlspecialchars($producto['imagen'] ?? '') ?>" 
+                            required
+                            class="form-input <?= isset($errores['imagen']) ? 'error-field' : '' ?>"
+                            oninvalid="this.setCustomValidity('La URL de la imagen no puede estar vacía o tener solo espacios')"
+                            oninput="this.setCustomValidity('')">
                             <button type="button" id="btn-actualizar-imagen" class="btn-actualizar">Actualizar</button>
                         </div>
                         <small>Ingrese la URL completa de la imagen (ej: https://ejemplo.com/imagen.jpg)</small>
@@ -269,6 +271,40 @@ if (isset($_GET['id'])) {
             preview.src = "<?= htmlspecialchars($producto['imagen']) ?>";
         });
         <?php endif; ?>
+
+        //validar campo descripcion
+        document.querySelector('form').addEventListener('submit', function (e) {
+        const descripcion = document.getElementById('descripcion');
+
+        // Si contiene solo espacios, mostrar mensaje emergente
+        if (!descripcion.value.trim()) {
+        descripcion.setCustomValidity('La descripción no puede estar vacía o tener solo espacios');
+        descripcion.reportValidity(); // Fuerza el mensaje emergente del navegador
+        e.preventDefault(); // Detiene el envío del formulario
+        } else {
+        descripcion.setCustomValidity('');
+        }
+        });
+
+        //validar imagen url
+        document.querySelector('form').addEventListener('submit', function (e) {
+        const imagen = document.getElementById('imagen');
+        let valido = true;
+
+        if (!imagen.value.trim()) {
+        imagen.setCustomValidity('La URL de la imagen no puede estar vacía o tener solo espacios');
+        imagen.reportValidity();
+        valido = false;
+        } else {
+        imagen.setCustomValidity('');
+        }
+
+        if (!valido) {
+        e.preventDefault(); // Detener el envío si hay error
+        }
+        });
+
+
     </script>
 </body>
 </html>

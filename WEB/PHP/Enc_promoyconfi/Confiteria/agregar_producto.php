@@ -112,20 +112,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <tr>
                     <td><label for="nombre">Nombre:</label></td>
                     <td>
-                        <input type="text" id="nombre" name="nombre" 
-                               value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>" 
-                               required class="form-input">
-                        <?php if (isset($errores['nombre'])): ?>
-                            <div class="error-message"><?= $errores['nombre'] ?></div>
-                        <?php endif; ?>
+                        <input type="text" id="nombre" name="nombre" required
+                    pattern="\S+.*"
+                    oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'El nombre no puede estar vacío' : 'El nombre no puede ser solo espacios')"
+                    oninput="this.setCustomValidity('')"
+                    value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>"
+                    class="form-input">
+
+                
                     </td>
                 </tr>
                 
                 <tr>
                     <td><label for="descripcion">Descripción:</label></td>
                     <td>
-                        <textarea id="descripcion" name="descripcion" rows="3" 
-                                  required class="form-input"><?= htmlspecialchars($_POST['descripcion'] ?? '') ?></textarea>
+                        <textarea id="descripcion" name="descripcion" rows="3" required
+                        oninvalid="this.setCustomValidity('La descripción no puede estar vacía o tener solo espacios')"
+                        oninput="this.setCustomValidity('')"
+                        class="form-input"><?= htmlspecialchars($_POST['descripcion'] ?? '') ?></textarea>
+
+
                         <?php if (isset($errores['descripcion'])): ?>
                             <div class="error-message"><?= $errores['descripcion'] ?></div>
                         <?php endif; ?>
@@ -150,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <tr>
                     <td><label for="precio">Precio:</label></td>
                     <td>
-                        <input type="number" id="precio" name="precio" 
+                        <input type="number" id="precio" name="precio" required
                                min="500" step="10" 
                                value="<?= htmlspecialchars($_POST['precio'] ?? '') ?>" 
                                required class="form-input">
@@ -164,9 +170,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <tr>
                     <td><label for="imagen">URL de la imagen:</label></td>
                     <td>
-                        <input type="text" id="imagen" name="imagen" 
-                               value="<?= htmlspecialchars($_POST['imagen'] ?? '') ?>" 
-                               required class="form-input">
+                        <input type="text" id="imagen" name="imagen" required
+                        pattern="\S+.*"
+                        oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'La URL de la imagen es requerida' : 'La URL no puede ser solo espacios')"
+                        oninput="this.setCustomValidity('')"
+                        value="<?= htmlspecialchars($_POST['imagen'] ?? '') ?>"
+                        class="form-input">
+
                         <?php if (isset($errores['imagen'])): ?>
                             <div class="error-message"><?= $errores['imagen'] ?></div>
                         <?php endif; ?>
@@ -181,5 +191,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </table>
         </form>
     </div>
+    <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+    const descripcion = document.getElementById('descripcion');
+
+    // Verificar si solo contiene espacios
+    if (descripcion.value.trim() === '') {
+        descripcion.setCustomValidity('La descripción no puede estar vacía o tener solo espacios');
+        descripcion.reportValidity();
+        e.preventDefault(); // Evita que se envíe el formulario
+    } else {
+        descripcion.setCustomValidity('');
+    }
+});
+</script>
+
 </body>
 </html>
