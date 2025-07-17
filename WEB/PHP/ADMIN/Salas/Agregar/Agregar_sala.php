@@ -13,6 +13,41 @@ $cines = cargarCines();
     <title>Agregar Sala - Web Cine</title>
     <link rel="stylesheet" href="../../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../../CSS/formulario.css">
+
+    <script>
+    /**
+     * Valida un campo en tiempo real para asegurarse de que no esté vacío
+     * o contenga solo espacios en blanco.
+     */
+    function validarCampo(input) {
+        // La función trim() elimina los espacios en blanco de ambos extremos de un string.
+        if (input.value.trim() === '') {
+            // Si el campo, después de quitarle los espacios, está vacío,
+            // se establece un mensaje de error personalizado.
+            input.setCustomValidity('El campo no puede estar vacío ni contener solo espacios.');
+        } else {
+            // Si el campo es válido, se elimina cualquier mensaje de error.
+            input.setCustomValidity('');
+        }
+    }
+
+    /**
+     * Función que se ejecuta al intentar enviar el formulario.
+     * Vuelve a validar el campo y, si hay un error, lo muestra y detiene el envío.
+     */
+    function validarFormulario() {
+        const nombreInput = document.getElementById('nombre');
+        validarCampo(nombreInput); // Ejecuta la validación una última vez
+
+        // checkValidity() devuelve false si hay un error de validación (incluido el nuestro).
+        if (!nombreInput.checkValidity()) {
+            nombreInput.reportValidity(); // Muestra el mensaje de error al usuario.
+            return false; // Detiene el envío del formulario.
+        }
+
+        return true; // Permite el envío del formulario si todo está correcto.
+    }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -32,13 +67,14 @@ $cines = cargarCines();
         <?php endif; ?>
 
         <div class="formulario-agregar">
-            <form id="form-sala" action="guardar_sala.php" method="POST">
+            <form id="form-sala" action="guardar_sala.php" method="POST" onsubmit="return validarFormulario()">
                 <table class="form-table">
                     <tr>
                         <td><label for="nombre">Nombre de la Sala:</label></td>
                         <td>
-                            <input type="text" id="nombre" name="nombre" 
-                                   required class="form-input" maxlength="100">
+                            <input type="text" id="nombre" name="nombre"
+                                   required class="form-input" maxlength="100"
+                                   oninput="validarCampo(this)">
                         </td>
                     </tr>
                     
