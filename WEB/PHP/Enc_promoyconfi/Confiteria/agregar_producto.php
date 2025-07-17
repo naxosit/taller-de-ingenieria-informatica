@@ -34,9 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errores['precio'] = "El precio debe ser un número.";
         } elseif ($precio < 500) {
             $errores['precio'] = "El precio mínimo es $500.";
+        } elseif ((float)$precio != (int)$precio) {
+            $errores['precio'] = "No se aceptan precios con decimales.";    
         } elseif ($precio % 10 !== 0) {
             $errores['precio'] = "El precio debe ser un múltiplo de 10.";
+        } else {
+            $precio = (int)$precio; // conversión segura si pasa todas las validaciones
         }
+        
 
 
 
