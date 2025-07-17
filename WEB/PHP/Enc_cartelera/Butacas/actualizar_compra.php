@@ -382,19 +382,6 @@ include_once("Actualizar_butaca_logica.php");
             </div>
         <?php endif; ?>
 
-        <?php if (!empty($detalles_butacas)): ?>
-            <div class="butacas-info">
-                <h3>Detalles de las Butacas:</h3>
-                <ul>
-                    <?php foreach ($detalles_butacas as $butaca):
-                        $fila = $butaca['fila'] ?? $butaca['Fila'] ?? '';
-                        $columna = $butaca['columna'] ?? $butaca['Columna'] ?? '';
-                    ?>
-                        <li>Butaca <?= htmlspecialchars($fila . $columna) ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
     </div>
 
     <script>

@@ -66,7 +66,7 @@ session_start();
                         <td>{$producto['nombre']}</td>
                         <td>{$producto['descripcion']}</td>
                         <td>{$producto['categoria']}</td>
-                        <td>$" . number_format($producto['precio']) . "</td>
+                        <td>$" . number_format($producto['precio'], 0,',','.') . "</td>
                         <td><img src='{$producto['imagen']}' alt='{$producto['nombre']}' style='width: 50px; height: auto;'></td>
                         <td class='acciones'>
                             <a href='actualizar_producto.php?id={$producto['id_producto']}' 
