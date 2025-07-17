@@ -6,8 +6,8 @@ session_start();
 $imagenesCines = [
   1 => 'cine1.jpeg',
   2 => 'cine2.jpeg',
-  3 => 'cine3.jpeg',
-  4 => 'cine4.jpeg'
+  9 => 'cine3.jpeg',
+  4 =>  'cine4.jpeg'
   // Agrega más mapeos según sea necesario
 ];
 

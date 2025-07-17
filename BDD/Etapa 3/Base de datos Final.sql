@@ -43,7 +43,7 @@ CREATE TABLE Pelicula (
     Sinopsis VARCHAR(500),
     Director VARCHAR(45),
     Genero VARCHAR(50),
-    Imagen VARCHAR(225)
+    Imagen VARCHAR
 );
 
 -- Tabla de funciones
