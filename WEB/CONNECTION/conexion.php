@@ -2,9 +2,9 @@
 // CONNECTION/conexion.php
 $host = 'localhost';
 $port = '5432';
-$dbname = 'BD_CINE';
+$dbname = 'Cinee';
 $db_user = 'postgres';  
-$db_pass = 'torresdiaz1811';
+$db_pass = 'farrush';
 
 // Configuración PDO
 $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";

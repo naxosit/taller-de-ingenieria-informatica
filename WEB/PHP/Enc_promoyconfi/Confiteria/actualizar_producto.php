@@ -125,7 +125,7 @@ if (isset($_GET['id'])) {
                     <label for="precio">Precio ($):</label>
                     <input type="number" id="precio" name="precio" 
                            value="<?= htmlspecialchars($producto['precio'] ?? '') ?>" 
-                           min="500" required 
+                           min="500" step="10" required 
                            class="form-input <?= isset($errores['precio']) ? 'error-field' : '' ?>">
                     <?php if (isset($errores['precio'])): ?>
                         <div class="error-message"><?= $errores['precio'] ?></div>
@@ -225,13 +225,15 @@ if (isset($_GET['id'])) {
                 descripcionInput.nextElementSibling.textContent = 'La descripción no puede estar vacía';
             }
             
-            // Validar precio
-            const precio = parseInt(precioInput.value);
-            if (isNaN(precio) || precio < 500) {
-                isValid = false;
-                precioInput.classList.add('error-field');
-                precioInput.nextElementSibling.textContent = 'El precio debe ser un número y al menos $500';
-            }
+            
+        // Validar precio
+        if (!is_numeric($precio)) {
+            $errores['precio'] = "El precio debe ser un número.";
+        } elseif ($precio < 500) {
+            $errores['precio'] = "El precio mínimo es $500.";
+        } elseif ($precio % 10 !== 0) {
+            $errores['precio'] = "El precio debe ser un múltiplo de 10.";
+        }
             
             // Validar imagen
             if (!imagenInput.value.trim()) {

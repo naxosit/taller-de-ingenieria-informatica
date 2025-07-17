@@ -30,9 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Validar precio
-        if (!is_numeric($precio) || $precio < 500) {
-            $errores[] = "El precio debe ser un número y al menos $500";
+        if (!is_numeric($precio)) {
+            $errores['precio'] = "El precio debe ser un número.";
+        } elseif ($precio < 500) {
+            $errores['precio'] = "El precio mínimo es $500.";
+        } elseif ($precio % 10 !== 0) {
+            $errores['precio'] = "El precio debe ser un múltiplo de 10.";
         }
+
+
 
         // Verificar que la URL sea válida
         if (!empty($imagen)) {
@@ -141,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td><label for="precio">Precio:</label></td>
                     <td>
                         <input type="number" id="precio" name="precio" 
-                               min="500" step="100" 
+                               min="500" step="10" 
                                value="<?= htmlspecialchars($_POST['precio'] ?? '') ?>" 
                                required class="form-input">
                         <small>Mínimo $500</small>
