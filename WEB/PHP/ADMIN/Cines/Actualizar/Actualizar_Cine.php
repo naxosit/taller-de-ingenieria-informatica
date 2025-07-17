@@ -7,12 +7,7 @@ include_once("../Agregar/cargar_ciudad.php");
 if (isset($_GET['idCine'])) {
     $idCine = $_GET['idCine'];
     $cine = cargarCine($idCine);
-    
-    if (!$cine) {
-        die("Cine no encontrado");
-    }
-    
-    // Convertir todas las claves a minúsculas para consistencia
+    if (!$cine) { die("Cine no encontrado"); }
     $cine = array_change_key_case($cine, CASE_LOWER);
 } else {
     die("ID de cine no proporcionado");
@@ -36,35 +31,35 @@ unset($_SESSION['form_data']);
         const valor = input.value.trim();
         if (valor === '') {
             input.setCustomValidity('Este campo no puede estar vacío');
-        } else if (!/\S/.test(valor)) {
-            input.setCustomValidity('No se permiten campos con solo espacios');
         } else {
             input.setCustomValidity('');
         }
     }
 
-   
-    // Añadimos filtro en tiempo real al input correo para solo permitir caracteres válidos y un solo @
+    // Filtros en tiempo real para los inputs
     document.addEventListener('DOMContentLoaded', () => {
         const correoInput = document.getElementById('correo');
+        const telefonoInput = document.getElementById('telefono');
 
+        // Filtro para el correo
         correoInput.addEventListener('input', function() {
-            // Caracteres permitidos en emails (sin espacios ni símbolos extraños)
             const permitido = /[^a-zA-Z0-9@.%+\-]/g;
             if (permitido.test(this.value)) {
                 this.value = this.value.replace(permitido, '');
             }
-
-            // Permitir solo un '@'
             const partes = this.value.split('@');
             if (partes.length > 2) {
-                // Si hay más de un '@', elimina los extras (dejando solo el primero)
                 this.value = partes[0] + '@' + partes.slice(1).join('');
             }
         });
+
+        // Filtro para el teléfono: solo números
+        telefonoInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
     });
 
-    // Validación general + correo específico
+    // Validación del formulario completo
     function validarFormulario() {
         const campos = [
             document.getElementById('nombre'),
@@ -73,66 +68,61 @@ unset($_SESSION['form_data']);
             document.getElementById('ubicacion')
         ];
 
-        let valido = true;
-
-        // Validación general campos vacíos o espacios
+        // 1. Validación general: campos no vacíos
         for (const campo of campos) {
             validarCampo(campo);
-            if (campo.validity.customError) {
+            if (!campo.checkValidity()) {
                 campo.reportValidity();
-                valido = false;
+                return false;
             }
         }
 
-        if (!valido) return false; // Si ya hay error general, no seguir
-
-        // Validación específica para correo
+        // 2. Validación específica para correo (formato y dominio)
         const correoInput = document.getElementById('correo');
-        const correo = correoInput.value.trim();
-
-        // Validar solo un @ (esto ya lo controla el filtro pero aquí confirmamos)
-        const arrobas = correo.split('@').length - 1;
-        if (arrobas === 0) {
-            correoInput.setCustomValidity('El correo debe contener un símbolo "@"');
-            correoInput.reportValidity();
-            return false;
-        } else if (arrobas > 1) {
-            correoInput.setCustomValidity('Solo se permite un símbolo "@" en el correo');
-            correoInput.reportValidity();
-            return false;
-        }
-
-        // Validar formato general del correo
+        const correo = correoInput.value.trim().toLowerCase();
         const regexCorreo = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
         if (!regexCorreo.test(correo)) {
-            correoInput.setCustomValidity('Por favor, ingrese un correo válido (ejemplo: usuario@gmail.com)');
+            correoInput.setCustomValidity('Por favor, ingrese un correo con formato válido.');
             correoInput.reportValidity();
             return false;
         }
+        
+        const dominioUsuario = correo.split('@')[1];
+        const dominiosPermitidos = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'yahoo.es', 'icloud.com'];
 
-        correoInput.setCustomValidity('');
+        if (!dominiosPermitidos.includes(dominioUsuario)) {
+            correoInput.setCustomValidity('Dominio no permitido. Use un correo de Gmail, Hotmail, Outlook, etc.');
+            correoInput.reportValidity();
+            return false;
+        } else {
+            correoInput.setCustomValidity('');
+        }
+
+        // 3. Validación específica para teléfono (exactamente 9 dígitos)
+        const telefonoInput = document.getElementById('telefono');
+        if (!/^[0-9]{9}$/.test(telefonoInput.value.trim())) {
+            telefonoInput.setCustomValidity('El teléfono debe tener exactamente 9 números.');
+            telefonoInput.reportValidity();
+            return false;
+        } else {
+            telefonoInput.setCustomValidity('');
+        }
+
         return true;
     }
-</script>
-
+    </script>
 </head>
 <body>
     <header class="header">
         <div class="logo">Web Cine - Gestión de Cines</div>
-        <nav>
-            <a href="../../Cines.php">Volver</a>
-        </nav>
+        <nav><a href="../../Cines.php">Volver</a></nav>
     </header>
-
     <div class="capa"></div>
-
     <div class="container">
         <?php if (isset($_GET['error'])): ?>
-            <div class="mensaje error">
-                <?= htmlspecialchars(urldecode($_GET['error'])) ?>
-            </div>
+            <div class="mensaje error"><?= htmlspecialchars(urldecode($_GET['error'])) ?></div>
         <?php endif; ?>
-
         <div class="formulario-agregar">
             <form id="form-cine" action="Logica_Actualizar_Cine.php" method="POST" onsubmit="return validarFormulario()">
                 <input type="hidden" name="idCine" value="<?= htmlspecialchars($cine['idcine']) ?>">
@@ -140,43 +130,27 @@ unset($_SESSION['form_data']);
                     <tr>
                         <td><label for="nombre">Nombre del Cine:</label></td>
                         <td>
-                            <input type="text" id="nombre" name="nombre" 
-                                    value="<?= htmlspecialchars($form_data['nombre'] ?? $cine['nombre_cine'] ?? '') ?>" 
-                                    required class="form-input" maxlength="100"
-                                    oninput="validarCampo(this)">
+                            <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($form_data['nombre'] ?? $cine['nombre_cine'] ?? '') ?>" required class="form-input" maxlength="100" oninput="validarCampo(this)">
                         </td>
                     </tr>
-
                     <tr>
                         <td><label for="correo">Correo:</label></td>
                         <td>
-                            <input type="text" id="correo" name="correo" 
-                                   value="<?= htmlspecialchars($form_data['correo'] ?? $cine['correo_cine'] ?? '') ?>" 
-                                   required class="form-input" maxlength="100"
-                                   oninput="validarCampo(this)">
+                            <input type="email" id="correo" name="correo" value="<?= htmlspecialchars($form_data['correo'] ?? $cine['correo_cine'] ?? '') ?>" required class="form-input" maxlength="100" placeholder="ejemplo@gmail.com" oninput="validarCampo(this)">
                         </td>
                     </tr>
-
                     <tr>
                         <td><label for="telefono">Teléfono:</label></td>
                         <td>
-                            <input type="text" id="telefono" name="telefono" 
-                                   value="<?= htmlspecialchars($form_data['telefono'] ?? $cine['telefono'] ?? '') ?>" 
-                                   required class="form-input" maxlength="100"
-                                   oninput="validarCampo(this)">
+                            <input type="tel" id="telefono" name="telefono" value="<?= htmlspecialchars($form_data['telefono'] ?? $cine['telefono'] ?? '') ?>" required class="form-input" maxlength="9" pattern="[0-9]{9}" title="El teléfono debe tener exactamente 9 números." oninput="validarCampo(this)">
                         </td>
                     </tr>
-
                     <tr>
                         <td><label for="ubicacion">Ubicación:</label></td>
                         <td>
-                            <input type="text" id="ubicacion" name="ubicacion" 
-                                   value="<?= htmlspecialchars($form_data['ubicacion'] ?? $cine['ubicacion'] ?? '') ?>" 
-                                   required class="form-input" maxlength="100"
-                                   oninput="validarCampo(this)">
+                            <input type="text" id="ubicacion" name="ubicacion" value="<?= htmlspecialchars($form_data['ubicacion'] ?? $cine['ubicacion'] ?? '') ?>" required class="form-input" maxlength="100" oninput="validarCampo(this)">
                         </td>
                     </tr>
-                    
                     <tr>
                         <td><label for="ciudad_id">Ciudad:</label></td>
                         <td>
@@ -185,21 +159,14 @@ unset($_SESSION['form_data']);
                                 <?php if (!empty($ciudades)): ?>
                                     <?php foreach ($ciudades as $ciudad): ?>
                                         <?php 
-                                        // Determinar si esta ciudad debe estar seleccionada
                                         $selected = false;
-                                        
-                                        // Si hay datos de formulario guardados
                                         if (isset($form_data['ciudad_id'])) {
                                             $selected = ($form_data['ciudad_id'] == $ciudad['id']);
-                                        } 
-                                        // Si no hay datos de formulario, usar datos del cine
-                                        elseif (isset($cine['idciudad'])) {
+                                        } elseif (isset($cine['idciudad'])) {
                                             $selected = ($cine['idciudad'] == $ciudad['id']);
                                         }
                                         ?>
-                                        
-                                        <option value="<?php echo htmlspecialchars($ciudad['id']); ?>" 
-                                            <?php echo $selected ? 'selected' : ''; ?>>
+                                        <option value="<?php echo htmlspecialchars($ciudad['id']); ?>" <?php echo $selected ? 'selected' : ''; ?>>
                                             <?php echo htmlspecialchars($ciudad['nombre']); ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -209,7 +176,6 @@ unset($_SESSION['form_data']);
                             </select>
                         </td>
                     </tr>
-                    
                     <tr>
                         <td colspan="2" style="text-align: center;">
                             <button type="submit" class="btn-submit">Actualizar Cine</button>
