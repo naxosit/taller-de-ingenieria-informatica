@@ -177,21 +177,21 @@ try {
     <h1 class="page-title">Gestión de Butacas</h1>
     
     <div class="welcome-message">
-      <p>Bienvenido al panel de gestión de butacas. Desde aquí podrás controlar las peliculas en cartelera, las funciones proximas, 
-        ademas de las vistas de las salas. Selecciona una de las opciones disponibles para comenzar.</p>
+      <p>Bienvenido al panel de gestión de butacas. Desde aquí podrás controlar las películas en cartelera, las funciones próximas, 
+        además de las vistas de las salas. Selecciona una de las opciones disponibles para comenzar.</p>
     </div>
     
     <div class="buttons-container">
       <a href="Peliculas.php" class="big-button">
         <i class="fa-solid fa-film"></i>
-        <h2>Peliculas</h2>
-        <p>Visualiza las peliculas que tiene el cine, ademas de editar y modificar estas mismas.</p>
+        <h2>Películas</h2>
+        <p>Visualiza las películas que tiene el cine, además de editar y modificar estas mismas.</p>
       </a>
       
       <a href="Funciones.php" class="big-button">
         <i class="fa-solid fa-video"></i>
         <h2>Funciones</h2>
-        <p>Desde aqui podra ver las funciones pasadas y futuras. Ademas de la creacion de funciones
+        <p>Desde aquí podrá ver las funciones pasadas y futuras. Además de la creación de funciones
             para fechas futuras.
         </p>
       </a>
