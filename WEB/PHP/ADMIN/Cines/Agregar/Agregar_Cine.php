@@ -1,21 +1,17 @@
 <?php
-session_start(); // Iniciar sesión para mantener datos
+session_start();
 include_once("../../../../CONNECTION/conexion.php");
 include_once("cargar_ciudad.php");
-
 $ciudades = cargarCiudad();
-
-// Recuperar datos de formulario si existen en sesión
 $form_data = $_SESSION['form_data'] ?? [];
 unset($_SESSION['form_data']);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Sala - Web Cine</title>
+    <title>Agregar Cine - Web Cine</title>
     <link rel="stylesheet" href="../../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../../CSS/formulario.css">
   <script>
@@ -28,12 +24,10 @@ unset($_SESSION['form_data']);
         }
     }
 
-    // Filtros en tiempo real para los inputs
     document.addEventListener('DOMContentLoaded', () => {
         const correoInput = document.getElementById('correo');
         const telefonoInput = document.getElementById('telefono');
 
-        // Filtro para el correo
         correoInput.addEventListener('input', function() {
             const permitido = /[^a-zA-Z0-9@.%+\-]/g;
             if (permitido.test(this.value)) {
@@ -45,13 +39,11 @@ unset($_SESSION['form_data']);
             }
         });
 
-        // Filtro para el teléfono: solo números
         telefonoInput.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
     });
 
-    // Validación del formulario completo
     function validarFormulario() {
         const campos = [
             document.getElementById('nombre'),
@@ -60,7 +52,6 @@ unset($_SESSION['form_data']);
             document.getElementById('ubicacion')
         ];
 
-        // 1. Validación general: campos no vacíos
         for (const campo of campos) {
             validarCampo(campo);
             if (!campo.checkValidity()) {
@@ -69,11 +60,9 @@ unset($_SESSION['form_data']);
             }
         }
 
-        // 2. Validación específica para correo (formato y dominio)
         const correoInput = document.getElementById('correo');
         const correo = correoInput.value.trim().toLowerCase();
         const regexCorreo = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
         if (!regexCorreo.test(correo)) {
             correoInput.setCustomValidity('Por favor, ingrese un correo con formato válido.');
             correoInput.reportValidity();
@@ -82,7 +71,6 @@ unset($_SESSION['form_data']);
         
         const dominioUsuario = correo.split('@')[1];
         const dominiosPermitidos = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'yahoo.es', 'icloud.com'];
-
         if (!dominiosPermitidos.includes(dominioUsuario)) {
             correoInput.setCustomValidity('Dominio no permitido. Use un correo de Gmail, Hotmail, Outlook, etc.');
             correoInput.reportValidity();
@@ -91,10 +79,11 @@ unset($_SESSION['form_data']);
             correoInput.setCustomValidity('');
         }
 
-        // 3. Validación específica para teléfono (exactamente 9 dígitos)
+        // --- VALIDACIÓN DE TELÉFONO CHILENO ACTUALIZADA ---
         const telefonoInput = document.getElementById('telefono');
-        if (!/^[0-9]{9}$/.test(telefonoInput.value.trim())) {
-            telefonoInput.setCustomValidity('El teléfono debe tener exactamente 9 números.');
+        // El patrón ^9[0-9]{8}$ significa: debe empezar con 9 (^) y ser seguido de 8 dígitos más.
+        if (!/^9[0-9]{8}$/.test(telefonoInput.value.trim())) {
+            telefonoInput.setCustomValidity('El teléfono debe empezar con 9 y tener 9 dígitos.');
             telefonoInput.reportValidity();
             return false;
         } else {
@@ -108,9 +97,7 @@ unset($_SESSION['form_data']);
 <body>
     <header class="header">
         <div class="logo">Web Cine - Gestión de Cines</div>
-        <nav>
-            <a href="../../Cines.php">Volver</a>
-        </nav>
+        <nav><a href="../../Cines.php">Volver</a></nav>
     </header>
     <div class="capa"></div>
     <div class="container">
@@ -122,27 +109,21 @@ unset($_SESSION['form_data']);
                 <table class="form-table">
                     <tr>
                         <td><label for="nombre">Nombre del Cine:</label></td>
-                        <td>
-                            <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($form_data['nombre'] ?? '') ?>" required class="form-input" maxlength="100" oninput="validarCampo(this)">
-                        </td>
+                        <td><input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($form_data['nombre'] ?? '') ?>" required class="form-input" maxlength="100" oninput="validarCampo(this)"></td>
                     </tr>
                     <tr>
                         <td><label for="correo">Correo:</label></td>
-                        <td>
-                            <input type="email" id="correo" name="correo" value="<?= htmlspecialchars($form_data['correo'] ?? '') ?>" required class="form-input" maxlength="100" placeholder="ejemplo@gmail.com" oninput="validarCampo(this)">
-                        </td>
+                        <td><input type="email" id="correo" name="correo" value="<?= htmlspecialchars($form_data['correo'] ?? '') ?>" required class="form-input" maxlength="100" placeholder="ejemplo@gmail.com" oninput="validarCampo(this)"></td>
                     </tr>
                     <tr>
                         <td><label for="telefono">Teléfono:</label></td>
                         <td>
-                            <input type="tel" id="telefono" name="telefono" value="<?= htmlspecialchars($form_data['telefono'] ?? '') ?>" required class="form-input" maxlength="9" pattern="[0-9]{9}" title="El teléfono debe tener exactamente 9 números." oninput="validarCampo(this)">
+                            <input type="tel" id="telefono" name="telefono" value="<?= htmlspecialchars($form_data['telefono'] ?? '') ?>" required class="form-input" maxlength="9" pattern="9[0-9]{8}" title="El teléfono debe empezar con 9 y tener 9 dígitos." oninput="validarCampo(this)">
                         </td>
                     </tr>
                     <tr>
                         <td><label for="ubicacion">Ubicación:</label></td>
-                        <td>
-                            <input type="text" id="ubicacion" name="ubicacion" value="<?= htmlspecialchars($form_data['ubicacion'] ?? '') ?>" required class="form-input" maxlength="100" oninput="validarCampo(this)">
-                        </td>
+                        <td><input type="text" id="ubicacion" name="ubicacion" value="<?= htmlspecialchars($form_data['ubicacion'] ?? '') ?>" required class="form-input" maxlength="100" oninput="validarCampo(this)"></td>
                     </tr>
                     <tr>
                         <td><label for="ciudad_id">Ciudad:</label></td>
@@ -162,9 +143,7 @@ unset($_SESSION['form_data']);
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="text-align: center;">
-                            <button type="submit" class="btn-submit">Agregar Cine</button>
-                        </td>
+                        <td colspan="2" style="text-align: center;"><button type="submit" class="btn-submit">Agregar Cine</button></td>
                     </tr>
                 </table>
             </form>
