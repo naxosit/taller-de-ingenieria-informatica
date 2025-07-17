@@ -1,9 +1,5 @@
 <?php
 include_once("../../../../CONNECTION/conexion.php");
-echo '<pre>';
-var_dump($_POST);
-echo '</pre>';
-// die();  // Descomenta si quieres parar aquí y ver el volcado
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){

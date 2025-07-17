@@ -120,9 +120,7 @@ unset($_SESSION['form_data']);
     <header class="header">
         <div class="logo">Web Cine - Gestión de Cines</div>
         <nav>
-            <a href="../../Salas.php">Lista de Salas</a>
-            <a href="../../Peliculas.php">Películas</a>
-            <a href="../../Cines.php">Cines</a>
+            <a href="../../Cines.php">Volver</a>
         </nav>
     </header>
 

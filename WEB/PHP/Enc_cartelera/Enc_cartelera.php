@@ -152,7 +152,7 @@ try {
               <span class="user-name"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></span>
               <span class="user-rut"><?= htmlspecialchars($_SESSION['rut']) ?></span>
             </div>
-            <a href="mis_boletos.php" class="dropdown-item">
+            <a href="../Cliente/mis_boletos.php" class="dropdown-item">
               <i class="fas fa-ticket-alt"></i> Mis Boletos
             </a>
             <a href="../logout.php" class="dropdown-item">
@@ -178,20 +178,20 @@ try {
     
     <div class="welcome-message">
       <p>Bienvenido al panel de gestión de butacas. Desde aquí podrás controlar las peliculas en cartelera, las funciones proximas, 
-        ademas de las vistas de las salas. Selecciona una de las opciones disponibles para comenzar.</p>
+        además de las vistas de las salas. Selecciona una de las opciones disponibles para comenzar.</p>
     </div>
     
     <div class="buttons-container">
       <a href="Peliculas.php" class="big-button">
         <i class="fa-solid fa-film"></i>
-        <h2>Peliculas</h2>
-        <p>Visualiza las peliculas que tiene el cine, ademas de editar y modificar estas mismas.</p>
+        <h2>Películas</h2>
+        <p>Visualiza las películas que tiene el cine, además de editar y modificar estas mismas.</p>
       </a>
       
       <a href="Funciones.php" class="big-button">
         <i class="fa-solid fa-video"></i>
         <h2>Funciones</h2>
-        <p>Desde aqui podra ver las funciones pasadas y futuras. Ademas de la creacion de funciones
+        <p>Desde aquí podra ver las funciones pasadas y futuras. Ademas de la creacion de funciones
             para fechas futuras.
         </p>
       </a>

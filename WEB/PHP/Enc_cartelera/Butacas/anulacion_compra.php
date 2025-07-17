@@ -298,7 +298,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 checkbox.checked = true;
             });
         }
+
+    // Función para formatear RUT mientras se escribe
+function formatearRut(rut) {
+  // Eliminar caracteres no válidos
+  rut = rut.replace(/[^0-9kK\-]/g, '').toUpperCase();
+  
+  // Separar cuerpo y DV
+  let cuerpo = rut.slice(0, -1);
+  const dv = rut.slice(-1);
+  
+  // Eliminar puntos existentes
+  cuerpo = cuerpo.replace(/\./g, '');
+  
+  // Limitar cuerpo a 8 dígitos (máximo permitido en Chile)
+  if (cuerpo.length > 8) cuerpo = cuerpo.substring(0, 8);
+  
+  // Agregar puntos cada 3 dígitos (de derecha a izquierda)
+  let cuerpoFormateado = '';
+  for (let i = cuerpo.length - 1, j = 1; i >= 0; i--, j++) {
+    cuerpoFormateado = cuerpo[i] + cuerpoFormateado;
+    if (j % 3 === 0 && i > 0) {
+      cuerpoFormateado = '.' + cuerpoFormateado;
+    }
+  }
+  
+  // Combinar cuerpo formateado con DV
+  return cuerpoFormateado + '-' + dv;
+}
+
+// Reemplazar el script existente por este:
+document.getElementById('rut').addEventListener('input', function(e) {
+    let rut = e.target.value.replace(/\./g, '').replace(/-/g, '');
+    
+    // Limitar a 9 caracteres (8 números + 1 dígito verificador)
+    if (rut.length > 9) rut = rut.substring(0, 9);
+    
+    // Formatear solo si hay más de 1 carácter
+    if (rut.length > 1) {
+        // Separar cuerpo y DV
+        const cuerpo = rut.slice(0, -1);
+        const dv = rut.slice(-1).toUpperCase();
+        
+        // Formatear con puntos cada 3 dígitos
+        let formatted = '';
+        for (let i = 0, j = cuerpo.length - 1; i < cuerpo.length; i++, j--) {
+            formatted = cuerpo[j] + formatted;
+            if (i % 3 === 2 && i < cuerpo.length - 1) {
+                formatted = '.' + formatted;
+            }
+        }
+        
+        e.target.value = formatted + '-' + dv;
+    }
+});
     </script>
+
 </body>
 
 </html>

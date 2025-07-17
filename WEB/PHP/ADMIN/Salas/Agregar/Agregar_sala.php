@@ -18,9 +18,7 @@ $cines = cargarCines();
     <header class="header">
         <div class="logo">Web Cine - Gestión de Salas</div>
         <nav>
-            <a href="../../Salas.php">Lista de Salas</a>
-            <a href="../../Peliculas.php">Películas</a>
-            <a href="#">Cines</a>
+            <a href="../../Salas.php">Volver</a>
         </nav>
     </header>
 
