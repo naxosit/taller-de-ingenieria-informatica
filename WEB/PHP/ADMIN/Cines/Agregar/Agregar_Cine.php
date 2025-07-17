@@ -18,40 +18,92 @@ unset($_SESSION['form_data']);
     <title>Agregar Sala - Web Cine</title>
     <link rel="stylesheet" href="../../../../CSS/styles.css">
     <link rel="stylesheet" href="../../../../CSS/formulario.css">
-    <script>
-        function validarCampo(input) {
-            const valor = input.value.trim();
-            if (valor === '') {
-                input.setCustomValidity('Este campo no puede estar vacío');
-            } else if (!/\S/.test(valor)) {
-                input.setCustomValidity('No se permiten campos con solo espacios');
-            } else {
-                input.setCustomValidity('');
+  <script>
+    function validarCampo(input) {
+        const valor = input.value.trim();
+        if (valor === '') {
+            input.setCustomValidity('Este campo no puede estar vacío');
+        } else if (!/\S/.test(valor)) {
+            input.setCustomValidity('No se permiten campos con solo espacios');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+   
+    // Añadimos filtro en tiempo real al input correo para solo permitir caracteres válidos y un solo @
+    document.addEventListener('DOMContentLoaded', () => {
+        const correoInput = document.getElementById('correo');
+
+        correoInput.addEventListener('input', function() {
+            // Caracteres permitidos en emails (sin espacios ni símbolos extraños)
+            const permitido = /[^a-zA-Z0-9@.%+\-]/g;
+            if (permitido.test(this.value)) {
+                this.value = this.value.replace(permitido, '');
+            }
+
+            // Permitir solo un '@'
+            const partes = this.value.split('@');
+            if (partes.length > 2) {
+                // Si hay más de un '@', elimina los extras (dejando solo el primero)
+                this.value = partes[0] + '@' + partes.slice(1).join('');
+            }
+        });
+    });
+
+    // Validación general + correo específico
+    function validarFormulario() {
+        const campos = [
+            document.getElementById('nombre'),
+            document.getElementById('correo'),
+            document.getElementById('telefono'),
+            document.getElementById('ubicacion')
+        ];
+
+        let valido = true;
+
+        // Validación general campos vacíos o espacios
+        for (const campo of campos) {
+            validarCampo(campo);
+            if (campo.validity.customError) {
+                campo.reportValidity();
+                valido = false;
             }
         }
 
-        function validarFormulario() {
-            const campos = [
-                document.getElementById('nombre'),
-                document.getElementById('correo'),
-                document.getElementById('telefono'),
-                document.getElementById('ubicacion')
-            ];
-            
-            let valido = true;
-            
-            for (const campo of campos) {
-                validarCampo(campo);
-                if (campo.validity.customError) {
-                    campo.reportValidity();
-                    valido = false;
-                }
-            }
-            
-            return valido;
+        if (!valido) return false; // Si ya hay error general, no seguir
+
+        // Validación específica para correo
+        const correoInput = document.getElementById('correo');
+        const correo = correoInput.value.trim();
+
+        // Validar solo un @ (esto ya lo controla el filtro pero aquí confirmamos)
+        const arrobas = correo.split('@').length - 1;
+        if (arrobas === 0) {
+            correoInput.setCustomValidity('El correo debe contener un símbolo "@"');
+            correoInput.reportValidity();
+            return false;
+        } else if (arrobas > 1) {
+            correoInput.setCustomValidity('Solo se permite un símbolo "@" en el correo');
+            correoInput.reportValidity();
+            return false;
         }
-    </script>
+
+        // Validar formato general del correo
+        const regexCorreo = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!regexCorreo.test(correo)) {
+            correoInput.setCustomValidity('Por favor, ingrese un correo válido (ejemplo: usuario@gmail.com)');
+            correoInput.reportValidity();
+            return false;
+        }
+
+        correoInput.setCustomValidity('');
+        return true;
+    }
+</script>
+
 </head>
+
 <body>
     <header class="header">
         <div class="logo">Web Cine - Gestión de Cines</div>
@@ -142,5 +194,23 @@ unset($_SESSION['form_data']);
             </form>
         </div>
     </div>
+
+<!-- Script de validación para CORREO -->
+<script>
+function validarCorreo() {
+    const correoInput = document.getElementById('correo');
+    const correo = correoInput.value.trim();
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!regex.test(correo)) {
+        alert('Por favor, ingrese un correo válido (ejemplo: usuario@gmail.com)');
+        correoInput.focus();
+        return false; // Evita el envío del formulario
+    }
+    return true; // Permite el envío
+}
+</script>
+
+
 </body>
 </html>

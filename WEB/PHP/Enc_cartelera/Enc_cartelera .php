@@ -124,7 +124,7 @@ try {
 
 <body>
 
-  <!-- Barra de navegación con azul -->
+  <!-- Barra de navegación-->
   <nav class="navbar">
     <div class="logo">
       <i class="fas fa-film"></i>
@@ -174,26 +174,32 @@ try {
   </nav>
 
   <div class="main-container">
-    <h1 class="page-title">Gestión confitería y promociones</h1>
+    <h1 class="page-title">Gestión de Butacas</h1>
     
     <div class="welcome-message">
-      <p>Bienvenido al panel de gestión de confiteria y promociones. Desde aquí podras agregar productos
-        que se añadirán a la confitería del cine y gestionarlos, además de programar y gestionar las promociones semanales.
-      </p>
+      <p>Bienvenido al panel de gestión de butacas. Desde aquí podrás controlar las peliculas en cartelera, las funciones proximas, 
+        ademas de las vistas de las salas. Selecciona una de las opciones disponibles para comenzar.</p>
     </div>
     
     <div class="buttons-container">
-      <a href="Confiteria/confiteriadmin.php" class="big-button">
-        <i class="fa-solid fa-burger"></i>
-        <h2>Productos</h2>
-        <p>Gestiona los productos que se encontrarán en la sección de confitería en tu cine.</p>
+      <a href="Peliculas.php" class="big-button">
+        <i class="fa-solid fa-film"></i>
+        <h2>Peliculas</h2>
+        <p>Visualiza las peliculas que tiene el cine, ademas de editar y modificar estas mismas.</p>
       </a>
       
-      <a href="ModPromos/modificar_promociones.php" class="big-button">
-        <i class="fa-solid fa-gift"></i>
-        <h2>Promociones</h2>
-        <p>Desde aquí podrá ver las promociones existentes correspondiende a su día, además de agregar algunas nuevas.
+      <a href="Funciones.php" class="big-button">
+        <i class="fa-solid fa-video"></i>
+        <h2>Funciones</h2>
+        <p>Desde aqui podra ver las funciones pasadas y futuras. Ademas de la creacion de funciones
+            para fechas futuras.
         </p>
+      </a>
+      
+      <a href="Butacas/Actualizar_compra.php" class="big-button">
+        <i class="fas fa-chair"></i>
+        <h2>Butacas</h2>
+        <p>Para actualizar boletos o anular compras de clientes. Utilizar RUT del cliente.</p>
       </a>
     </div>
   </div>
@@ -218,7 +224,7 @@ try {
       <p>Disfruta del mejor cine en nuestras modernas salas con tecnología de última generación.</p>
       <p>© 2025 Cine Azul. Todos los derechos reservados.</p>
       <div class="copyright">
-        <p>Este sitio es únicamente para fines educativos.</p>
+        <p>Este sitio es solo con fines educativos.</p>
       </div>
     </div>
   </footer>

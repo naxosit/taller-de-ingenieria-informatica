@@ -132,6 +132,7 @@ if (isset($_GET['id'])) {
                     <?php else: ?>
                         <div class="error-message">Mínimo $500</div>
                     <?php endif; ?>
+
                 </div>
                 
                 <div class="form-group">

@@ -7,7 +7,7 @@ session_start();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Confiteria - Web Cine</title>
+    <title>Confitería - Web Cine</title>
     <link rel="stylesheet" href="../../../CSS/styles.css">
 
     <link rel="stylesheet" href="../../../CSS/botones.css">
@@ -30,7 +30,7 @@ session_start();
         
         <?php if (isset($_GET['eliminado'])): ?>
             <div class="mensaje success">
-                Producto eliminado correctamente!
+                ¡Producto eliminado correctamente!
             </div>
         <?php endif; ?>
 

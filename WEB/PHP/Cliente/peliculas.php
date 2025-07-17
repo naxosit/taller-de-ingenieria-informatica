@@ -150,8 +150,26 @@ try {
 
         <div class="filter-group">
           <h3><i class="fas fa-calendar-day"></i> Fecha</h3>
-          <input type="date" class="filter-select" name="fecha" id="fecha" value="<?php echo $fecha; ?>" required>
+          <input type="date" class="filter-select" name="fecha" id="fecha"
+            value="<?php echo isset($_GET['fecha']) ? htmlspecialchars($_GET['fecha']) : date('Y-m-d'); ?>"
+            min="<?php echo date('Y-m-d'); ?>" required>
         </div>
+
+        <script>
+        // Obtener la referencia al input de fecha
+          const fechaInput = document.getElementById('fecha');
+
+        // Obtener la fecha actual en formato YYYY-MM-DD
+          const hoy = new Date().toISOString().split('T')[0];
+
+        // Establecer la fecha mínima (para evitar fechas pasadas)
+          fechaInput.setAttribute('min', hoy);
+
+        // Si no hay valor (por ejemplo, primera carga sin GET), asignamos la fecha actual
+        if (!fechaInput.value) {
+          fechaInput.value = hoy;
+        }
+        </script>
         
         <button type="submit" class="btn btn-tickets" style="width: 100%; margin-top: 20px;">
           <i class="fas fa-filter"></i> Aplicar Filtros
