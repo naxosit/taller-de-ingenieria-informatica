@@ -40,7 +40,7 @@ if (isset($_GET['id'])) {
     <header class="header">
         <div class="logo">Web Cine - Gestión de Películas</div>
         <nav>
-            <a href="../../Peliculas.php">Lista de Peliculas</a>
+            <a href="../../Peliculas.php">Volver</a>
             <a href="#"></a>
             <a href="#"></a>
         </nav>

@@ -94,6 +94,8 @@ $dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado',
 </head>
 <body>
 
+
+
 <div class="container">
     <h1>Gestionar Promociones</h1>
 

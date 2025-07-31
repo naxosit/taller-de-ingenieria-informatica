@@ -152,7 +152,7 @@ try {
               <span class="user-name"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></span>
               <span class="user-rut"><?= htmlspecialchars($_SESSION['rut']) ?></span>
             </div>
-            <a href="mis_boletos.php" class="dropdown-item">
+            <a href="../Cliente/mis_boletos.php" class="dropdown-item">
               <i class="fas fa-ticket-alt"></i> Mis Boletos
             </a>
             <a href="../logout.php" class="dropdown-item">

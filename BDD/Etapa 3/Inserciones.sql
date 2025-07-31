@@ -7,7 +7,9 @@ INSERT INTO Region (idRegion, NombreRegion) VALUES
 -- Ciudades
 INSERT INTO Ciudad (idCiudad, idRegion, NombreCiudad) VALUES
 (10301, 10, 'Osorno'),
-(10101, 10, 'Puerto Montt');
+(10101, 10, 'Puerto Montt'),
+(14101, 14, 'Valdivia'),
+(13101, 13, 'Santiago');
 
 -- Cines
 INSERT INTO Cine (Nombre_cine, correo_cine, telefono, ubicacion, idCiudad) VALUES
