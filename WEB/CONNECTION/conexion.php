@@ -16,7 +16,7 @@ $options = [
 try {
     $db = new PDO($dsn, $db_user, $db_pass, $options);
 } catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+    die("Error de conectividad: " . $e->getMessage());
 }
 
 // Para compatibilidad con código existente que use $conn
