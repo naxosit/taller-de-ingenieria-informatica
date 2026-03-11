@@ -92,7 +92,7 @@ CREATE TABLE CONECTARSE (
 CREATE TABLE BOLETO (
 	Id_Pago INT NOT NULL,
 	Id_Butaca INT NOT NULL,
-	Estado_Butaca VARCHAR(50), -- atributo "Estado_Butaca"
+	Estado_Butaca VARCHAR(50), -- atributo "Estado_Butaca" ''cambio''
 	PRIMARY KEY (Id_Pago, Id_Butaca),
 	FOREIGN KEY (Id_Pago) REFERENCES PAGO (Id_Pago),
 	FOREIGN KEY (Id_Butaca) REFERENCES BUTACA (Id_Butaca)
